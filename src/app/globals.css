@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+
+/* CSS Variables for theming with accessible contrast ratios */
+:root {
+  /* Light theme colors */
+  --color-bg-primary: 255, 255, 255; /* #ffffff */
+  --color-bg-secondary: 249, 250, 251; /* #f9fafb */
+  --color-bg-tertiary: 243, 244, 246; /* #f3f4f6 */
+  
+  --color-text-primary: 17, 24, 39; /* #111827 - WCAG AAA for normal text */
+  --color-text-secondary: 55, 65, 81; /* #374151 - WCAG AA for normal text */
+  --color-text-tertiary: 107, 114, 128; /* #6b7280 - WCAG AA for large text */
+  
+  --color-accent-primary: 37, 99, 235; /* #2563eb */
+  --color-accent-secondary: 59, 130, 246; /* #3b82f6 */
+  
+  --color-border: 229, 231, 235; /* #e5e7eb */
+  --color-shadow: 0, 0, 0; /* #000000 */
+  
+  /* Semantic colors */
+  --color-success: 22, 163, 74; /* #16a34a */
+  --color-warning: 217, 119, 6; /* #d97706 */
+  --color-error: 220, 38, 38; /* #dc2626 */
+  --color-info: 37, 99, 235; /* #2563eb */
+}
+
+/* Dark theme colors */
+.dark {
+  --color-bg-primary: 17, 24, 39; /* #111827 */
+  --color-bg-secondary: 31, 41, 55; /* #1f2937 */
+  --color-bg-tertiary: 55, 65, 81; /* #374151 */
+  
+  --color-text-primary: 255, 255, 255; /* #ffffff - WCAG AAA for normal text */
+  --color-text-secondary: 229, 231, 235; /* #e5e7eb - WCAG AA for normal text */
+  --color-text-tertiary: 156, 163, 175; /* #9ca3af - WCAG AA for large text */
+  
+  --color-accent-primary: 96, 165, 250; /* #60a5fa */
+  --color-accent-secondary: 59, 130, 246; /* #3b82f6 */
+  
+  --color-border: 55, 65, 81; /* #374151 */
+  --color-shadow: 0, 0, 0; /* #000000 */
+  
+  /* Semantic colors with adjusted contrast for dark mode */
+  --color-success: 34, 197, 94; /* #22c55e */
+  --color-warning: 245, 158, 11; /* #f59e0b */
+  --color-error: 248, 113, 113; /* #f87171 */
+  --color-info: 96, 165, 250; /* #60a5fa */
+}
+
+/* Hide scrollbars globally */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Ensure content is still scrollable */
+html, body {
+  overflow: auto;
+}
+
+/* Custom scrollbar hide utility */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.scroll-left {
+  animation: scroll-left 80s linear infinite;
+}
+
+.scroll-right {
+  animation: scroll-right 80s linear infinite;
+}
+
+
+
