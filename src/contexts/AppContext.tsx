@@ -1,16 +1,13 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { TeamMember, BookingData } from './fromType'
+import { TeamMember,UserType, BookingData } from './fromType'
 
 
-type ThemeType = 'light' | 'dark' | 'system'
 
 interface AppContextType {
-  darkMode: boolean
-  theme: ThemeType
-  setTheme: (theme: ThemeType) => void
-  toggleDarkMode: () => void
+  currentUserData:TeamMember | null ;
+  adminOperatorData:UserType | null ;
   currentPage: string
   setCurrentPage: (page: string) => void
   mobileMenuOpen: boolean
@@ -19,16 +16,11 @@ interface AppContextType {
   setIsLoggedIn: (loggedIn: boolean) => void
   userType: 'admin' | 'operator' | 'member'
   setUserType: (type: 'admin' | 'operator' | 'member') => void
-  userData: any
-  setUserData: (data: any) => void
   navigateToPage: (page: string) => void
   bookings: BookingData[]
   teamMembers: TeamMember[]
-  messages: any[]
+  messages: string[]
 }
-
-
-
 
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -47,87 +39,25 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const [theme, setThemeState] = useState<ThemeType>('system')
-  const [darkMode, setDarkMode] = useState(false)
+
   const [currentPage, setCurrentPage] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userType, setUserType] = useState<'admin' | 'operator' | 'member'>('admin')
-  const [userData, setUserData] = useState<any>(null)
-
- 
-
-  // Function to apply theme to document
-  const applyTheme = (isDark: boolean) => {
-    setDarkMode(isDark)
-    if (isDark) {
-      document.documentElement.classList.add('dark')
+  const [currentUserData, setCurrentUserData] = useState<TeamMember| null >(null)
+  const [adminOperatorData, setAdminOperatorData] = useState< UserType | null >(null)
+useEffect(() => {
+  const storedUser = localStorage.getItem("userData");
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser.uType === "member") {
+      setCurrentUserData(parsedUser.data.user );
     } else {
-      document.documentElement.classList.remove('dark')
+      setAdminOperatorData(parsedUser.data.user );
     }
   }
+}, []);
 
-  // Set theme based on user preference or system preference
-  const setTheme = (newTheme: ThemeType) => {
-    setThemeState(newTheme)
-    localStorage.setItem('theme-preference', newTheme)
-    
-    if (newTheme === 'dark') {
-      applyTheme(true)
-    } else if (newTheme === 'light') {
-      applyTheme(false)
-    } else {
-      // System preference
-      applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches)
-    }
-  }
-
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    const savedThemePreference = localStorage.getItem('theme-preference') as ThemeType | null
-    
-    if (savedThemePreference && ['light', 'dark', 'system'].includes(savedThemePreference)) {
-      setThemeState(savedThemePreference as ThemeType)
-      
-      if (savedThemePreference === 'system') {
-        applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches)
-      } else {
-        applyTheme(savedThemePreference === 'dark')
-      }
-    } else {
-      // Default to system preference if no saved preference
-      setThemeState('system')
-      applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches)
-    }
-  }, [])
-
-  // Listen for system preference changes when theme is set to 'system'
-  useEffect(() => {
-    if (theme !== 'system') return
-    
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    
-    const handleChange = (e: MediaQueryListEvent) => {
-      applyTheme(e.matches)
-    }
-    
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [theme])
-
-  const toggleDarkMode = () => {
-    const newTheme = darkMode ? 'light' : 'dark'
-    console.log(newTheme)
-    setTheme(newTheme)
-  }
-  
-  
-  useEffect(() => {
-    console.log(theme)
-    setTheme(theme)
-
-  }, [theme])
-  
 
   const navigateToPage = (page: string) => {
     setCurrentPage(page)
@@ -169,7 +99,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
 const [bookings, setHiringRequests] = useState<BookingData[]>([]);
 const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-const [messages, setMessages] = useState<any[]>([]);
+const [messages, setMessages] = useState<string[]>([]);
 
 async function getDashboardData() {
   try {
@@ -194,12 +124,7 @@ useEffect(() => {
 }, []);
 
 
-
   const value = {
-    darkMode,
-    theme,
-    setTheme,
-    toggleDarkMode,
     currentPage,
     setCurrentPage,
     mobileMenuOpen,
@@ -208,13 +133,15 @@ useEffect(() => {
     setIsLoggedIn,
     userType,
     setUserType,
-    userData,
-    setUserData,
+    currentUserData,
+    adminOperatorData,
     navigateToPage,
     teamMembers,
     bookings,
     messages
   }
+
+
 
 
 
@@ -224,3 +151,5 @@ useEffect(() => {
     </AppContext.Provider>
   )
 }
+
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Clock, CheckCircle, Star, Award, Users, Calendar } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, CheckCircle} from 'lucide-react';
 import toast from 'react-hot-toast';
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,12 +12,21 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    
+    const res=await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify({ warmup: true }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    console.log(data);
   };
+
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -123,7 +132,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               <div className="p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg flex items-center space-x-3">
                 <CheckCircle className="h-5 w-5 text-green-500" />
                 <span className="text-green-700 dark:text-green-300">
-                  Thank you! We'll get back to you within 24 hours.
+                  Thank you! We&#39;ll get back to you within 24 hours.
                 </span>
               </div>
             )}
@@ -243,7 +252,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 Get in Touch
               </h3>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                We're here to help bring your vision to life. Reach out through any of these channels, and our team will respond promptly.
+                We&#39;re here to help bring your vision to life. Reach out through any of these channels, and our team will respond promptly.
               </p>
             </div>
 

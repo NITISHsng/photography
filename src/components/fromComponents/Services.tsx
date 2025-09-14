@@ -30,7 +30,7 @@ const Services: React.FC<ServicesProps> = ({ bookingData, setBookingData }) => {
                 const isSelected = bookingData.selectedService.some(
                   (a) => a.id === service.id
                 );
-          const { mrp, discount, finalPrice }=PriceHandeler(
+          const {discount, finalPrice }=PriceHandeler(
                         service.price, 
                         service.discount,
                         bookingData.details.package,

@@ -1,7 +1,6 @@
 // categories
 import {
   Camera,
-  Music,
   ScreenShare,
   Video,
   Edit,
@@ -16,7 +15,6 @@ import {
   Image as ImageIcon,
   Usb,
   PictureInPicture,
-  Book,
 } from "lucide-react";
 
 //  categories
@@ -261,12 +259,12 @@ export const packages = {
 const camera = { name: "Camera", type: "equipment" };
 const cameraLights = { name: "Camera Lights", type: "equipment" };
 const stageLights = { name: "Stage Lights", type: "equipment" };
-const lights = { name: "Lights", type: "equipment" };
+// const lights = { name: "Lights", type: "equipment" };
 const mic = { name: "Microphone", type: "equipment" };
 const operator = { name: "Camera Operator", type: "staff" };
 const droneOperator = { name: "Drone Operator", type: "staff" };
-const soundTech = { name: "Sound Technician", type: "staff" };
-const editor = { name: "Editor", type: "staff" };
+// const soundTech = { name: "Sound Technician", type: "staff" };
+// const editor = { name: "Editor", type: "staff" };
 const drone = { name: "Drone", type: "equipment" };
 const streamingRig = { name: "Streaming//drone option" };
 

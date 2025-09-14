@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/contexts/AppContext";
-import { AssignedTeam, BookingData , TeamMember} from "@/contexts/fromType";
+import { BookingData, TeamMember } from "@/contexts/fromType";
+import Image from "next/image";
+
 import {
   Users,
   BarChart3,
-  Package,
   UserCheck,
   TrendingUp,
-  TrendingDown,
   Search,
   MapPin,
   Phone,
   Mail,
-  User,
   Calendar,
   Star,
   Award,
@@ -22,17 +21,15 @@ export type ExtendedBookingData = BookingData & {
   createdAt: Date | null;
 };
 
-
 const Dashboard: React.FC = () => {
-  
- type AppContextType = {
-  bookings: BookingData[];
-  teamMembers: TeamMember[];
-  // Add other context properties if exist
-};
+  type AppContextType = {
+    bookings: BookingData[];
+    teamMembers: TeamMember[];
+    // Add other context properties if exist
+  };
 
-// Usage in component
-const { bookings, teamMembers } = useAppContext() as AppContextType;
+  // Usage in component
+  const { bookings, teamMembers } = useAppContext() as AppContextType;
 
   const [timeFilter, setTimeFilter] = useState(30);
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,31 +56,38 @@ const { bookings, teamMembers } = useAppContext() as AppContextType;
       m.details.status === "completed"
   );
 
-  const recentMembers = teamMembers.filter(
-    (m) => m.createdAt ? new Date(m.createdAt) >= lastUpdate : false
+  const recentMembers = teamMembers.filter((m) =>
+    m.createdAt ? new Date(m.createdAt) >= lastUpdate : false
   );
 
-  const recentClients = bookings.filter(
-    (m) => m.createdAt ? new Date(m.createdAt) >= lastUpdate : false
+  const recentClients = bookings.filter((m) =>
+    m.createdAt ? new Date(m.createdAt) >= lastUpdate : false
   );
 
   const recentEquipments = teamMembers.filter(
-    (m) => (m.createdAt ? new Date(m.createdAt) >= lastUpdate : false) && m.role === "equipment"
+    (m) =>
+      (m.createdAt ? new Date(m.createdAt) >= lastUpdate : false) &&
+      m.role === "equipment"
   );
 
   const filteredTeamMembers = teamMembers.filter((member) => {
     return (
       member.name.toLowerCase().includes(nameFilter.toLowerCase()) &&
-      (member.location ? member.location.toLowerCase().includes(areaFilter.toLowerCase()) : areaFilter === '') &&
-      (member.pincode ? member.pincode.includes(pincodeFilter) : pincodeFilter === '')
+      (member.location
+        ? member.location.toLowerCase().includes(areaFilter.toLowerCase())
+        : areaFilter === "") &&
+      (member.pincode
+        ? member.pincode.includes(pincodeFilter)
+        : pincodeFilter === "")
     );
   });
 
   const filteredLocations = teamMembers.filter((loca) => {
     return (
       // loca.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (loca.location ? loca.location.toLowerCase().includes(searchTerm.toLowerCase()) : false) ||
-      (loca.pincode ? loca.pincode.includes(searchTerm) : false)
+      (loca.location
+        ? loca.location.toLowerCase().includes(searchTerm.toLowerCase())
+        : false) || (loca.pincode ? loca.pincode.includes(searchTerm) : false)
     );
   });
 
@@ -277,19 +281,21 @@ const { bookings, teamMembers } = useAppContext() as AppContextType;
           </div>
 
           <div className="space-y-4 max-h-96 overflow-y-auto">
-            {filteredTeamMembers.map((member) => (
+            {filteredTeamMembers.map((member,index) => (
               <div
-                key={member.id}
+                key={index}
                 className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-xl border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 p-4"
               >
                 {/* Top Section: Logo/Name with ID (left) and Status/Rating (right) */}
                 <div className="flex items-start justify-between mb-4">
                   {/* Left: Avatar + Name + ID */}
                   <div className="flex items-center space-x-3">
-                    <img
+                    <Image
                       src={member.avatar}
                       alt={member.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-md"
+                      width={48}
+                      height={48}
+                      className="rounded-full border-2 border-white dark:border-gray-700 shadow-md object-cover"
                     />
                     <div>
                       <h4 className="font-bold text-lg text-gray-800 dark:text-white">
@@ -371,6 +377,11 @@ const { bookings, teamMembers } = useAppContext() as AppContextType;
                 </div> */}
               </div>
             ))}
+
+
+
+
+            
           </div>
         </div>
 
@@ -398,9 +409,9 @@ const { bookings, teamMembers } = useAppContext() as AppContextType;
           </div>
 
           <div className="space-y-4 max-h-96 overflow-y-auto">
-            {filteredLocations.map((location) => (
+            {filteredLocations.map((location,index) => (
               <div
-                key={location.id}
+                key={index}
                 className="relative bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-all duration-300 p-4"
               >
                 {/* Status Badge - Top Right */}

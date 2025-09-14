@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
+import Image from "next/image";
 interface GalleryPageProps {
   darkMode?: boolean;
   toggleDarkMode?: () => void;
@@ -13,15 +13,9 @@ interface GalleryPageProps {
   currentPage?: string;
 }
 
-const Gallery: React.FC<GalleryPageProps> = (props) => {
-  const {
-    darkMode,
-    toggleDarkMode,
-    mobileMenuOpen,
-    setMobileMenuOpen,
-    navigateToPage,
-    currentPage,
-  } = useAppContext();
+const Gallery: React.FC<GalleryPageProps> = () => {
+  const { mobileMenuOpen, setMobileMenuOpen, navigateToPage, currentPage } =
+    useAppContext();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -34,34 +28,7 @@ const Gallery: React.FC<GalleryPageProps> = (props) => {
       title: "Priya & Bipul - Wedding",
       featured: true,
     },
-    {
-      src: "https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/539807603_776139798687519_6788254801554819364_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Jsy02BJ7SnYQ7kNvwGBz3Sq&_nc_oc=Adl4IbUvv0fdqnE8hzsgvFYtZrBAwkGDMVD9AzsZkE7U4KS3lR2h51wSvxakza_UPQJjPxP4iJwnY1mKfjsRdyGp&_nc_zt=23&_nc_ht=scontent-ams4-1.xx&_nc_gid=3HAPSelmXFK3pnHlip_3pw&oh=00_AfbUE7GLtsaf7Ng0ZaofGCOSwDJnNvVnGCt5Vxcx6YB27Q&oe=68BE3AC0",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/539769157_776138748687624_2457949338638173225_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=6I9BUzeogOMQ7kNvwFL5EJz&_nc_oc=AdkkmHxsrt2axYWJlMUUvqgbsidRBPKmiGch_z9fMDKs5r3O2Ecy1FpwaZCBwHMPlSnmI27WG6XROcTUA0vP-jbL&_nc_zt=23&_nc_ht=scontent-ams4-1.xx&_nc_gid=SrFp1LRlznsfZgkOFdIJ8Q&oh=00_AfYtcSnPmYOjflY80UHPHBhHeT8oCGSNcqjtAzwzRXUZwg&oe=68BE2DC3",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/539769157_776138748687624_2457949338638173225_n.jpg?stp=c0.5000x0.5000f_dst-webp_e15_p1260x1275_q70_tt1_u&efg=eyJ1cmxnZW4iOiJ1cmxnZW5fZnJvbV91cmwifQ&_nc_cid=0&_nc_ad=z-m&_nc_rml=0&_nc_ht=scontent-ams4-1.xx&_nc_cat=101&_nc_ohc=6I9BUzeogOMQ7kNvwFL5EJz&_nc_gid=mat4SFqtYYT7gtxvBmnhLg&ccb=1-7&_nc_sid=833d8c&oh=00_AfZ015T2gMzdySFCYhf3NnzFP_OW6OVt3BTE-JEsc1_xwA&oe=68BE2DC3",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/531096118_762841203350712_2367502173999090400_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_ohc=hsFXLAvJj6kQ7kNvwGAzRi2&_nc_oc=AdkA28MRe2SMYpfSfOBOmtiOGPvEkV_WpLG-s2evgKUruMoVjk83aXyulqulKOhNl-KyFNr-1QESxI9U5o-F_KZ1&_nc_zt=23&_nc_ht=scontent-ams4-1.xx&_nc_gid=g2jrsuJ5qLS4LwuMIF36HQ&oh=00_AfbkfRGgvNw2MqrRGB9MDDu811b_M6q1cInRbqzbZuTlmw&oe=68BE391F",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/531777317_762581233376709_5778001647717008115_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ooOAfbsPL4gQ7kNvwGDGNet&_nc_oc=AdnshSyxEAVX3jeFqwzbMUNhVOsyLqz9xFLorcsSLYbH7tnDBFkl6jduFyC8rpa9SjPJ6OnK_1BxOjsHRlr2O6Gs&_nc_zt=23&_nc_ht=scontent-ams2-1.xx&_nc_gid=nqdpMmYYXQpg4CN0bWBoJQ&oh=00_AfY49bMUfnXmpdBysB7spZPb41nXtjTpVyRrvfGM65E_Lw&oe=68BE5D51",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/530426790_762581163376716_7005323389753229873_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Rl9YrgbsujgQ7kNvwERH4dd&_nc_oc=Adm-JAiQ_Qy5NKqmHmVeU6ztqlz3B8wJiNTq7miSFsPjsNjuLksWBt7VpLDt-eq9KOA0GspLNpRScKz8G73huXD0&_nc_zt=23&_nc_ht=scontent-ams2-1.xx&_nc_gid=fLgnHvL3oorVJPY0tOu_FA&oh=00_AfYUv8QBTeD0zPQ2Dl92VhFsq-hUSOLbixPOTH8X1Xotkw&oe=68BE4E6D",
-      title: "Priya & Bipul - Wedding",
-    },
-    {
-      src: "https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/541822509_779640648337434_6957839408032711975_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=sUzPxHu7XIsQ7kNvwHyO_RX&_nc_oc=AdkppZ8LR_JRkleA1JVM-xsKnONa7cXPINib4TiRhhcp0lIqmpLpkoT75aEw-qUYrIsw3tH4QE95G-QOdcmt3_0z&_nc_zt=23&_nc_ht=scontent-ams4-1.xx&_nc_gid=5yYEm2auSgYRgGZ5FpRh2g&oh=00_AfanxwV1tceJgZIIidEnaGV4WAVLqEoM87-v8NTCqf_p3Q&oe=68BE2E13",
-      title: "Priya & Bipul - Wedding",
-    },
+
     { src: "/galleryImages/gallery1.webp", title: "Amit & Riya" },
     { src: "/galleryImages/gallery2.webp", title: "Amit & Riya" },
     { src: "/homeImages/l11.webp", title: "Amit & Riya" },
@@ -87,7 +54,6 @@ const Gallery: React.FC<GalleryPageProps> = (props) => {
     { src: "/homeImages/l33.webp", title: "Baby Blessings" },
     { src: "/homeImages/l32.webp", title: "Baby Portrait" },
     { src: "/homeImages/l34.webp", title: "Family with Baby" },
-    { src: "/homeImages/l35.webp", title: "Baby Smiles" },
     { src: "/homeImages/l36.webp", title: "Baby Moments" },
 
     // Corporate
@@ -163,10 +129,17 @@ What made Priya and Bipul’s wedding truly unforgettable was its simplicity and
           <div className="flex flex-col md:flex-row gap-8 mb-16 items-center justify-center">
             {/* Big Image Left */}
             <div className="w-full md:w-1/2 flex justify-center">
-              <img
+              {/* <img
                 src={featured.src}
                 alt={featured.title}
                 className="w-full/2 h-full object-cover rounded-2xl shadow-lg"
+              /> */}
+              <Image
+                src={featured.src}
+                alt={featured.title}
+                width={500}
+                height={300}
+                className="w-full h-full object-cover"
               />
             </div>
 
@@ -208,9 +181,11 @@ What made Priya and Bipul’s wedding truly unforgettable was its simplicity and
               <div className="aspect-[3/4] w-full max-h-[300px]">
                 {" "}
                 {/* portrait ratio */}
-                <img
+                <Image
                   src={item.src}
                   alt={item.title}
+                  width={500}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
               </div>

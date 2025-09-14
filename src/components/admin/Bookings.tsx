@@ -24,9 +24,10 @@ import {
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
 import PriceCalculate from "../sub_Components/PriceCalculate";
-import { BookingData, EventTimeSlot, PersonRole } from "@/contexts/fromType";
+import { BookingData, EventTimeSlot} from "@/contexts/fromType";
 
 const Bookings: React.FC = () => {
+  type BookingWithId = BookingData & { _id: string };
   const { bookings } = useAppContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -34,11 +35,9 @@ const Bookings: React.FC = () => {
   const [dateFilter, setDateFilter] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState<any>(null);
-  type BookingWithId = BookingData & { _id: string };
-
+  const [selectedBooking, setSelectedBooking] = useState<BookingWithId | null>(null);
   const getStatusColor = (status: string) => {
+
     switch (status) {
       case "confirmed":
         return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
@@ -120,19 +119,14 @@ const Bookings: React.FC = () => {
   };
 
   // Working action handlers
-  const handleViewBooking = (booking: any) => {
+  const handleViewBooking = (booking: BookingWithId) => {
     setSelectedBooking(booking);
   };
   useEffect(() => {
     setShowViewModal(true);
     console.log(selectedBooking);
   }, [selectedBooking]);
-
-  const handleEditBooking = (booking: any) => {
-    setSelectedBooking(booking);
-    setShowEditModal(true);
-  };
-
+  
   const handleAddBooking = () => {
     setShowAddModal(true);
   };
@@ -140,14 +134,12 @@ const Bookings: React.FC = () => {
   const handleSaveBooking = () => {
     alert("Booking saved successfully!");
     setShowAddModal(false);
-    setShowEditModal(false);
     setSelectedBooking(null);
   };
 
   const closeModals = () => {
     setShowAddModal(false);
     setShowViewModal(false);
-    setShowEditModal(false);
     setSelectedBooking(null);
   };
 
@@ -415,13 +407,12 @@ const Bookings: React.FC = () => {
                       </button>
 
                       <button
-                        onClick={() => handleEditBooking(booking)}
                         className="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200"
                         title="Edit Booking"
                       >
                         <Link
                           rel="stylesheet"
-                          href={`admin/client/${booking._id}`}
+                          href={`edit/client/${booking._id}`}
                         >
                           <Edit className="h-4 w-4" />
                         </Link>
@@ -510,7 +501,7 @@ const Bookings: React.FC = () => {
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
-                Booking Details - {selectedBooking.id}
+                Booking Details - {selectedBooking._id}
               </h3>
               <button
                 onClick={closeModals}
@@ -635,9 +626,6 @@ const Bookings: React.FC = () => {
                       <span className="text-gray-600 dark:text-gray-300">
                         Total Amount: {selectedBooking.details.totalAmount}
                       </span>
-                      <span className="font-bold text-lg text-gray-800 dark:text-white">
-                        {selectedBooking.amount}
-                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600 dark:text-gray-300">
@@ -658,9 +646,6 @@ const Bookings: React.FC = () => {
                       <span className="text-gray-600 dark:text-gray-300">
                         Advance Paid:{selectedBooking.details.advance}
                       </span>
-                      <span className="font-medium text-gray-800 dark:text-white">
-                        {selectedBooking.advanceAmount}
-                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600 dark:text-gray-300">
@@ -668,14 +653,11 @@ const Bookings: React.FC = () => {
                         {selectedBooking.details.totalAmount -
                           selectedBooking.details.advance}
                       </span>
-                      <span className="font-medium text-gray-800 dark:text-white">
-                        {selectedBooking.remainingAmount}
-                      </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
+                {/* <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
                   <h2 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
                     Assigned Team
                   </h2>
@@ -701,7 +683,7 @@ const Bookings: React.FC = () => {
                       )}
                     </ul>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
             <PriceCalculate localBooking={selectedBooking} />
@@ -712,12 +694,6 @@ const Bookings: React.FC = () => {
                 className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
               >
                 Close
-              </button>
-              <button
-                onClick={() => handleEditBooking(selectedBooking)}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-all duration-200"
-              >
-                Edit Booking
               </button>
             </div>
           </div>

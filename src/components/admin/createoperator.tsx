@@ -47,59 +47,62 @@ const CreateOperator: React.FC = () => {
     return true
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    
-    if (!validateForm()) return
-    
-    setIsLoading(true)
-    
-    try {
-      const response = await fetch('/api/operators', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          operatorId: formData.operatorId,
-          password: formData.password,
-          role: formData.role,
-          location: formData.location,
-          skills: formData.skills.split(',').map(skill => skill.trim()),
-          status: formData.status
-        }),
-      })
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError('');
 
-      const data = await response.json()
+  if (!validateForm()) return;
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create operator')
-      }
+  setIsLoading(true);
 
-      toast.success('Operator created successfully')
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        operatorId: '',
-        password: '',
-        confirmPassword: '',
-        role: 'operator',
-        location: '',
-        skills: '',
-        status: 'active'
-      })
-    } catch (err: any) {
-      setError(err.message || 'An error occurred')
-      toast.error(err.message || 'Failed to create operator')
-    } finally {
-      setIsLoading(false)
+  try {
+    const response = await fetch('/api/operators', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        operatorId: formData.operatorId,
+        password: formData.password,
+        role: formData.role,
+        location: formData.location,
+        skills: formData.skills.split(',').map((skill) => skill.trim()),
+        status: formData.status,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to create operator');
     }
+
+    toast.success('Operator created successfully');
+
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      operatorId: '',
+      password: '',
+      confirmPassword: '',
+      role: 'operator',
+      location: '',
+      skills: '',
+      status: 'active',
+    });
+  } catch (err: unknown) {
+    // Narrow the unknown to Error
+    const error = err instanceof Error ? err : new Error('An unknown error occurred');
+    setError(error.message);
+    toast.error(error.message);
+  } finally {
+    setIsLoading(false);
   }
+};
+
 
   return (
     <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">

@@ -1,19 +1,29 @@
 import React from 'react';
-import { Video, LogOut, Shield } from 'lucide-react';
-import ThemeToggle from '../ThemeToggle';
+import { Video,LogOut, Shield, Menu } from 'lucide-react';
 import { useAppContext } from '@/contexts/AppContext';
-
+import ThemeToggle from '../ThemeToggle';
 interface HeaderProps {
-  userData: any;
-  userType: 'admin' | 'operator' | 'member';
   onLogout: () => void;
+  onSidebarToggle?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ userData, userType, onLogout }) => {
-  console.log(userData);
+const Header: React.FC<HeaderProps> = ({ onLogout, onSidebarToggle }) => {
+  const {adminOperatorData} = useAppContext();
+  console.log(adminOperatorData?.name);
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 px-6 py-4">
       <div className="flex items-center justify-between">
+        {/* Mobile Sidebar Toggle */}
+        {onSidebarToggle && (
+          <button
+            onClick={onSidebarToggle}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 lg:hidden mr-4"
+            aria-label="Toggle sidebar"
+          >
+            <Menu className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+          </button>
+        )}
+
         {/* Left side - Company name with icon */}
         <div className="flex items-center space-x-3">
           <div className="relative">
@@ -21,14 +31,14 @@ const Header: React.FC<HeaderProps> = ({ userData, userType, onLogout }) => {
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-80"></div>
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            AsanCapture
+            CaptureVision
           </span>
         </div>
 
         {/* Right side - Theme toggle, admin info, logout */}
         <div className="flex items-center space-x-4">
-          {/* Theme Toggle */}
-          <ThemeToggle />
+   
+           <ThemeToggle />
 
           {/* Admin/Operator Logo with name/id */}
           <div className="flex items-center space-x-3 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
@@ -36,8 +46,8 @@ const Header: React.FC<HeaderProps> = ({ userData, userType, onLogout }) => {
               <Shield className="h-4 w-4 text-white" />
             </div>
             <div className="text-sm">
-              <div className="font-medium text-gray-800 dark:text-white">{userData.name}</div>
-              <div className="text-gray-600 dark:text-gray-300">{userData.role}</div>
+              <div className="font-medium text-gray-800 dark:text-white">{adminOperatorData?.name}</div>
+              <div className="text-gray-600 dark:text-gray-300">{adminOperatorData?.role}</div>
             </div>
           </div>
 

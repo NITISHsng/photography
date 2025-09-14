@@ -15,16 +15,16 @@ import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-import { initialBookingData } from "@/contexts/fromType";
+import { initialBookingData,areaType } from "@/contexts/fromType";
 
-import { BookingData, ExpandablePriceProps } from "@/contexts/fromType";
-import { categories, videoCategory } from "@/contexts/fromData";
+import { BookingData} from "@/contexts/fromType";
+import { categories } from "@/contexts/fromData";
 import { packages } from "@/contexts/fromData";
 
-import BasicDetails from "@/components/fromComponents.tsx/BasicDetails";
-import Services from "@/components/fromComponents.tsx/Services";
-import PhotoVideoOptions from "@/components/fromComponents.tsx/PhotoVideoOptions";
-import Lights from "@/components/fromComponents.tsx/Lights";
+import BasicDetails from "@/components/fromComponents/BasicDetails";
+import Services from "@/components/fromComponents/Services";
+import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
+import Lights from "@/components/fromComponents/Lights";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 
 
@@ -169,9 +169,7 @@ const HiringPage: React.FC<HiringPageProps> = () => {
 
   // pincode to find details
 
-  const [loading, setLoading] = useState(false);
-  const [areaDetails, setDetails] = useState<any>(null);
-  const [error, setError] = useState("");
+const [areaDetails, setDetails] = useState< areaType | null>(null);
 
   useEffect(() => {
     const pin = bookingData?.details?.pinCode;
@@ -181,8 +179,7 @@ const HiringPage: React.FC<HiringPageProps> = () => {
     }
 
     const fetchDetails = async () => {
-      setError("");
-      setLoading(true);
+
       setDetails(null);
 
       try {
@@ -203,12 +200,10 @@ const HiringPage: React.FC<HiringPageProps> = () => {
             };
           });
         } else {
-          setError("No details found for this PIN code.");
+          console.log("No details found for this PIN code.");
         }
       } catch (err) {
-        setError("Failed to fetch details. Try again later.");
-      } finally {
-        setLoading(false);
+        console.log(err);
       }
     };
 
@@ -460,7 +455,7 @@ const HiringPage: React.FC<HiringPageProps> = () => {
                         <BasicDetails
                           bookingData={bookingData}
                           setBookingData={setBookingData}
-                          areaDetails={areaDetails}
+                          areaDetails={areaDetails ? [areaDetails] : []}
                         />
                         {/* Services Selection */}
                         <Services

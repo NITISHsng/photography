@@ -5,7 +5,7 @@ import { albumOptions } from "@/contexts/fromData";
 import { videoQualityOptions } from "@/contexts/fromData";
 import { extraVideos } from "@/contexts/fromData";
 import { videoCategory } from "@/contexts/fromData";
-import { Clock, Film, Clapperboard } from "lucide-react";
+import { Clock} from "lucide-react";
 import { PriceHandeler } from "@/contexts/fromData";
 interface PhotosVideosProps {
   bookingData: BookingData;
@@ -373,7 +373,7 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
                 bookingData.requiredServices.videography.extraVideos?.some(
                   (a) => a.id === opt.id
                 );
-            const { mrp, discount, finalPrice } = PriceHandeler(
+            const { discount, finalPrice } = PriceHandeler(
       opt.price,
       opt.discount,
       bookingData.details.package,
@@ -403,7 +403,7 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
                               : [
                                   ...prev.requiredServices.videography
                                     .extraVideos,
-                                  { id: opt.id as any, price: finalPrice },
+                                  { id: opt.id, price: finalPrice },
                                 ],
                           },
                         },

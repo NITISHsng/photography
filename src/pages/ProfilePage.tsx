@@ -7,21 +7,6 @@ import Header from "@/components/Header";
 import { useAppContext } from "@/contexts/AppContext";
 import { LogOut } from "lucide-react";
 
-interface UserProfile {
-  name: string;
-  email: string;
-  phone: string;
-  age: number;
-  gender: string;
-  role: string;
-  location: string;
-  operatorId?: string;
-  pincode: string;
-  district: string;
-  state: string;
-  country: string;
-}
-
 interface EventDetail {
   date: string;
   title: string;
@@ -37,14 +22,21 @@ interface ProfilePageProps {
   onLogout: () => void;
 }
 
-const ProfilePage: React.FC<ProfilePageProps> = ({ userId, userType, onLogout }) => {
+
+interface ProfilePageProps {
+  userId: string;
+  onLogout: () => void;
+}
+
+
+const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
+
   const {
-    darkMode,
     mobileMenuOpen,
     setMobileMenuOpen,
     navigateToPage,
     currentPage,
-    teamMembers,
+    currentUserData,
   } = useAppContext();
 
   const toggleMobileMenu = () => {
@@ -53,10 +45,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId, userType, onLogout })
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
+ console.log(currentUserData)
+  const currentUser =currentUserData;
 
-  const currentUser = teamMembers.find((member) => member.id === userId);
-
-  // console.log(currentUser.id)
   const normalizeDate = (dateStr: string) => {
     const [d, m, y] = dateStr.split("/");
     return `${parseInt(d)}/${parseInt(m)}/${y}`;
@@ -84,11 +75,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId, userType, onLogout })
     setSelectedDate(date);
   };
 
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>{error}</div>;
+
   return (
     <div
-      className={`min-h-screen ${
-        darkMode ? "dark bg-gray-900" : "bg-gray-100"
-      }`}
+      // className={`min-h-screen ${
+      //   darkMode ? "dark bg-gray-900" : "bg-gray-100"
+      // }`}
     >
       {/* Header */}
       <Header
@@ -101,9 +96,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId, userType, onLogout })
       <div className="max-w-4xl mx-auto pt-5 px-6 mt-14 space-y-4">
         {/* Calendar */}
         <div
-          className={`p-4 rounded-2xl shadow-lg transition-colors duration-300 ${
-            darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-          }`}
+          // className={`p-4 rounded-2xl shadow-lg transition-colors duration-300 ${
+          //   darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+          // }`}
         >
           <div className="flex justify-between items-center">
 
@@ -138,9 +133,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId, userType, onLogout })
         {selectedEvent && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div
-              className={`p-6 rounded-2xl shadow-lg max-w-md w-full ${
-                darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
-              }`}
+              // className={`p-6 rounded-2xl shadow-lg max-w-md w-full ${
+              //   darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+              // }`}
             >
               <h3 className="text-xl font-bold mb-4">{selectedEvent?.title}</h3>
               <p>

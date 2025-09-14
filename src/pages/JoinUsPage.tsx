@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 import {
-  skillOptions,
   roles,
   experienceLevels,
   basicConditions,
@@ -44,8 +43,8 @@ interface JoinUsPageProps {
 const JoinUsPage: React.FC<JoinUsPageProps> = (props) => {
   const context = useAppContext();
 
-  const darkMode = props.darkMode ?? context.darkMode;
-  const toggleDarkMode = props.toggleDarkMode ?? context.toggleDarkMode;
+  // const darkMode = props.darkMode ?? context.darkMode;
+
   const mobileMenuOpen = props.mobileMenuOpen ?? context.mobileMenuOpen;
   
   const toggleMobileMenu =
@@ -197,14 +196,12 @@ const [formData, setFormData] = useState<TeamMember>({
     return basicConditions[selectedLevel as keyof typeof basicConditions] || [];
   };
 
-  const currentSkills =
-    skillOptions[selectedRole as keyof typeof skillOptions] || [];
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
-        darkMode ? "dark" : ""
-      }`}
+      // className={`min-h-screen transition-colors duration-300 ${
+      //   darkMode ? "dark" : ""
+      // }`}
     >
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Header
@@ -234,10 +231,10 @@ const [formData, setFormData] = useState<TeamMember>({
                   <span className="text-white">Join Our Creative Team</span>
                 </h1>
                 <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-                  Whether you're an experienced professional, have moderate
+                  Whether you&apos;re an experienced professional, have moderate
                   experience, or just starting your career, we have
                   opportunities for you. Take our skills test and join
-                  AsanCapture's growing team.
+                  AsanCapture&apos;s growing team.
                 </p>
               </div>
             </div>
@@ -875,7 +872,7 @@ const [formData, setFormData] = useState<TeamMember>({
                         className="text-sm text-gray-700 dark:text-gray-300"
                       >
                         I agree that my submitted work/portfolio may be
-                        showcased on the company’s social media and marketing
+                        showcased on the company&apos;s social media and marketing
                         platforms.
                       </label>
                     </div>
@@ -884,7 +881,7 @@ const [formData, setFormData] = useState<TeamMember>({
                   <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg flex items-center space-x-3 max-w-2xl mx-auto">
                     <CheckCircle className="h-5 w-5 text-green-500" />
                     <span className="text-green-700 dark:text-green-300">
-                      Thank you for your application! We'll contact you within
+                      Thank you for your application! We&apos;ll contact you within
                       24 hours to schedule your skills test.
                     </span>
                   </div>

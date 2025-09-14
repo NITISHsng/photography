@@ -1,10 +1,10 @@
 import React from "react";
-
+import Image from "next/image";
 import {
-  Camera,
-  Video,
-  Edit,
-  FileText,
+  // Camera,
+  // Video,
+  // Edit,
+  // FileText,
 } from "lucide-react";
 const ourServices = [ 
   { label: "Wedding", imageUrl: "/homeImages/l13.webp" },
@@ -19,82 +19,15 @@ const ourServices = [
 
 
 const Services: React.FC = () => {
-  const services = [
-    {
-      icon: FileText,
-      title: "Production Contracts",
-      description:
-        "We currently provide full-service contracts for weddings, private parties, and small programs — with a goal to expand into all types of event productions.",
-      features: [
-        "Wedding Productions",
-        "Pre-Wedding Shoots",
-        "Engagement Ceremony",
-        "Birthday Parties",
-        "Outdoor Wedding (Photo & Video)",
-        "Rice Ceremony Photography / Annoprashan",
-        "Engagements & Anniversaries",
 
-      ],
-      color: "from-green-500 to-green-600",
-      buttonText: "Book Event",
-    },
-    {
-      icon: Camera,
-      title: "Cameraman (coming soon)",
-      description:
-        "We plan to offer skilled videographers and photographers for weddings, parties, corporate events, and creative productions of all kinds.",
-      features: [
-        "Weddings & Functions",
-        "Birthday Parties",
-        "Music Videos",
-        "Commercial Shoots",
-        "Documentaries",
-        "Corporate Events",
-      ],
-      color: "from-blue-500 to-blue-600",
-      buttonText: "Book Cameraman",
-    },
-    {
-      icon: Video,
-      title: "Camera & Equipment Rental (coming soon)",
-      description:
-        "We aim to provide high-quality camera gear for creators, agencies, and freelancers — affordable and fully equipped.",
-      features: [
-        "4K Cameras (Cinema, DSLR)",
-        "Lenses, Gimbals, Tripods",
-        "Lighting & Audio Kits",
-        "Complete Shooting Setups",
-      ],
-      color: "from-purple-500 to-purple-600",
-      buttonText: "Rent Equipment",
-    },
-    {
-      icon: Edit,
-      title: "Video Editing (coming soon)",
-      description:
-        "We’re working to offer expert video editing for events, brands, and creators — from highlights to high-end production.",
-      features: [
-        "Wedding & Event Editing",
-        "Birthday & Family Edits",
-        "Music Video Editing",
-        "Promo & Social Media Videos",
-        "Color Grading, VFX & Sound",
-      ],
-      color: "from-pink-500 to-pink-600",
-      buttonText: "Hire Editor",
-    },
-  ];
+  // const scrollToContact = () => {
+  //   const element = document.getElementById("contact");
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
-
-
-
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+  
   return (
     <section
       id="services"
@@ -170,11 +103,21 @@ const Services: React.FC = () => {
       {ourServices.map((service, index) => (
         <div
           key={index}
-          className="bg-white relative rounded-2xl pb-[40px] shadow-md hover:shadow-xl transition overflow-hidden dark:bg-gray-600 border-2 dark:border-gray-600"
+          className="bg-white relative rounded-2xl pb-[40px] shadow-md hover:shadow-xl transition overflow-hidden dark:bg-gray-600  dark:border-gray-600"
         >
-          <div className="relative h-full">
-           <img src={service.imageUrl} alt="" className="h-full max-h-[360px] w-full" /> 
-          </div>
+
+<div className="relative h-full max-h-[360px] w-full">
+  <Image
+    src={service.imageUrl}
+    alt=""
+    height={500}
+    width={400}
+    className="object-cover"
+  />
+  {/* <img src={service.imageUrl} className="h-full w-full" alt="" /> */}
+</div>
+
+
           <div className="absolute flex justify-center w-[100%] text-center items-center mt-2">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{service.label}</h3>
           </div>

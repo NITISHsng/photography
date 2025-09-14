@@ -1,36 +1,18 @@
 "use Client";
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 // import zod
 import { BookingData } from "@/contexts/fromType";
 import { EventTimeSlot } from "@/contexts/fromType";
 import { PersonRole } from "@/contexts/fromType";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { calculateDuration } from "@/contexts/fromType";
-interface PostOffice {
-  Name: string;
-  Description: string | null;
-  BranchType: string;
-  DeliveryStatus: string;
-  Circle: string;
-  District: string;
-  Division: string;
-  Region: string;
-  Block: string;
-  State: string;
-  Country: string;
-  Pincode: string;
-}
+import { areaType } from "@/contexts/fromType";
 
-interface AreaDetail {
-  Message: string;
-  Status: string;
-  PostOffice: PostOffice[];
-}
 
 interface BasicDetailsProps {
   bookingData: BookingData;
   setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
-  areaDetails: AreaDetail[];
+  areaDetails: areaType[] | null;
 }
 
 const BasicDetails: React.FC<BasicDetailsProps> = ({
@@ -66,8 +48,6 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     });
   };
 
-  // set client location rural , urban
-  const [area, setArea] = useState("");
 
   useEffect(() => {
     if (areaDetails?.[0]?.Message) {
@@ -76,7 +56,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
   }, [areaDetails]);
 
 
-  const handleEventTimeChange = (
+  const handleEventTimeChange =async (
     index: number,
     field: keyof EventTimeSlot,
     value: string
@@ -96,9 +76,18 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         },
       };
     });
+
+  const res=await fetch("/api/hiring", {
+      method: "POST",
+      body: JSON.stringify({ warmup: true }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    console.log(data);
+
   };
 
-  const addEventTimeBlock = () => {
+  const addEventTimeBlock = async () => {
     setBookingData((prev) => ({
       ...prev,
       details: {
@@ -109,6 +98,8 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         ],
       },
     }));
+
+    
   };
 
   const removeEventTimeBlock = (index: number) => {
@@ -141,37 +132,38 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   };
 
-  const generateInput = ({
-    htmlFor,
-    label,
-    type,
-    id,
-    value,
-    required,
-    placeholder,
-    handleInputChange,
-  }: GenerateInputProps): JSX.Element => {
-    return (
-      <div>
-        <label
-          htmlFor={htmlFor}
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >
-          {label} {required && "*"}
-        </label>
-        <input
-          type={type}
-          id={id}
-          name={id}
-          value={value}
-          onChange={handleInputChange}
-          required={required}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
-          placeholder={placeholder}
-        />
-      </div>
-    );
-  };
+
+const generateInput = ({
+  htmlFor,
+  label,
+  type,
+  id,
+  value,
+  required,
+  placeholder,
+  handleInputChange,
+}: GenerateInputProps): React.ReactElement => {
+  return (
+    <div>
+      <label
+        htmlFor={htmlFor}
+        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+      >
+        {label} {required && "*"}
+      </label>
+      <input
+        type={type}
+        id={id}
+        name={id}
+        value={value}
+        onChange={handleInputChange}
+        required={required}
+        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
+        placeholder={placeholder}
+      />
+    </div>
+  );
+};
 
   const handlePersonChange = (
     eventName: string,

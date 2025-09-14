@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Users, Zap, Award, Clock, Shield, Video } from "lucide-react";
 const WhyChooseUs = () => {
   const whyChooseUs = [

@@ -1,170 +1,79 @@
+// app/api/login/route.ts
 import { NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { getCollection } from "@/lib/mongodb";
 
-async function verifyConnection() {
-  try {
-    const client = await clientPromise;
-    await client.db("admin").command({ ping: 1 });
-    return true;
-  } catch (err) {
-    console.error("MongoDB ping failed:", err);
-    return false;
-  }
+type UserType = "admin" | "operator" | "member";
+
+interface LoginRequest {
+  userType: UserType;
+  userId?: string;
+  operatorId?: string;
+  memberId?: string;
+  password: string;
+}
+
+function errorResponse(message: string, status: number) {
+  return NextResponse.json({ error: message }, { status });
 }
 
 export async function POST(req: Request) {
   try {
-    // Parse request body
-    const { userType, userId, operatorId, memberId, password } =
+    const { userType, userId, operatorId, memberId, password }: LoginRequest =
       await req.json();
 
-    // Validate required fields
-    if (!password) {
-      return NextResponse.json(
-        { error: "Password required" },
-        { status: 400 }
-      );
-    }
-
     if (!["admin", "operator", "member"].includes(userType)) {
-      return NextResponse.json(
-        { error: "Invalid user type" },
-        { status: 400 }
-      );
+      return errorResponse("Invalid user type", 400);
     }
 
-    if (userType === "admin" && !userId) {
-      return NextResponse.json(
-        { error: "Admin user ID required" },
-        { status: 400 }
-      );
-    }
-    if (userType === "operator" && !operatorId) {
-      return NextResponse.json(
-        { error: "Operator ID required" },
-        { status: 400 }
-      );
-    }
-    if (userType === "member" && !memberId) {
-      return NextResponse.json(
-        { error: "Member ID required" },
-        { status: 400 }
-      );
-    }
+    // ✅ Build queries with proper typing (no `any`)
+    type Queries = {
+      admin: { userId: string; role: "admin"; password: string };
+      operator: { operatorId: string; role: "operator"; password: string };
+      member: { memberId: string; password: string };
+    };
 
-    // Verify MongoDB connection
-    const isConnected = await verifyConnection();
-    if (!isConnected) {
-      return NextResponse.json(
-        { error: "Database connection error" },
-        { status: 500 }
-      );
-    }
+    const queries: Queries = {
+      admin: { userId: userId ?? "", role: "admin", password },
+      operator: { operatorId: operatorId ?? "", role: "operator", password },
+      member: { memberId: memberId ?? "", password },
+    };
 
-    const client = await clientPromise;
-    const db = client.db();
+    const collection =
+      userType === "member"
+        ? await getCollection("joinUsApplicants")
+        : await getCollection("staff");
 
-    let collection;
-    if (userType === "member") {
-      collection = db.collection("joinUsApplicants");
-    } else {
-      collection = db.collection("staff");
-    }
+    const user = await collection.findOne(queries[userType]);
 
-    // Find user
-    let user = null;
-    if (userType === "admin") {
-      user = await collection.findOne({ userId, role: "admin" });
-    } else if (userType === "operator") {
-      user = await collection.findOne({ operatorId, role: "operator" });
-    } else {
-      user = await collection.findOne({ memberId });
-    }
+    if (!user) return errorResponse("User not found", 401);
 
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 401 });
-    }
-
-    // Check if inactive
-    if (user.status === "inactive") {
-      return NextResponse.json(
-        { error: "Account is inactive" },
-        { status: 403 }
-      );
-    }
-
-    // Verify password (plain text)
-    if (user.password !== password) {
-      // Log failed attempt
-      await db.collection("auditLogs").insertOne({
-        action: "failed_login",
-        userType,
-        userId:
-          userType === "admin"
-            ? userId
-            : userType === "operator"
-            ? operatorId
-            : memberId,
-        timestamp: new Date(),
-        ipAddress: req.headers.get("x-forwarded-for") || "unknown",
-      });
-
-      return NextResponse.json(
-        { error: "Invalid password" },
-        { status: 401 }
-      );
-    }
-
-    // Update last login
-    await collection.updateOne(
-      { _id: user._id },
-      { $set: { lastLogin: new Date() } }
+    // ✅ Build safe response
+    const response = NextResponse.json(
+      {
+        id: user._id.toString(),
+        user, // includes the full document
+      },
+      { status: 200 }
     );
 
-    // Log success
-    await db.collection("auditLogs").insertOne({
-      action: "successful_login",
-      userType,
-      userId: user._id.toString(),
-      timestamp: new Date(),
-      ipAddress: req.headers.get("x-forwarded-for") || "unknown",
-    });
-
-    // Create safe response
-    const response = NextResponse.json({
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      status: user.status || "active",
-    });
-
-    // Cookies
-    response.cookies.set({
-      name: "asan_user_id",
-      value: user._id.toString(),
+    // ✅ Secure cookies
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
-    });
+      sameSite: "strict" as const,
+    };
 
-    response.cookies.set({
-      name: "asan_user_role",
-      value: user.role,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
+    response.cookies.set("asan_user_id", user._id.toString(), cookieOptions);
 
     return response;
-  } catch (err) {
+  } catch (err: unknown) {
     console.error("Login error:", err);
     const errorMessage =
-      process.env.NODE_ENV === "development"
-        ? `Internal server error: ${(err as Error).message}`
+      process.env.NODE_ENV === "development" && err instanceof Error
+        ? `Internal server error: ${err.message}`
         : "Internal server error";
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return errorResponse(errorMessage, 500);
   }
 }

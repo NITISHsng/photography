@@ -10,6 +10,17 @@ export type PersonRole = {
   name: string;
 };
 
+export interface UserType {
+  _id: string;             
+  userId: string;
+  operatorId?: string;     
+  memberId?: string;      
+  name: string;
+  email: string;
+  role: "admin" | "operator" | "member";
+  password: string;      
+  lastLogin: string;      
+}
 export type AssignedTeam = {
   name: string;
   role: string;
@@ -187,6 +198,7 @@ export type MemberEvent = {
   contact: string;
 };
 
+
 // Main form data type
 export type TeamMember = {
   id: string;
@@ -221,6 +233,26 @@ export type TeamMember = {
 };
 
 
+export interface PostOffice {
+  Name: string;
+  Description: string | null;
+  BranchType: string;
+  DeliveryStatus: string;
+  Circle: string;
+  District: string;
+  Division: string;
+  Region: string;
+  Block: string;
+  State: string;
+  Country: string;
+  Pincode: string;
+}
+
+export interface areaType {
+  Message: string;
+  Status: string;
+  PostOffice: PostOffice[];
+}
 
 
 

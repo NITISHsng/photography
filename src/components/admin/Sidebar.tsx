@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { 
-  LayoutDashboard, Users, BarChart3, Package, UserCheck, Menu, X, 
-  Calendar, ChevronLeft, Settings, UserPlus
+  LayoutDashboard, Users, BarChart3, Package, UserCheck, Menu, 
+  Calendar, ChevronLeft, Settings, 
 } from 'lucide-react'
 
 interface SidebarProps {

@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
 import { 
-  Package, Search, Filter, Plus, Eye, Edit, Trash2, 
+  Package, Search, Filter, Plus, Eye, Edit,
   Camera, Video, Mic, Lightbulb, Settings, MapPin,
-  Star, Clock, DollarSign, TrendingUp, CheckCircle, X, History
+  Star, DollarSign, TrendingUp, X, History
 } from 'lucide-react';
-
+import Image from "next/image";
+export interface EquipmentPartner {
+  id: string;
+  name: string;
+  owner: string;
+  phone: string;
+  email: string;
+  location: string;
+  pincode: string;
+  status: 'active' | 'inactive' | string;
+  rating: number;
+  totalEquipment: number;
+  categories: string[];
+  monthlyRevenue: number;
+  joinDate: string;      // could also use Date if you parse it
+  lastRental: string;    // could also use Date
+  avatar: string;
+}
 const EquipmentPartner: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -12,7 +29,7 @@ const EquipmentPartner: React.FC = () => {
   const [locationFilter, setLocationFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPartner, setSelectedPartner] = useState<any>(null);
+  const [selectedPartner, setSelectedPartner] = useState<EquipmentPartner | null > (null);
 
   // Mock equipment partners data
   const equipmentPartners = [
@@ -132,7 +149,7 @@ const EquipmentPartner: React.FC = () => {
     setShowAddModal(true);
   };
 
-  const handleAddPayment = (partner: any) => {
+  const handleAddPayment = (partner: EquipmentPartner) => {
     setSelectedPartner(partner);
     setShowPaymentModal(true);
   };
@@ -288,7 +305,9 @@ const EquipmentPartner: React.FC = () => {
             {/* Partner Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <img
+                <Image
+                  height={48}
+                  width={48}
                   src={partner.avatar}
                   alt={partner.owner}
                   className="w-12 h-12 rounded-full object-cover border-2 border-orange-200 dark:border-orange-700"

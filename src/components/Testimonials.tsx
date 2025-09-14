@@ -1,81 +1,73 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Star,
-  Quote,
-  ChevronLeft,
-  ChevronRight,
-  Play,
-  Award,
-} from "lucide-react";
+import { Star, Quote, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import Image from "next/image";
 
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-const testimonials = [
-  {
-    name: "Vikram Paul",
-    role: "Wedding Couple",
-    content:
-      "আসানক্যাপচার আমাদের বিয়ের দিনটিকে স্বপ্নময় করে তুলেছিল! তারা প্রতিটি মুহূর্ত অসাধারণভাবে ধারণ করেছে। ভিডিওটি দেখে চোখে জল এসে যায়।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Wedding Videography",
-  },
-  {
-    name: "Rohan Singha",
-    role: "Marketing Director",
-    content:
-      "আমাদের প্রোডাক্ট লঞ্চ ভিডিওটি অসাধারণ হয়েছে! তাদের কাজের মান ছিল দারুণ এবং তারা পুরোপুরি আমাদের ধারণা বাস্তবায়ন করেছে। বিক্রি 4০% বেড়েছে।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Commercial Production",
-  },
-  {
-    name: "Ananya Paul",
-    role: "Event Coordinator",
-    content:
-      "আমরা একাধিক কর্পোরেট ইভেন্টে তাদের সাথে কাজ করেছি। প্রতিবারই তারা আমাদের প্রত্যাশা ছাড়িয়ে গেছে। তাদের পেশাদারিত্ব প্রশংসনীয়।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Corporate Events",
-  },
-  {
-    name: "Aarav Roy",
-    role: "Music Producer",
-    content:
-      "তাদের তৈরি করা মিউজিক ভিডিওটি চমৎকার হয়েছে! সৃজনশীলতা ও দক্ষতায় ভরা কাজটি খুব দ্রুত ভাইরাল হয়ে যায়।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Music Video",
-  },
-  {
-    name: "Sneha Singha",
-    role: "Restaurant Owner",
-    content:
-      "আমাদের রেস্টুরেন্টের প্রোমো ভিডিওটি দারুণভাবে পরিবেশ ও খাবারের সৌন্দর্য তুলে ধরেছে। বুকিং 36% বৃদ্ধি পেয়েছে।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Promotional Video",
-  },
-  {
-    name: "Priya Roy",
-    role: "Documentary Filmmaker",
-    content:
-      "আসানক্যাপচারের সঙ্গে ডকুমেন্টারি বানাতে দারুণ অভিজ্ঞতা হয়েছে। তাদের প্রযুক্তিগত দক্ষতা আমাদের কাজকে উৎসবে পুরস্কৃত করেছে।",
-    rating: 5,
-    image:
-      "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
-    project: "Documentary",
-  },
-];
-
-
+  const testimonials = [
+    {
+      name: "Vikram Paul",
+      role: "Wedding Couple",
+      content:
+        "আসানক্যাপচার আমাদের বিয়ের দিনটিকে স্বপ্নময় করে তুলেছিল! তারা প্রতিটি মুহূর্ত অসাধারণভাবে ধারণ করেছে। ভিডিওটি দেখে চোখে জল এসে যায়।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Wedding Videography",
+    },
+    {
+      name: "Rohan Singha",
+      role: "Marketing Director",
+      content:
+        "আমাদের প্রোডাক্ট লঞ্চ ভিডিওটি অসাধারণ হয়েছে! তাদের কাজের মান ছিল দারুণ এবং তারা পুরোপুরি আমাদের ধারণা বাস্তবায়ন করেছে। বিক্রি 4০% বেড়েছে।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Commercial Production",
+    },
+    {
+      name: "Ananya Paul",
+      role: "Event Coordinator",
+      content:
+        "আমরা একাধিক কর্পোরেট ইভেন্টে তাদের সাথে কাজ করেছি। প্রতিবারই তারা আমাদের প্রত্যাশা ছাড়িয়ে গেছে। তাদের পেশাদারিত্ব প্রশংসনীয়।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Corporate Events",
+    },
+    {
+      name: "Aarav Roy",
+      role: "Music Producer",
+      content:
+        "তাদের তৈরি করা মিউজিক ভিডিওটি চমৎকার হয়েছে! সৃজনশীলতা ও দক্ষতায় ভরা কাজটি খুব দ্রুত ভাইরাল হয়ে যায়।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Music Video",
+    },
+    {
+      name: "Sneha Singha",
+      role: "Restaurant Owner",
+      content:
+        "আমাদের রেস্টুরেন্টের প্রোমো ভিডিওটি দারুণভাবে পরিবেশ ও খাবারের সৌন্দর্য তুলে ধরেছে। বুকিং 36% বৃদ্ধি পেয়েছে।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Promotional Video",
+    },
+    {
+      name: "Priya Roy",
+      role: "Documentary Filmmaker",
+      content:
+        "আসানক্যাপচারের সঙ্গে ডকুমেন্টারি বানাতে দারুণ অভিজ্ঞতা হয়েছে। তাদের প্রযুক্তিগত দক্ষতা আমাদের কাজকে উৎসবে পুরস্কৃত করেছে।",
+      rating: 5,
+      image:
+        "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      project: "Documentary",
+    },
+  ];
 
   const stats = [
     {
@@ -138,10 +130,15 @@ const testimonials = [
     scrollToIndex(prevIndex);
   };
 
-  useEffect(() => {
-    const timer = setInterval(nextTestimonial, 5000);
-    return () => clearInterval(timer);
-  }, [currentIndex]);
+useEffect(() => {
+  const timer = setInterval(() => {
+    const nextIndex = (currentIndex + 1) % testimonials.length;
+    scrollToIndex(nextIndex);
+  }, 5000);
+
+  return () => clearInterval(timer);
+}, [currentIndex, testimonials.length]);
+
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -173,8 +170,8 @@ const testimonials = [
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our satisfied clients
-            have to say about their experience with AsanCapture.
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied
+            clients have to say about their experience with AsanCapture.
           </p>
         </div>
 
@@ -228,16 +225,20 @@ const testimonials = [
 
                 {/* Content */}
                 <blockquote className="text-lg font-medium text-gray-800 dark:text-white mb-6 leading-relaxed">
-                  "{testimonial.content}"
+                  {'"' + testimonial.content + '"'}
                 </blockquote>
 
                 {/* Author */}
+
                 <div className="flex items-center space-x-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white dark:border-gray-600"
-                  />
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
                     <div className="font-bold text-gray-800 dark:text-white">
                       {testimonial.name}
@@ -245,10 +246,6 @@ const testimonials = [
                     <div className="text-gray-600 dark:text-gray-300 text-sm">
                       {testimonial.role}
                     </div>
-                    
-                    {/* <div className="text-gray-500 dark:text-gray-400 text-xs">
-                      {testimonial.company}
-                    </div> */}
                   </div>
                 </div>
               </div>

@@ -1,31 +1,47 @@
-import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
-const uri = process.env.MONGODB_URI!;
-const client = new MongoClient(uri);
+import { NextResponse } from "next/server";
+import { getCollection } from "@/lib/mongodb";
+import clientPromise from "@/lib/mongodb";
 
-export async function POST(request: Request) {
-
+export async function POST(req: Request) {
   try {
-    const body = await request.json();
+    const body = await req.json();
 
-    if (!body.name || !body.email || !body.service || !body.phone) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    // ✅ Handle warmup requests
+    if (body.warmup) {
+      if (!clientPromise) {
+        await getCollection("contactMessages");
+      }
+      return NextResponse.json({ success: true, warmedUp: true });
     }
 
-    await client.connect();
-    const db = client.db();
-    const collection = db.collection('contactMessages');
+    // ✅ Validate user input
+    if (!body.name || !body.email || !body.service || !body.phone) {
+      return NextResponse.json(
+        { success: false, error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
 
+    // ✅ Insert user message
+    const collection = await getCollection("contactMessages");
     const result = await collection.insertOne({
       ...body,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
 
-    return NextResponse.json({ message: 'Message received', id: result.insertedId }, { status: 201 });
-  } catch (err) {
-    console.error('Error saving contact message:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  } finally {
-    await client.close();
+    return NextResponse.json({ success: true, id: result.insertedId });
+  } catch (error: unknown) {
+    console.error("Error in api:", error);
+
+    // safely handle unknown error type
+    let message = "Internal server error";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+
+    return NextResponse.json(
+      { success: false, error: message },
+      { status: 500 }
+    );
   }
 }

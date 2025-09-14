@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import ProfilePage from "@/pages/ProfilePage";
-import { AppProvider } from "@/contexts/AppContext";
 import LoginPage from "@/pages/LoginPage";
 
 export default function Profile() {
@@ -28,11 +27,6 @@ const [userType, setUserType] = useState<UserType>("member");
     setUserType(type);
     setUserId(id);
     setIsLoggedIn(true);
-
-    localStorage.setItem(
-      "asan_user_data",
-      JSON.stringify({ userType: type, userId: id })
-    );
   };
 
   // ✅ Logout clears everything
@@ -40,21 +34,21 @@ const [userType, setUserType] = useState<UserType>("member");
     setIsLoggedIn(false);
     setUserType("member");
     setUserId(null);
-    localStorage.removeItem("asan_user_data");
+    localStorage.clear();
   };
 
   if (!isLoggedIn) {
     return (
-      <AppProvider>
+      <div>
         <LoginPage onLogin={handleLogin} />
-      </AppProvider>
+      </div>
+
     );
   }
 
   return (
-    <AppProvider>
-      {/* ✅ Pass userId as a prop */}
-      <ProfilePage userId={userId!} userType={userType} onLogout={handleLogout} />
-    </AppProvider>
+    <div>
+        <ProfilePage userId={userId!} userType={userType} onLogout={handleLogout} />
+    </div>
   );
 }

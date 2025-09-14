@@ -1,75 +1,56 @@
-'use client'
+// components/ThemeToggle.tsx
+"use client";
 
-import React from 'react'
-import { useAppContext } from '@/contexts/AppContext'
-import { Moon, Sun, Monitor } from 'lucide-react'
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { Sun, Moon, Laptop } from "lucide-react";
 
-interface ThemeToggleProps {
-  className?: string
-  showLabel?: boolean
-  theme?: 'light' | 'dark' | 'system'
-  setTheme?: (theme: 'light' | 'dark' | 'system') => void
-}
+export default function ThemeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-const ThemeToggle: React.FC<ThemeToggleProps> = ({ 
-  className = '',
-  showLabel = false,
-  theme: propTheme,
-  setTheme: propSetTheme
-}) => {
-  // Try to use props first, then fall back to context
-  let theme: 'light' | 'dark' | 'system' = 'system';
-  let setTheme: (theme: 'light' | 'dark' | 'system') => void = () => {};
-  
-  try {
-    const context = useAppContext();
-    theme = propTheme || context.theme;
-    setTheme = propSetTheme || context.setTheme;
-  } catch (error) {
-    // If context is not available, use props or defaults
-    theme = propTheme || 'system';
-    setTheme = propSetTheme || (() => {});
-  }
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
-  const handleThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
-    setTheme(newTheme)
-  }
+  const current = theme === "system" ? resolvedTheme : theme;
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {showLabel && (
-        <span className="text-sm font-medium mr-2 text-gray-700 dark:text-gray-300">
-          Theme:
-        </span>
-      )}
-      <div className="relative inline-flex gap-2 p-1 rounded-lg bg-gray-100 dark:bg-gray-800 shadow-inner">
-        <button
-          onClick={() => handleThemeChange('light')}
-          className={`p-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${theme === 'light' ? 'bg-white text-yellow-500 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-          aria-label="Light mode"
-          aria-pressed={theme === 'light'}
-        >
-          <Sun className="h-4 w-4" />
-        </button>
-        <button
-          onClick={() => handleThemeChange('dark')}
-          className={`p-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${theme === 'dark' ? 'bg-gray-700 text-blue-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-          aria-label="Dark mode"
-          aria-pressed={theme === 'dark'}
-        >
-          <Moon className="h-4 w-4" />
-        </button>
-        <button
-          onClick={() => handleThemeChange('system')}
-          className={`p-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${theme === 'system' ? 'bg-white dark:bg-gray-700 text-purple-500 dark:text-purple-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-          aria-label="System preference"
-          aria-pressed={theme === 'system'}
-        >
-          <Monitor className="h-4 w-4" />
-        </button>
-      </div>
-    </div>
-  )
-}
+    <div className="flex gap-2 items-center">
+      <button
+        onClick={() => setTheme("light")}
+        aria-pressed={current === "light"}
+        className={`p-2 rounded-xl ${
+          current === "light"
+            ? "bg-gray-300 dark:bg-gray-600"
+            : "bg-gray-200 dark:bg-gray-700"
+        }`}
+      >
+        <Sun className="w-5 h-5 text-yellow-500" />
+      </button>
 
-export default ThemeToggle
+      <button
+        onClick={() => setTheme("dark")}
+        aria-pressed={current === "dark"}
+        className={`p-2 rounded-xl ${
+          current === "dark"
+            ? "bg-gray-300 dark:bg-gray-600"
+            : "bg-gray-200 dark:bg-gray-700"
+        }`}
+      >
+        <Moon className="w-5 h-5 text-blue-500" />
+      </button>
+
+      <button
+        onClick={() => setTheme("system")}
+        aria-pressed={theme === "system"}
+        className={`p-2 rounded-xl ${
+          theme === "system"
+            ? "bg-gray-300 dark:bg-gray-600"
+            : "bg-gray-200 dark:bg-gray-700"
+        }`}
+      >
+        <Laptop className="w-5 h-5 text-gray-500 dark:text-gray-300" />
+      </button>
+    </div>
+  );
+}

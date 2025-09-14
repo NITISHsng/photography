@@ -19,7 +19,6 @@ const PriceCalculate = ({ localBooking }: Props) => {
 const calculateServicePrice = (bookingData: BookingData) => {
   let baseServiceCost = 0;
   let additionalCosts = 0;
-  let durationMultiplier = 1;
   let videoDurationAmount = 0;
   let daysAndEventDueration = 0;
   // Sum prices of all selected services
@@ -112,7 +111,7 @@ const calculateServicePrice = (bookingData: BookingData) => {
 
   if (totalDuration > 5) {
     const extraHours = (totalDuration - 5) * 200;
-    const { mrp, discount, finalPrice } = PriceHandeler(
+    const {finalPrice } = PriceHandeler(
       extraHours,
       0,
       bookingData.details.package,
@@ -129,7 +128,7 @@ const calculateServicePrice = (bookingData: BookingData) => {
 
   if (slotCount > 1) {
     const eachSlot = (slotCount - 1) * 1000;
-    const { mrp, discount, finalPrice } = PriceHandeler(
+    const { finalPrice } = PriceHandeler(
       eachSlot,
       0,
       bookingData.details.package,
@@ -144,7 +143,6 @@ const calculateServicePrice = (bookingData: BookingData) => {
   return {
     baseServiceCost,
     additionalCosts,
-    durationMultiplier,
     totalDuration,
     totalAmount,
     videoDurationAmount,

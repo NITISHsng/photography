@@ -7,7 +7,6 @@ import {
   Camera,
   Heart,
   Trophy,
-  Star,
   Target,
   Zap,
 } from "lucide-react";
@@ -76,13 +75,6 @@ const About: React.FC = () => {
       id="about"
       className="py-6 md:py-10 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden"
     >
-      {/* Background decoration */}
-      {/* <div className="absolute inset-0 opacity-5 dark:opacity-3">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500 rounded-full blur-3xl"></div>
-      </div> */}
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
@@ -93,7 +85,7 @@ const About: React.FC = () => {
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             With over 5 years of experience in the video production industry,
-            we've built a reputation for delivering exceptional visual
+            we&apos;ve built a reputation for delivering exceptional visual
             storytelling that captures hearts and minds.
           </p>
         </div>
@@ -179,7 +171,7 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Content - Visual Element */}
+          {/* Right Content */}
           <div className="relative hidden md:block">
             <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1 rounded-3xl shadow-2xl">
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 h-full">

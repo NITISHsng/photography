@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { BookingData } from "@/contexts/fromType";
 import { useAppContext } from "@/contexts/AppContext";
 import { serviceOptions } from "@/contexts/fromData";
-import ThemeToggle from "@/components/ThemeToggle";
-// import { updateClientData } from "../../app/api/hiring/route";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
+import { AssignedTeam } from "@/contexts/fromType";
 import {
   photoPackages,
   albumOptions,
@@ -19,19 +18,10 @@ import {
 } from "@/contexts/fromData";
 import {
   Calendar,
-  Clock,
-  MapPin,
   User,
   Phone,
   Mail,
-  Filter,
-  Search,
-  Eye,
-  Edit,
   Delete,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
   Camera,
   Video,
   Edit3,
@@ -41,18 +31,12 @@ import {
 import Header from "@/components/Header";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 
-interface Props {
-  params: { id: string };
-}
+import { useParams } from 'next/navigation';
 
-const ClientPage: React.FC<Props> = ({ params }) => {
-    const {teamMembers } = useAppContext();
-
-  const { id } = params;
-  const context = useAppContext();
+export default function ClientPage() {
+  const params = useParams();
+  const id = params?.id; 
   const {
-    darkMode,
-    toggleDarkMode,
     mobileMenuOpen,
     setMobileMenuOpen,
     navigateToPage,
@@ -102,20 +86,6 @@ const ClientPage: React.FC<Props> = ({ params }) => {
     { name: "Michael B. Jordan", role: "Editor Assistant", price: 130 },
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
-      case "completed":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
-      case "cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
-    }
-  };
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:
@@ -129,20 +99,7 @@ const ClientPage: React.FC<Props> = ({ params }) => {
     Cancelled:
       "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400",
   };
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return <CheckCircle className="h-4 w-4" />;
-      case "pending":
-        return <AlertCircle className="h-4 w-4" />;
-      case "completed":
-        return <CheckCircle className="h-4 w-4" />;
-      case "cancelled":
-        return <XCircle className="h-4 w-4" />;
-      default:
-        return <AlertCircle className="h-4 w-4" />;
-    }
-  };
+
 
   const getServiceIcon = (service: string) => {
     switch (service) {
@@ -158,39 +115,53 @@ const ClientPage: React.FC<Props> = ({ params }) => {
         return <Calendar className="h-4 w-4" />;
     }
   };
-  const handleChange = (path: string, value: any) => {
-    if (!hiringRequest) return;
-    const updated = { ...hiringRequest };
-    const keys = path.split(".");
-    let obj: any = updated;
-    for (let i = 0; i < keys.length - 1; i++) {
-      obj = obj[keys[i]];
-    }
-    obj[keys[keys.length - 1]] = value;
-    setHiringRequest(updated);
-  };
+const handleChange = (
+  path: string,
+  value: string | number | AssignedTeam[]
+) => {
+  if (!hiringRequest) return;
 
-  const handleSave = async () => {
-    console.log(hiringRequest);
-    if (!hiringRequest) return;
-    try {
-      setSaving(true);
-      const res = await fetch(`/api/hiring?id=${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(hiringRequest),
-      });
-      if (!res.ok) throw new Error("Failed to save");
-      const data = await res.json();
-      console.log("Updated successfully:", data);
-      alert("Saved successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to save");
-    } finally {
-      setSaving(false);
+  const updated = { ...hiringRequest };
+  const keys = path.split(".");
+
+  let obj: Record<string, unknown> = updated;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (typeof obj[key] !== "object" || obj[key] === null) {
+      throw new Error(`Invalid path: ${path}`);
     }
-  };
+    obj = obj[key] as Record<string, unknown>;
+  }
+
+  obj[keys[keys.length - 1]] = value;
+  setHiringRequest(updated);
+};
+
+
+const handleSave = async () => {
+  console.log(hiringRequest);
+  try {
+    setSaving(true);
+    
+    const res = await fetch(`/api/hiring?id=${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: id, ...hiringRequest }), // Combine _id and data
+    });
+    
+    if (!res.ok) throw new Error("Failed to save");
+
+    const data = await res.json();
+    console.log("Updated successfully:", data);
+    alert("Saved successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to save");
+  } finally {
+    setSaving(false);
+  }
+};
+
 
   if (loading) return <div className="p-6">Loading...</div>;
   if (!hiringRequest) return <div className="p-6">Client not found</div>;
@@ -1140,4 +1111,3 @@ const ClientPage: React.FC<Props> = ({ params }) => {
   );
 };
 
-export default ClientPage;

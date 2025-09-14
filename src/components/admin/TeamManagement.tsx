@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { 
-  Search, Filter, UserPlus, Star, MapPin, Phone, Mail, 
-  Calendar, DollarSign, Edit, Plus, Eye, User, Award,
-  Camera, Video, Edit3, Package, TrendingUp, Clock, X
+  Search, Filter, UserPlus, Star, MapPin, Phone, 
+  Calendar,  Edit, Plus, Eye, User,
+  Camera,  Edit3, Package, TrendingUp, Clock, X
 } from 'lucide-react';
-
+import Image from 'next/image';
+import { TeamMember } from '@/contexts/fromType';
 const TeamManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [idFilter, setIdFilter] = useState('');
@@ -13,7 +14,7 @@ const TeamManagement: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedMember, setSelectedMember] = useState<any>(null);
+  const [selectedMember, setSelectedMember] = useState<TeamMember |null >(null);
 
   // Mock team members data
   const teamMembers = [
@@ -135,10 +136,10 @@ const TeamManagement: React.FC = () => {
     setShowAddModal(true);
   };
 
-  const openPaymentModal = (member: any) => {
-    setSelectedMember(member);
-    setShowPaymentModal(true);
-  };
+  // const openPaymentModal = (member: TeamMember) => {
+  //   setSelectedMember(member);
+  //   setShowPaymentModal(true);
+  // };
 
   const handleEditMember = (memberId: string) => {
     const member = teamMembers.find(m => m.id === memberId);
@@ -312,7 +313,9 @@ const TeamManagement: React.FC = () => {
             {/* Member Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <img
+                <Image
+                  height={48}
+                  width={48}         
                   src={member.avatar}
                   alt={member.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-purple-200 dark:border-purple-700"
@@ -391,7 +394,7 @@ const TeamManagement: React.FC = () => {
             {/* Actions */}
             <div className="flex space-x-2">
               <button 
-                onClick={() => openPaymentModal(member)}
+                // onClick={() => openPaymentModal(member)}
                 className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center space-x-1"
               >
                 <Plus className="h-4 w-4" />

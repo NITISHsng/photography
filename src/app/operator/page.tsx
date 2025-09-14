@@ -6,21 +6,13 @@ import LoginPage from '@/pages/LoginPage'
 
 export default function Operator() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userType, setUserType] = useState<'admin' | 'operator' | 'member'>('operator')
-  const [userData, setUserData] = useState<any>(null)
 
-
-
-  const handleLogin = (type: 'admin' | 'operator' | 'member', data: any) => {
-    setUserType(type)
-    setUserData(data)
+  const handleLogin = () => {
     setIsLoggedIn(true)
   }
 
   const handleLogout = () => {
     setIsLoggedIn(false)
-    setUserType('operator')
-    setUserData(null)
     localStorage.clear();
   }
 
@@ -34,8 +26,6 @@ export default function Operator() {
 
   return (
     <OperatorPage 
-      userType={userType}
-      userData={userData}
       onLogout={handleLogout}
     />
   )
