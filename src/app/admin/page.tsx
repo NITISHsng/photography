@@ -1,20 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-
-import AdminPage from '@/pages/AdminPage'
-import LoginPage from '@/pages/LoginPage'
-// import { OperatorUser , AdminUser , MemberUser } from '@/contexts/fromType'
-
-// type User = AdminUser | OperatorUser | MemberUser
+import { AppProvider } from "@/contexts/AppContext";
+import AdminPage from '@/mainComponents/AdminPage'
+import LoginPage from '@/mainComponents/LoginPage'
 
 export default function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userType, setUserType] = useState<'admin' | 'operator' | 'member'>('admin')
-  // const [userData, setUserData] = useState<User | null>(null)
 
-const handleLogin = (type: 'admin' | 'operator' | 'member') => {
-  setUserType(type)
+const handleLogin = () => {
   setIsLoggedIn(true)
 }
 
@@ -28,10 +22,11 @@ const handleLogin = (type: 'admin' | 'operator' | 'member') => {
   }
 
   return (
-    <AdminPage 
-      userType={userType}
-      onLogout={handleLogout}
-    />
+      <AppProvider>
+        <AdminPage 
+          onLogout={handleLogout}
+        />
+      </AppProvider>
   )
 }
 

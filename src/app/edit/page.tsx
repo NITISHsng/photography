@@ -1,8 +1,12 @@
 import React from 'react'
+import { AppProvider } from "@/contexts/AppContext";
 
 const  page = () => {
   return (
-    <div>Edit page</div>
+      <AppProvider>
+
+        <div>Edit page</div>
+      </AppProvider>
   )
 }
 

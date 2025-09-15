@@ -1,8 +1,12 @@
 'use client'
+import { AppProvider } from "@/contexts/AppContext";
 
-import PincodeLookup from '@/pages/PinToLocation'
+import PincodeLookup from '@/mainComponents/PinToLocation'
 export default function JoinUs() {
   return (
-      <PincodeLookup />
+      <AppProvider>
+
+        <PincodeLookup />
+      </AppProvider>
   )
 }

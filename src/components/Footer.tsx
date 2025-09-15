@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { Video, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Heart, Camera, Edit, Users, Award, Clock, Shield } from 'lucide-react';
 

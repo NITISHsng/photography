@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import OperatorPage from '@/pages/OperatorPage'
-import LoginPage from '@/pages/LoginPage'
+import OperatorPage from '@/mainComponents/OperatorPage'
+import LoginPage from '@/mainComponents/LoginPage'
+import { AppProvider } from "@/contexts/AppContext";
 
 export default function Operator() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -25,8 +26,8 @@ export default function Operator() {
   }
 
   return (
-    <OperatorPage 
-      onLogout={handleLogout}
-    />
+    <AppProvider>
+         <OperatorPage  onLogout={handleLogout}/>
+      </AppProvider>
   )
 }

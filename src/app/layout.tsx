@@ -48,6 +48,7 @@
 
 
 
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -66,7 +67,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         <AppProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <Toaster position="top-right" />

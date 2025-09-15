@@ -1,11 +1,15 @@
 'use client'
 
 
-import JoinUsPage from '@/pages/JoinUsPage'
+import JoinUsPage from '@/mainComponents/JoinUsPage'
+import { AppProvider } from "@/contexts/AppContext";
 
 export default function JoinUs() {
   return (
-      <JoinUsPage />
+      <AppProvider>
+
+        <JoinUsPage />
+      </AppProvider>
 
   )
 }

@@ -10,15 +10,12 @@ import Bookings from '@/components/admin/Bookings'
 import TeamManagement from '@/components/admin/TeamManagement'
 import Analysis from '@/components/admin/Analysis'
 import EquipmentPartner from '@/components/admin/EquipmentPartner'
-import Operator from '@/components/admin/Operator'
+// import Operator from '@/components/admin/Operator'
 interface AdminPageProps {
-  userType: 'admin' | 'operator' | 'member'
-  // userData: any
   onLogout: () => void
 }
 
 const AdminPage: React.FC<AdminPageProps> = ({ 
-  userType, 
   onLogout
 }) => {
 
@@ -37,8 +34,8 @@ const AdminPage: React.FC<AdminPageProps> = ({
         return <Analysis />
       case 'equipment':
         return <EquipmentPartner />
-      case 'operator':
-        return userType === 'admin' ? <Operator /> : <Dashboard />
+      // case 'operator':
+        // return userType === 'admin' ? <Operator /> : <Dashboard />
       default:
         return <Dashboard />
     }
@@ -53,7 +50,7 @@ const AdminPage: React.FC<AdminPageProps> = ({
           setSidebarOpen={setSidebarOpen}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          userType={userType}
+          // userType={userType}
         />
 
         {/* Main Content */}

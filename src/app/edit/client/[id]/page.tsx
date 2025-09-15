@@ -1,11 +1,12 @@
-import ClientPage from "@/pages/ClientPage";
+import ClientPage from "@/mainComponents/ClientPage";
+import { AppProvider } from "@/contexts/AppContext";
 
 const page = () => {
   return (
-    <div>
-   <ClientPage/>
-    </div>
-  )
-}
+    <AppProvider>
+      <ClientPage />
+    </AppProvider>
+  );
+};
 
-export default page
+export default page;

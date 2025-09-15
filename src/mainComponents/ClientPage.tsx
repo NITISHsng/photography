@@ -6,7 +6,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { serviceOptions } from "@/contexts/fromData";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
-
+import { AssignedTeam } from "@/contexts/fromType";
 import {
   photoPackages,
   albumOptions,
@@ -22,9 +22,6 @@ import {
   Phone,
   Mail,
   Delete,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
   Camera,
   Video,
   Edit3,
@@ -34,11 +31,11 @@ import {
 import Header from "@/components/Header";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation';
+
 export default function ClientPage() {
   const params = useParams();
-  const id  = params;
-  
+  const id = params?.id; 
   const {
     mobileMenuOpen,
     setMobileMenuOpen,
@@ -89,20 +86,6 @@ export default function ClientPage() {
     { name: "Michael B. Jordan", role: "Editor Assistant", price: 130 },
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
-      case "completed":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
-      case "cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
-    }
-  };
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:
@@ -116,20 +99,7 @@ export default function ClientPage() {
     Cancelled:
       "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400",
   };
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return <CheckCircle className="h-4 w-4" />;
-      case "pending":
-        return <AlertCircle className="h-4 w-4" />;
-      case "completed":
-        return <CheckCircle className="h-4 w-4" />;
-      case "cancelled":
-        return <XCircle className="h-4 w-4" />;
-      default:
-        return <AlertCircle className="h-4 w-4" />;
-    }
-  };
+
 
   const getServiceIcon = (service: string) => {
     switch (service) {
@@ -145,27 +115,29 @@ export default function ClientPage() {
         return <Calendar className="h-4 w-4" />;
     }
   };
-  const handleChange = (path: string, value: any) => {
-    if (!hiringRequest) return;
-    const updated = { ...hiringRequest };
-    const keys = path.split(".");
-    let obj: any = updated;
-    for (let i = 0; i < keys.length - 1; i++) {
-      obj = obj[keys[i]];
+const handleChange = (
+  path: string,
+  value: string | number | AssignedTeam[]
+) => {
+  if (!hiringRequest) return;
+
+  const updated = { ...hiringRequest };
+  const keys = path.split(".");
+
+  let obj: Record<string, unknown> = updated;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (typeof obj[key] !== "object" || obj[key] === null) {
+      throw new Error(`Invalid path: ${path}`);
     }
-    obj[keys[keys.length - 1]] = value;
-    setHiringRequest(updated);
-  };
-type User = {
-  name: string;
-  age: number;
+    obj = obj[key] as Record<string, unknown>;
+  }
+
+  obj[keys[keys.length - 1]] = value;
+  setHiringRequest(updated);
 };
 
-// Original object
-let dataa: User = {
-  name: "Alice",
-  age: 25,
-};
+
 const handleSave = async () => {
   console.log(hiringRequest);
   try {
@@ -1138,6 +1110,4 @@ const handleSave = async () => {
     </div>
   );
 };
-
-
 

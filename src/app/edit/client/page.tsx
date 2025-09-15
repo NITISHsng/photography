@@ -1,20 +1,13 @@
-// import React from 'react'
-// import ClientPage from '@/pages/ClientPage'
-// const page = ({params}: {params: String}) => {
-//   const id = params
-//     return (
-//     <div><ClientPage params={{ id: id as string }}/></div>
-//   )
-// }
 
-// export default page
-
-import React from 'react'
+import React from "react";
+import { AppProvider } from "@/contexts/AppContext";
 
 const page = () => {
   return (
-    <div>client page</div>
-  )
-}
+    <AppProvider>
+      <div>client page</div>
+    </AppProvider>
+  );
+};
 
-export default page
+export default page;

@@ -48,7 +48,7 @@ const OperatorPage: React.FC<OperatorPageProps> = ({
           setSidebarOpen={setSidebarOpen}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          userType="operator" // Force operator type to hide operator management
+          // userType="operator" // Force operator type to hide operator management
         />
 
         {/* Main Content */}

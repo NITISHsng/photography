@@ -1,12 +1,15 @@
 'use client'
+import { AppProvider } from "@/contexts/AppContext";
 
 
-import Gallery from '@/pages/GalleryPage'
+import Gallery from '@/mainComponents/GalleryPage'
 
 export default function Hiring() {
   return (
-
-      <Gallery />
+  <AppProvider>
+    
+    <Gallery />
+  </AppProvider>
 
   )
 }

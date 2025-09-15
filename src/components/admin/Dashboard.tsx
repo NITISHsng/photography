@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/contexts/AppContext";
 import { BookingData, TeamMember } from "@/contexts/fromType";

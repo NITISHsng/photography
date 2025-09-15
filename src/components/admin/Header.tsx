@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { Video,LogOut, Shield, Menu } from 'lucide-react';
 import { useAppContext } from '@/contexts/AppContext';

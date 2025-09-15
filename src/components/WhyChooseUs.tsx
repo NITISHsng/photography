@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { Users, Zap, Award, Clock, Shield, Video } from "lucide-react";
 const WhyChooseUs = () => {

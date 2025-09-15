@@ -3,15 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { Eye, EyeOff, User, Lock, Video, Shield, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { UserType } from "@/contexts/fromType";
 
 interface LoginPageProps {
-  onLogin: (userType: "admin" | "operator" | "member", data: UserType) => void;
+  onLogin: () => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-
-
   const pathname = usePathname();
   const [userType, setUserType] = useState<"admin" | "operator" | "member">(
     pathname?.startsWith("/operator")
@@ -21,30 +18,35 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       : "member"
   );
 
-  useEffect(() => {
-    if (pathname?.startsWith("/admin")) setUserType("admin");
-    else if (pathname?.startsWith("/operator")) setUserType("operator");
-    else setUserType("member");
-    
 
-     const storedUser = localStorage.getItem("userData");
+useEffect(() => {
+  const currentUserType =
+    pathname?.startsWith("/admin")
+      ? "admin"
+      : pathname?.startsWith("/operator")
+      ? "operator"
+      : "member";
+
+  setUserType(currentUserType);
+
+  const storedUser = localStorage.getItem("userData");
   if (!storedUser) return; // ✅ avoid JSON.parse(null) crash
 
   try {
     const { uType, creds } = JSON.parse(storedUser);
 
-    if (uType === userType) {
+    if (uType === currentUserType) {
       // Only re-validate if creds exist
       if (creds?.userId || creds?.operatorId || creds?.memberId) {
-        handleLogin(uType, creds);
+        onLogin(); // ✅ call parent callback instead of undefined handleLogin
       }
     }
   } catch (err) {
     console.error("Failed to parse userData:", err);
     localStorage.removeItem("userData"); // cleanup if data corrupted
   }
-    
-  }, [pathname]);
+}, [pathname, onLogin]); // ✅ dependencies are clean now
+
 
   const [formData, setFormData] = useState({
     userId: "",
@@ -85,7 +87,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       localStorage.setItem("userData", JSON.stringify({ uType, creds, data }));
 
       // Notify parent
-      onLogin(uType, data);
+      onLogin();
 
       setFormData({ userId: "", operatorId: "", memberId: "", password: "" });
     } catch (err) {
