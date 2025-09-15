@@ -14,17 +14,11 @@ interface EventDetail {
   contact: string;
 }
 
-type UserType = "admin" | "operator" | "member";
+// type UserType = "admin" | "operator" | "member";
 
 interface ProfilePageProps {
-  userId: string;
-  userType: UserType;   
-  onLogout: () => void;
-}
-
-
-interface ProfilePageProps {
-  userId: string;
+  // userId: string;
+  // userType: UserType;   
   onLogout: () => void;
 }
 

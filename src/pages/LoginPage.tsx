@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation";
 import { UserType } from "@/contexts/fromType";
 
 interface LoginPageProps {
-  onLogin: (userType: "admin" | "operator" | "member", userData: UserType) => void;
+  onLogin: (userType: "admin" | "operator" | "member", data: UserType) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-  const pathname = usePathname();
 
+
+  const pathname = usePathname();
   const [userType, setUserType] = useState<"admin" | "operator" | "member">(
     pathname?.startsWith("/operator")
       ? "operator"

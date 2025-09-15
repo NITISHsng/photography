@@ -86,6 +86,31 @@ export type BookingData = {
 };
 
 
+export type AdminUser = {
+  id: string
+  name: string
+  email: string
+  role: 'admin'
+}
+
+export type OperatorUser = {
+  id: string
+  operatorId: string
+  name: string
+  email: string
+  role: 'operator'
+}
+
+export type MemberUser = {
+  id: string
+  memberId: string
+  name: string
+  email: string
+  role: 'member'
+}
+
+
+
 
 export type SelectedServices = {
   photography: boolean;

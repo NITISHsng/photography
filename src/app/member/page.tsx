@@ -1,54 +1,33 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import ProfilePage from "@/pages/ProfilePage";
-import LoginPage from "@/pages/LoginPage";
+import { useState } from 'react'
+import ProfilePage from '@/pages/ProfilePage'
+import LoginPage from '@/pages/LoginPage'
+// import { OperatorUser , AdminUser , TeamMember } from '@/contexts/fromType'
 
-export default function Profile() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-type UserType = "admin" | "operator" | "member";
-const [userType, setUserType] = useState<UserType>("member");
+// type User = AdminUser | OperatorUser | TeamMember
 
-  const [userId, setUserId] = useState<string | null>(null);
+export default function Admin() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // const [userType, setUserType] = useState<'admin' | 'operator' | 'member'>('admin')
 
-  // ✅ Load from localStorage on mount
-  useEffect(() => {
-    const savedUser = localStorage.getItem("asan_user_data");
-    if (savedUser) {
-      const parsed = JSON.parse(savedUser);
-      setUserType(parsed.userType);
-      setUserId(parsed.userId);
-      setIsLoggedIn(true);
-    }
-  }, []);
+const handleLogin = () => {
+  // setUserType(type)
+  setIsLoggedIn(true)
+}
 
-  // ✅ Save login info
-  const handleLogin = (type: "admin" | "operator" | "member", id: string) => {
-    setUserType(type);
-    setUserId(id);
-    setIsLoggedIn(true);
-  };
-
-  // ✅ Logout clears everything
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserType("member");
-    setUserId(null);
-    localStorage.clear();
-  };
+    setIsLoggedIn(false)
+    localStorage.clear()
+  }
 
   if (!isLoggedIn) {
-    return (
-      <div>
-        <LoginPage onLogin={handleLogin} />
-      </div>
-
-    );
+    return <LoginPage onLogin={handleLogin} />
   }
 
   return (
     <div>
-        <ProfilePage userId={userId!} userType={userType} onLogout={handleLogout} />
+        <ProfilePage  onLogout={handleLogout} />
     </div>
   );
 }
