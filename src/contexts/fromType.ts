@@ -10,6 +10,14 @@ export type PersonRole = {
   name: string;
 };
 
+  export type headerType= {
+    darkMode?: boolean;
+    toggleDarkMode?: () => void;
+    mobileMenuOpen?: boolean;
+    toggleMobileMenu?: () => void;
+    navigateToPage?: (page: string) => void;
+    currentPage?: string;
+  }
 export interface UserType {
   _id: string;             
   userId: string;

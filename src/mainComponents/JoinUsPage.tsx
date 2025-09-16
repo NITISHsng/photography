@@ -148,6 +148,7 @@ const [formData, setFormData] = useState<TeamMember>({
   };
 
   const getCurrentRequirements = () => {
+    console.log("Getting requirements for:", { selectedLevel, selectedRole });
 
     try {
       switch (selectedLevel) {
@@ -156,6 +157,7 @@ const [formData, setFormData] = useState<TeamMember>({
             experiencedRequirements[
               selectedRole as keyof typeof experiencedRequirements
             ];
+          console.log("Experienced requirements:", experiencedReqs);
           return experiencedReqs || [];
 
         case "moderate":

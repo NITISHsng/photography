@@ -2,33 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  // Camera,
-  // Video,
-  // Edit,
-  // FileText,
-} from "lucide-react";
-const ourServices = [ 
-  { label: "Wedding", imageUrl: "/homeImages/l13.webp" },
-  { label: "Pre-Wedding", imageUrl: "/homeImages/ser1.webp" },
-  { label: "Engagement Ceremony", imageUrl: "/homeImages/l114.webp" },
-  { label: "Outdoor Wedding (Photo & Video)", imageUrl: "/homeImages/outdoor_wedding.webp" },
-  { label: "Baby Photography", imageUrl: "/homeImages/l35.webp" },
-  { label: "Rice Ceremony Photography", imageUrl: "/homeImages/annaprashan.webp" },
-  { label: "Corporate Event", imageUrl: "/homeImages/l41.webp" },
-  { label: "Birthday", imageUrl: "/homeImages/l37.webp" },
-];
+import { ourServices } from "@/contexts/fromData";
 
 
-const Services: React.FC = () => {
 
-  // const scrollToContact = () => {
-  //   const element = document.getElementById("contact");
-  //   if (element) {
-  //     element.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
-
+const Services = () => {
   
   return (
     <section
