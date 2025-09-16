@@ -6,7 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import Header from "@/components/Header";
 import { useAppContext } from "@/contexts/AppContext";
 import { LogOut } from "lucide-react";
-
+// import { headerType } from "@/contexts/fromType";
 interface EventDetail {
   date: string;
   title: string;
@@ -17,8 +17,7 @@ interface EventDetail {
 // type UserType = "admin" | "operator" | "member";
 
 interface ProfilePageProps {
-  // userId: string;
-  // userType: UserType;   
+  
   onLogout: () => void;
 }
 
@@ -28,7 +27,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
   const {
     mobileMenuOpen,
     setMobileMenuOpen,
-    navigateToPage,
     currentPage,
     currentUserData,
   } = useAppContext();
@@ -39,7 +37,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
- console.log(currentUserData)
   const currentUser =currentUserData;
 
   const normalizeDate = (dateStr: string) => {
@@ -75,16 +72,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
       <Header
         mobileMenuOpen={mobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}
-        navigateToPage={navigateToPage}
         currentPage={currentPage}
       />
 
       <div className="max-w-4xl mx-auto pt-5 px-6 mt-14 space-y-4">
         {/* Calendar */}
         <div
-          // className={`p-4 rounded-2xl shadow-lg transition-colors duration-300 ${
-          //   darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-          // }`}
+          // className={p-4 rounded-2xl shadow-lg transition-colors duration-300}
         >
           <div className="flex justify-between items-center">
 
@@ -119,9 +113,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
         {selectedEvent && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div
-              // className={`p-6 rounded-2xl shadow-lg max-w-md w-full ${
-              //   darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
-              // }`}
+              // className={p-6 rounded-2xl shadow-lg max-w-md w-full}
             >
               <h3 className="text-xl font-bold mb-4">{selectedEvent?.title}</h3>
               <p>

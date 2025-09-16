@@ -4,17 +4,10 @@ import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-interface GalleryPageProps {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-  mobileMenuOpen?: boolean;
-  toggleMobileMenu?: () => void;
-  navigateToPage?: (page: string) => void;
-  currentPage?: string;
-}
+import { headerType } from "@/contexts/fromType";
 
-const Gallery: React.FC<GalleryPageProps> = () => {
-  const { mobileMenuOpen, setMobileMenuOpen, navigateToPage, currentPage } =
+const Gallery: React.FC<headerType> = () => {
+  const { mobileMenuOpen, setMobileMenuOpen, currentPage } =
     useAppContext();
 
   const toggleMobileMenu = () => {
@@ -79,7 +72,6 @@ What made Priya and Bipul’s wedding truly unforgettable was its simplicity and
       <Header
         mobileMenuOpen={mobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}
-        navigateToPage={navigateToPage}
         currentPage={currentPage}
       />
 

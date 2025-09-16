@@ -26,35 +26,23 @@ import Services from "@/components/fromComponents/Services";
 import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
 import Lights from "@/components/fromComponents/Lights";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
+import { headerType } from "@/contexts/fromType";
 
 
 
-
-
-interface HiringPageProps {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-  mobileMenuOpen?: boolean;
-  toggleMobileMenu?: () => void;
-  navigateToPage?: (page: string) => void;
-  currentPage?: string;
-}
-const HiringPage: React.FC<HiringPageProps> = () => {
+const HiringPage: React.FC<headerType> = () => {
   const [bookingData, setBookingData] =
     useState<BookingData>(initialBookingData);
   
   const {
     mobileMenuOpen,
     setMobileMenuOpen,
-    navigateToPage,
     currentPage,
   } = useAppContext();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
-
   
 
   const handleBooking = (packageId: string) => {
@@ -257,7 +245,6 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
         <Header
           mobileMenuOpen={mobileMenuOpen}
           toggleMobileMenu={toggleMobileMenu}
-          navigateToPage={navigateToPage}
           currentPage={currentPage}
         />
 

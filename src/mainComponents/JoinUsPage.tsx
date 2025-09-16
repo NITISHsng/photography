@@ -30,27 +30,16 @@ import {
   experiencedRequirements,
 } from "@/contexts/fromData";
 import { TeamMember } from "@/contexts/fromType";
+import { headerType } from "@/contexts/fromType";
 
-interface JoinUsPageProps {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-  mobileMenuOpen?: boolean;
-  toggleMobileMenu?: () => void;
-  navigateToPage?: (page: string) => void;
-  currentPage?: string;
-}
-
-const JoinUsPage: React.FC<JoinUsPageProps> = (props) => {
+const JoinUsPage: React.FC<headerType> = (props) => {
   const context = useAppContext();
-
-  // const darkMode = props.darkMode ?? context.darkMode;
 
   const mobileMenuOpen = props.mobileMenuOpen ?? context.mobileMenuOpen;
   
   const toggleMobileMenu =
     props.toggleMobileMenu ??
     (() => context.setMobileMenuOpen(!context.mobileMenuOpen));
-  const navigateToPage = props.navigateToPage ?? context.navigateToPage;
   const currentPage = props.currentPage ?? context.currentPage;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -197,15 +186,12 @@ const [formData, setFormData] = useState<TeamMember>({
 
   return (
     <div
-      // className={`min-h-screen transition-colors duration-300 ${
-      //   darkMode ? "dark" : ""
-      // }`}
+      // className="min-h-screen transition-colors duration-300"
     >
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Header
           mobileMenuOpen={mobileMenuOpen}
           toggleMobileMenu={toggleMobileMenu}
-          navigateToPage={navigateToPage}
           currentPage={currentPage}
         />
 

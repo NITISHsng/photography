@@ -1,70 +1,112 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { Video, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, Heart, Camera, Edit, Users, Award, Clock, Shield } from 'lucide-react';
+import React from "react";
+import {
+  Video,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Camera,
+  Edit,
+  Users,
+  Award,
+  Clock,
+  Shield,
+} from "lucide-react";
+import CountUp from "./sub_Components/numberAnimation";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     services: [
-      { name: 'Cameraman Hire', href: '#services' },
-      { name: 'Equipment Rental', href: '#services' },
-      { name: 'Video Editing', href: '#services' },
-      { name: 'Production Contracts', href: '#services' }
+      { name: "Cameraman Hire (comming soon)", href: "#services" },
+      { name: "Equipment Rental (comming soon)", href: "#services" },
+      { name: "Video Editing (comming soon)", href: "#services" },
+      { name: "Production Contracts", href: "#services" },
     ],
     company: [
-      { name: 'About Us', href: '#about' },
-      { name: 'Our Team', href: '#about' },
-      { name: 'Careers', href: '/join-us' },
-      { name: 'Blog', href: '#' }
+      { name: "About Us", href: "#about" },
+      { name: "Our Team", href: "#about" },
+      { name: "Careers", href: "/join-us" },
+      { name: "Blog", href: "#" },
     ],
     support: [
-      { name: 'Contact Us', href: '#contact' },
-      { name: 'Book Event', href: '/hiring' },
-      { name: 'Join Our Team', href: '/join-us' },
-      { name: 'FAQ', href: '#' },
-      { name: 'Support Center', href: '#' },
-      { name: 'Privacy Policy', href: '#' }
+      { name: "Contact Us", href: "#contact" },
+      { name: "Book Event", href: "/hiring" },
+      { name: "Join Our Team", href: "/join-us" },
+      { name: "FAQ", href: "#" },
+      { name: "Support Center", href: "#" },
+      { name: "Privacy Policy", href: "#" },
     ],
     quickStats: [
-      { icon: Users, label: '40+ Team Members', value: '40+' },
-      { icon: Award, label: 'Projects Completed', value: '800+' },
-      { icon: Clock, label: 'Years Experience', value: '5+' },
-      { icon: Shield, label: 'Client Satisfaction', value: '98%' }
-    ]
+      { icon: Users, label: "40+ Team Members", value: 40 },
+      { icon: Award, label: "Projects Completed", value: 800 },
+      { icon: Clock, label: "Years Experience", value: 5 },
+      { icon: Shield, label: "Client Satisfaction", value: 98 },
+    ],
   };
 
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook', color: 'hover:bg-blue-600' },
-    { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:bg-blue-400' },
-    { icon: Instagram, href: '#', label: 'Instagram', color: 'hover:bg-pink-600' },
-    { icon: Youtube, href: '#', label: 'YouTube', color: 'hover:bg-red-600' }
+    {
+      icon: Facebook,
+      href: "#",
+      label: "Facebook",
+      color: "hover:bg-blue-600",
+    },
+    { icon: Twitter, href: "#", label: "Twitter", color: "hover:bg-blue-400" },
+    {
+      icon: Instagram,
+      href: "#",
+      label: "Instagram",
+      color: "hover:bg-pink-600",
+    },
+    { icon: Youtube, href: "#", label: "YouTube", color: "hover:bg-red-600" },
   ];
 
   const specialties = [
-    { icon: Camera, name: 'Wedding Photography', description: 'Capturing your special moments' },
-    { icon: Video, name: 'Event Videography', description: 'Professional event coverage' },
-    { icon: Edit, name: 'Post Production', description: 'Expert editing and effects' },
-    { icon: Users, name: 'Team Collaboration', description: 'Coordinated professional crews' }
+    {
+      icon: Camera,
+      name: "Wedding Photography",
+      description: "Capturing your special moments",
+    },
+    {
+      icon: Video,
+      name: "Event Videography",
+      description: "Professional event coverage",
+    },
+    {
+      icon: Edit,
+      name: "Post Production",
+      description: "Expert editing and effects",
+    },
+    {
+      icon: Users,
+      name: "Team Collaboration",
+      description: "Coordinated professional crews",
+    },
   ];
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId.replace('#', ''));
+    const element = document.getElementById(sectionId.replace("#", ""));
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const handleNavigation = (href: string) => {
-    if (href.startsWith('/')) {
+    if (href.startsWith("/")) {
       // Handle page navigation
-      if (href === '/hiring') {
-        window.location.href = '/hiring';
-      } else if (href === '/join-us') {
-        window.location.href = '/join-us';
+      if (href === "/hiring") {
+        window.location.href = "/hiring";
+      } else if (href === "/join-us") {
+        window.location.href = "/join-us";
       }
-    } else if (href.startsWith('#')) {
+    } else if (href.startsWith("#")) {
       // Handle section scrolling
       scrollToSection(href);
     }
@@ -94,9 +136,12 @@ const Footer: React.FC = () => {
                 </span>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Your trusted partner in high-quality video production. We capture memories and create stories that last a lifetime. From weddings to corporate events, we bring your vision to life with professional excellence.
+                Your trusted partner in high-quality video production. We
+                capture memories and create stories that last a lifetime. From
+                weddings to corporate events, we bring your vision to life with
+                professional excellence.
               </p>
-              
+
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {footerLinks.quickStats.map((stat, index) => {
@@ -105,7 +150,17 @@ const Footer: React.FC = () => {
                     <div key={index} className="bg-gray-800 p-3 rounded-lg">
                       <div className="flex items-center space-x-2 mb-1">
                         <IconComponent className="h-4 w-4 text-blue-400" />
-                        <span className="text-lg font-bold text-white">{stat.value}</span>
+                        <span className="text-lg font-bold text-white">
+                          <div className="flex font-bold  dark:text-white mb-2">
+                            <CountUp
+                              target={stat.value}
+                              duration={1500}
+                              delay={400}
+                              step={10}
+                            />
+                            {stat.label == "Client Satisfaction" ? "%" : "+"}
+                          </div>
+                        </span>
                       </div>
                       <p className="text-xs text-gray-400">{stat.label}</p>
                     </div>
@@ -133,7 +188,9 @@ const Footer: React.FC = () => {
 
             {/* Services Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-blue-400">Our Services</h3>
+              <h3 className="text-lg font-semibold mb-6 text-blue-400">
+                Our Services
+              </h3>
               <ul className="space-y-3">
                 {footerLinks.services.map((link, index) => (
                   <li key={index}>
@@ -146,10 +203,12 @@ const Footer: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              
+
               {/* Specialties */}
               <div className="mt-8">
-                <h4 className="text-sm font-semibold mb-4 text-purple-400">Specialties</h4>
+                <h4 className="text-sm font-semibold mb-4 text-purple-400">
+                  Specialties
+                </h4>
                 <div className="space-y-3">
                   {specialties.slice(0, 2).map((specialty, index) => {
                     const IconComponent = specialty.icon;
@@ -157,8 +216,12 @@ const Footer: React.FC = () => {
                       <div key={index} className="flex items-start space-x-2">
                         <IconComponent className="h-4 w-4 text-blue-400 mt-0.5" />
                         <div>
-                          <p className="text-sm font-medium text-gray-300">{specialty.name}</p>
-                          <p className="text-xs text-gray-500">{specialty.description}</p>
+                          <p className="text-sm font-medium text-gray-300">
+                            {specialty.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {specialty.description}
+                          </p>
                         </div>
                       </div>
                     );
@@ -169,7 +232,9 @@ const Footer: React.FC = () => {
 
             {/* Company Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-purple-400">Company</h3>
+              <h3 className="text-lg font-semibold mb-6 text-purple-400">
+                Company
+              </h3>
               <ul className="space-y-3">
                 {footerLinks.company.map((link, index) => (
                   <li key={index}>
@@ -185,7 +250,9 @@ const Footer: React.FC = () => {
 
               {/* More Specialties */}
               <div className="mt-8">
-                <h4 className="text-sm font-semibold mb-4 text-green-400">More Services</h4>
+                <h4 className="text-sm font-semibold mb-4 text-green-400">
+                  More Services
+                </h4>
                 <div className="space-y-3">
                   {specialties.slice(2).map((specialty, index) => {
                     const IconComponent = specialty.icon;
@@ -193,8 +260,12 @@ const Footer: React.FC = () => {
                       <div key={index} className="flex items-start space-x-2">
                         <IconComponent className="h-4 w-4 text-purple-400 mt-0.5" />
                         <div>
-                          <p className="text-sm font-medium text-gray-300">{specialty.name}</p>
-                          <p className="text-xs text-gray-500">{specialty.description}</p>
+                          <p className="text-sm font-medium text-gray-300">
+                            {specialty.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {specialty.description}
+                          </p>
                         </div>
                       </div>
                     );
@@ -205,7 +276,9 @@ const Footer: React.FC = () => {
 
             {/* Support & Contact */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-green-400">Support & Contact</h3>
+              <h3 className="text-lg font-semibold mb-6 text-green-400">
+                Support & Contact
+              </h3>
               <ul className="space-y-3 mb-8">
                 {footerLinks.support.map((link, index) => (
                   <li key={index}>
@@ -223,17 +296,27 @@ const Footer: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-blue-400" />
-                  <span className="text-gray-300 text-sm">hello@AsanCapture.com</span>
+                  <a
+                    href="mailto:hello@AsanCapture.com?subject=Hello%20from%20your%20website&body=Hi%20Team%2C%0A%0AI%20am%20interested%20in%20your%20services.%20Please%20get%20back%20to%20me.%0A%0AThanks!"
+                    className="text-gray-300 text-sm hover:underline"
+                  >
+                    hello@AsanCapture.com
+                  </a>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-green-400" />
-                  <span className="text-gray-300 text-sm">+1 (555) 123-4567</span>
+                  <a
+                    href="tel:+918001338614"
+                    className="text-gray-300 text-sm hover:underline"
+                  >
+                    +91-8001338614
+                  </a>
                 </div>
                 <div className="flex items-start space-x-3">
                   <MapPin className="h-5 w-5 text-purple-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">
-                    123 Creative Ave<br />
-                    Studio City, CA 90210
+                    virtual office - vision care , kachakali City & Kolkata
+                    secter iii
                   </span>
                 </div>
               </div>
@@ -288,12 +371,20 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-800 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © {currentYear} AsanCapture. All rights reserved. | Professional Video Production Services
+              © {currentYear} AsanCapture. All rights reserved. | Professional
+              Video Production Services
             </div>
             <div className="flex items-center space-x-1 text-gray-400 text-sm">
-              <span>Made with</span>
-              <Heart className="h-4 w-4 text-red-500 fill-current" />
-              <span>for storytellers everywhere</span>
+              <span>Developed by</span>
+              {/* <Heart className="h-4 w-4 text-red-500 fill-current" /> */}
+              <a
+                href="https://devnitishx.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                Nitish Chandra Singha
+              </a>
             </div>
           </div>
         </div>

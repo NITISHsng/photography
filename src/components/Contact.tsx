@@ -91,8 +91,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     {
       icon: MapPin,
       title: 'Visit Us',
-      content: 'virtual office - vision care , kachakali City & Kolkata',
-      description: 'Chopra, 733207',
+      content: 'virtual office - vision care , kachakali City & Kolkata secter iii',
+      description: 'Feel free to visit',
       color: 'from-purple-500 to-purple-600'
     },
     {

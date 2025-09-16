@@ -16,7 +16,6 @@ interface AppContextType {
   setIsLoggedIn: (loggedIn: boolean) => void
   userType: 'admin' | 'operator' | 'member'
   setUserType: (type: 'admin' | 'operator' | 'member') => void
-  navigateToPage: (page: string) => void
   bookings: BookingData[]
   teamMembers: TeamMember[]
   messages: string[]
@@ -58,45 +57,6 @@ useEffect(() => {
   }
 }, []);
 
-
-  const navigateToPage = (page: string) => {
-    setCurrentPage(page)
-    setMobileMenuOpen(false)
-    
-    // Use window.location for navigation to avoid router issues
-    switch (page) {
-      case 'home':
-        if (typeof window !== 'undefined' && window.location.pathname !== '/') {
-          window.location.href = '/'
-        }
-        break
-      case 'admin':
-        if (typeof window !== 'undefined' && window.location.pathname !== '/admin') {
-          window.location.href = '/admin'
-        }
-        break
-      case 'operator':
-        if (typeof window !== 'undefined' && window.location.pathname !== '/operator') {
-          window.location.href = '/operator'
-        }
-        break
-      case 'hiring':
-        if (typeof window !== 'undefined' && window.location.pathname !== '/hiring') {
-          window.location.href = '/hiring'
-        }
-        break
-      case 'join-us':
-        if (typeof window !== 'undefined' && window.location.pathname !== '/join-us') {
-          window.location.href = '/join-us'
-        }
-        break
-      default:
-        if (typeof window !== 'undefined' && window.location.pathname !== '/') {
-          window.location.href = '/'
-        }
-    }
-  }
-
 const [bookings, setHiringRequests] = useState<BookingData[]>([]);
 const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 const [messages, setMessages] = useState<string[]>([]);
@@ -135,7 +95,6 @@ useEffect(() => {
     setUserType,
     currentUserData,
     adminOperatorData,
-    navigateToPage,
     teamMembers,
     bookings,
     messages

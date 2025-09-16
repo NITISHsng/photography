@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
+import CountUp from "./sub_Components/numberAnimation";
 
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,7 +74,7 @@ const Testimonials: React.FC = () => {
 
   const stats = [
     {
-      value: "98%",
+      value: 98,
       title: "Client Satisfaction",
       subtitle: "Based on 800+ projects",
       color:
@@ -81,7 +82,7 @@ const Testimonials: React.FC = () => {
       textColor: "text-blue-600 dark:text-blue-400",
     },
     {
-      value: "800+",
+      value: 800,
       title: "Happy Clients",
       subtitle: "Across all industries",
       color:
@@ -89,7 +90,7 @@ const Testimonials: React.FC = () => {
       textColor: "text-purple-600 dark:text-purple-400",
     },
     {
-      value: "4.9",
+      value: 4.9,
       title: "Average Rating",
       subtitle: "Out of 5 stars",
       color:
@@ -97,7 +98,7 @@ const Testimonials: React.FC = () => {
       textColor: "text-green-600 dark:text-green-400",
     },
     {
-      value: "24h",
+      value: 24,
       title: "Response Time",
       subtitle: "Average response",
       color:
@@ -132,15 +133,14 @@ const Testimonials: React.FC = () => {
     scrollToIndex(prevIndex);
   };
 
-useEffect(() => {
-  const timer = setInterval(() => {
-    const nextIndex = (currentIndex + 1) % testimonials.length;
-    scrollToIndex(nextIndex);
-  }, 5000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % testimonials.length;
+      scrollToIndex(nextIndex);
+    }, 5000);
 
-  return () => clearInterval(timer);
-}, [currentIndex, testimonials.length]);
-
+    return () => clearInterval(timer);
+  }, [currentIndex, testimonials.length]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -278,7 +278,16 @@ useEffect(() => {
               className={`text-center p-4 bg-gradient-to-br ${stat.color} rounded-xl`}
             >
               <div className={`text-4xl font-bold ${stat.textColor} mb-2`}>
-                {stat.value}
+                
+                <div className="flex justify-center">
+                  <CountUp
+                    target={stat.value}
+                    duration={1500}
+                    delay={400}
+                    step={1}
+                  />
+                   {stat.title == "Response Time" ? "h" : "+"}
+                </div>
               </div>
               <div className="text-gray-600 dark:text-gray-300 text-lg font-medium">
                 {stat.title}

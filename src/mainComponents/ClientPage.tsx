@@ -39,7 +39,6 @@ export default function ClientPage() {
   const {
     mobileMenuOpen,
     setMobileMenuOpen,
-    navigateToPage,
     currentPage,
   } = useAppContext();
 
@@ -172,7 +171,6 @@ const handleSave = async () => {
         <Header
           mobileMenuOpen={mobileMenuOpen}
           toggleMobileMenu={toggleMobileMenu}
-          navigateToPage={navigateToPage}
           currentPage={currentPage}
         />
 

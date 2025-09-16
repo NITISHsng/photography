@@ -23,14 +23,18 @@ const Hero: React.FC = () => {
     }
   };
 
-  const renderRow = (images: string[], direction: "left" | "right", rowKey: string) => (
+  const renderRow = (
+    images: string[],
+    direction: "left" | "right",
+    rowKey: string
+  ) => (
     <div className={`flex scroll-${direction} h-1/4 mt-[-1px]`}>
       {images.concat(images).map((url, index) => (
         <Image
           key={`${rowKey}-${index}`}
           src={url}
           alt={`Photography ${index + 1}`}
-          width={300}  // you can adjust size here
+          width={300} // you can adjust size here
           height={200}
           className="h-full w-auto object-cover"
         />
@@ -65,14 +69,24 @@ const Hero: React.FC = () => {
             <div className="text-center lg:text-left">
               {/* Headline */}
               <h1 className="text-5xl text-white md:text-6xl lg:text-7xl font-bold tracking-tight dark:text-white/80 mb-4 leading-tight">
-                <div className="text-4xl">Capture.</div>
+                <div className="text-4xl flex">
+                  Capture
+                  <span className="block bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                    .
+                  </span>
+                </div>
                 <div className="flex text-5xl justify-center md:justify-start items-center">
                   Create
                   <span className="block bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                     .
                   </span>
                 </div>
-                <span className="block">Deliver.</span>
+                <span className=" flex">
+                  Deliver
+                  <span className="block bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                    .
+                  </span>
+                </span>
               </h1>
 
               {/* Subtitle */}

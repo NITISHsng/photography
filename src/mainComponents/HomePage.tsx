@@ -10,21 +10,13 @@ import Testimonials from '@/components/Testimonials'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import WhyChooseUs from '@/components/WhyChooseUs'
+import { headerType } from '@/contexts/fromType'
 
-interface HomePageProps {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-  mobileMenuOpen?: boolean;
-  toggleMobileMenu?: () => void;
-  navigateToPage?: (page: string) => void;
-  currentPage?: string;
-}
-const HomePage: React.FC<HomePageProps> = () => {
+const HomePage: React.FC<headerType> = () => {
 
   const {
     mobileMenuOpen,
     setMobileMenuOpen,
-    navigateToPage,
     currentPage
   } = useAppContext()
 
@@ -38,7 +30,6 @@ const HomePage: React.FC<HomePageProps> = () => {
         <Header 
           mobileMenuOpen={mobileMenuOpen}
           toggleMobileMenu={toggleMobileMenu}
-          navigateToPage={navigateToPage}
           currentPage={currentPage}
         />
         <Hero />

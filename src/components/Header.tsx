@@ -4,13 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Menu, X, Video } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { usePathname } from "next/navigation";
-
-interface HeaderProps {
-  mobileMenuOpen: boolean;
-  toggleMobileMenu: () => void;
-  navigateToPage: (page: string) => void;
-  currentPage: string;
-}
+import { headerType } from "@/contexts/fromType";
 
 const navLinks = [
   { id: "services", label: "Services" },
@@ -57,10 +51,9 @@ const actionButtons = [
     darkGradient: "hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700",
   },
 ];
-const Header: React.FC<HeaderProps> = ({
+const Header: React.FC<headerType> = ({
   mobileMenuOpen,
   toggleMobileMenu,
-  navigateToPage,
   currentPage,
 }) => {
   const pathname = usePathname();
@@ -72,7 +65,6 @@ const Header: React.FC<HeaderProps> = ({
 
   const scrollToSection = (sectionId: string) => {
     if (currentPage !== "home") {
-      navigateToPage("home");
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         element?.scrollIntoView({ behavior: "smooth" });
@@ -88,9 +80,10 @@ const Header: React.FC<HeaderProps> = ({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12 md:h-14">
           {/* Logo */}
+          <Link href={"/"}>
+          
           <div
             className="flex items-center space-x-3 cursor-pointer group"
-            onClick={() => navigateToPage("home")}
           >
             <div className="relative">
               <Video className="h-10 w-10 text-blue-600 dark:text-blue-400 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
@@ -100,6 +93,7 @@ const Header: React.FC<HeaderProps> = ({
               AsanCapture
             </span>
           </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-2">
@@ -122,14 +116,6 @@ const Header: React.FC<HeaderProps> = ({
 
             <span className="hidden md:inline-flex items-center gap-4">
               {/* Conditional Home Button */}
-              {!isHomePage && (
-                <Link href="/">
-                  <button className="hidden md:inline-flex items-center relative px-4 py-2.5 font-bold text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 dark:from-blue-700 dark:via-blue-800 dark:to-blue-900 shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-                    <span className="relative z-10">Home</span>
-                    <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
-                  </button>
-                </Link>
-              )}
 
               {actionButtons.map((btn) => (
                 <Link key={btn.label} href={btn.href}>
@@ -175,14 +161,6 @@ const Header: React.FC<HeaderProps> = ({
                   </button>
                 ))}
 
-              {!isHomePage && (
-                <Link href="/">
-                  <button className="w-full relative px-6 py-4 mb-4 font-bold text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 dark:from-blue-700 dark:via-blue-800 dark:to-blue-900 shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-                    <span className="relative z-10">Home</span>
-                    <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
-                  </button>
-                </Link>
-              )}
 
               {actionButtons.slice(1).map((btn) => (
                 <Link key={btn.label} href={btn.href}>

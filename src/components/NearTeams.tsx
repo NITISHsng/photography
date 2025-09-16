@@ -19,15 +19,14 @@ import { usePathname } from "next/navigation";
 const Page = () => {
   const { teamMembers } = useAppContext(); // ✅ Correct context usage
  const pathname = usePathname();
- const [isPrivileged, setIsPrivileged] = useState<boolean>(
-  pathname?.startsWith("/admin") || pathname?.startsWith("/operator")
-);
+const [isPrivileged, setIsPrivileged] = useState<boolean>(false);
 
 useEffect(() => {
   setIsPrivileged(
-    pathname?.startsWith("/admin") || pathname?.startsWith("/operator")
+    !!(pathname?.startsWith("/admin") || pathname?.startsWith("/operator"))
   );
 }, [pathname]);
+
 
 
   // Local states for filters

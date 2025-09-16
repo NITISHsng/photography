@@ -12,33 +12,34 @@ import {
   Target,
   Zap,
 } from "lucide-react";
+import CountUp from "./sub_Components/numberAnimation";
 
 const About: React.FC = () => {
   const stats = [
     {
       icon: Calendar,
-      number: "5+",
+      number: 5,
       label: "Years Experience",
       description: "Delivering exceptional video content",
       color: "from-blue-500 to-blue-600",
     },
     {
       icon: Users,
-      number: "40+",
-      label: "Team Members",
+      number: 40,
+      label: "Core Team Members",
       description: "Professional creatives and technicians",
       color: "from-purple-500 to-purple-600",
     },
     {
       icon: Award,
-      number: "800+",
+      number: 800,
       label: "Projects Completed",
       description: "Successful deliveries across industries",
       color: "from-green-500 to-green-600",
     },
     {
       icon: Trophy,
-      number: "98%",
+      number: 98,
       label: "Client Satisfaction",
       description: "Happy clients who return for more",
       color: "from-yellow-500 to-orange-500",
@@ -107,9 +108,16 @@ const About: React.FC = () => {
                   <IconComponent className="h-8 w-8 text-white" />
                 </div>
 
-                <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
-                  {stat.number}
-                </div>
+  <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+    <div className="flex justify-center">
+
+  <CountUp target={stat.number} duration={1500} delay={400} step={1} />
+  {
+    stat.label=="Client Satisfaction" ? "%" : "+"
+  }
+    </div>
+</div>
+
 
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
                   {stat.label}
