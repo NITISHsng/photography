@@ -44,7 +44,7 @@ useEffect(() => {
 
   
 
-let filteredTeamMembers = teamMembers.filter((member: TeamMember) => {
+const filteredTeamMembers = teamMembers.filter((member: TeamMember) => {
   const matchesName = member.name.toLowerCase().includes(nameFilter.toLowerCase());
   const matchesArea = member.location
     ? member.location.toLowerCase().includes(areaFilter.toLowerCase())

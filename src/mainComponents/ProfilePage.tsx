@@ -69,16 +69,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
     setSelectedDate(date);
   };
 
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>{error}</div>;
-
   return (
-    <div
-      // className={`min-h-screen ${
-      //   darkMode ? "dark bg-gray-900" : "bg-gray-100"
-      // }`}
-    >
+    <div>
       {/* Header */}
       <Header
         mobileMenuOpen={mobileMenuOpen}
