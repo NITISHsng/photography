@@ -3,15 +3,14 @@
 import React from 'react'
 import { 
   LayoutDashboard, Users, BarChart3, Package, Menu, 
-  Calendar, ChevronLeft, Settings, 
+  Calendar, ChevronLeft, Settings, UserCheck
 } from 'lucide-react'
-
+import { useAppContext } from "@/contexts/AppContext";
 interface SidebarProps {
   sidebarOpen: boolean
   setSidebarOpen: (open: boolean) => void
   activeSection: string
   setActiveSection: (section: string) => void
-  // userType: 'admin' | 'operator' | 'member'
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -20,15 +19,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeSection,
   setActiveSection,
 }) => {
+  
+  
+  const {adminOperatorData}=useAppContext();
   const sidebarItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard', color: 'from-blue-500 to-blue-600' },
     { id: 'bookings', icon: Calendar, label: 'Bookings', color: 'from-green-500 to-green-600' },
     { id: 'team', icon: Users, label: 'Team Management', color: 'from-purple-500 to-purple-600' },
     { id: 'analysis', icon: BarChart3, label: 'Analysis', color: 'from-orange-500 to-orange-600' },
     { id: 'equipment', icon: Package, label: 'Equipment Partner', color: 'from-red-500 to-red-600' },
-    // ...(userType === 'admin' ? [
-    //   { id: 'operator', icon: UserCheck, label: 'Operator', color: 'from-indigo-500 to-indigo-600' },
-    // ] : [])
+    ...(adminOperatorData?.role === 'admin' ? [
+      { id: 'operator', icon: UserCheck, label: 'Operator', color: 'from-indigo-500 to-indigo-600' },
+    ] : [])
   ]
 
   return (

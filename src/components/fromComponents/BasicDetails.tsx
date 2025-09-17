@@ -1,6 +1,5 @@
 "use Client";
 import React, {useEffect } from "react";
-// import zod
 import { BookingData } from "@/contexts/fromType";
 import { EventTimeSlot } from "@/contexts/fromType";
 import { PersonRole } from "@/contexts/fromType";

@@ -34,7 +34,7 @@ const actionButtons = [
   },
   {
     label: "Book Event",
-    href: "/book-event",
+    href: "/hiring",
     gradient: "from-blue-500 via-blue-600 to-blue-700",
     darkGradient: "hover:from-blue-600 hover:via-blue-700 hover:to-blue-800",
   },

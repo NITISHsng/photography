@@ -3,13 +3,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
 interface CountUpProps {
-  target: number;        // final number to reach
-  duration?: number;     // total animation time in ms (default 1000)
-  delay?: number;        // delay after visibility in ms (default 400)
-  step?: number;         // step increment (default 1)
-  start?: number;        // starting number (default 0)
-  threshold?: number;    // IntersectionObserver threshold (default 0.5)
-  format?: boolean;      // whether to format with toLocaleString (default true)
+  target: number;      
+  duration?: number;    
+  delay?: number;      
+  step?: number;      
+  start?: number;
+  threshold?: number;    
+  format?: boolean;   
   className?: string;    // optional className for styling
 }
 

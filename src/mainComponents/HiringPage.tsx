@@ -175,7 +175,8 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
         const data = await res.json();
 
         if (data[0].Status === "Success") {
-          setDetails(data);
+          setDetails(data?.[0]);
+          // console.log(data?.[0].PostOffice)
           setBookingData((prev) => {
             return {
               ...initialBookingData,

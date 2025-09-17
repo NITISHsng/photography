@@ -151,7 +151,7 @@ const Footer: React.FC = () => {
                       <div className="flex items-center space-x-2 mb-1">
                         <IconComponent className="h-4 w-4 text-blue-400" />
                         <span className="text-lg font-bold text-white">
-                          <div className="flex font-bold  dark:text-white mb-2">
+                          <div className="flex font-bold mt-2 items-center  dark:text-white mb-2">
                             <CountUp
                               target={stat.value}
                               duration={1500}

@@ -10,7 +10,9 @@ import Bookings from '@/components/admin/Bookings'
 import TeamManagement from '@/components/admin/TeamManagement'
 import Analysis from '@/components/admin/Analysis'
 import EquipmentPartner from '@/components/admin/EquipmentPartner'
-// import Operator from '@/components/admin/Operator'
+import Operator from '@/components/admin/Operator'
+import { useAppContext } from "@/contexts/AppContext";
+
 interface AdminPageProps {
   onLogout: () => void
 }
@@ -21,7 +23,7 @@ const AdminPage: React.FC<AdminPageProps> = ({
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activeSection, setActiveSection] = useState('dashboard')
-
+const {adminOperatorData}=useAppContext();
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
@@ -34,8 +36,8 @@ const AdminPage: React.FC<AdminPageProps> = ({
         return <Analysis />
       case 'equipment':
         return <EquipmentPartner />
-      // case 'operator':
-        // return userType === 'admin' ? <Operator /> : <Dashboard />
+      case 'operator':
+        return adminOperatorData?.role === 'admin' ? <Operator /> : <Dashboard />
       default:
         return <Dashboard />
     }
@@ -50,7 +52,6 @@ const AdminPage: React.FC<AdminPageProps> = ({
           setSidebarOpen={setSidebarOpen}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          // userType={userType}
         />
 
         {/* Main Content */}
