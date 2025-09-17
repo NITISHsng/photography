@@ -1,9 +1,8 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { TeamMember,UserType, BookingData } from './fromType'
-
-
+import { TeamMember,UserType, BookingData , bookAssignedTeam} from './fromType'
+import { Dispatch, SetStateAction } from "react";
 
 interface AppContextType {
   currentUserData:TeamMember | null ;
@@ -19,6 +18,9 @@ interface AppContextType {
   bookings: BookingData[]
   teamMembers: TeamMember[]
   messages: string[]
+  hiringRequest:BookingData | null 
+  setHiringRequest: Dispatch<SetStateAction<BookingData | null>>
+  handleChange: (path: string, value: string | number | bookAssignedTeam[]) => void;
 }
 
 
@@ -83,8 +85,35 @@ useEffect(() => {
   getDashboardData();
 }, []);
 
+  const [hiringRequest, setHiringRequest] = useState<BookingData | null>(null);
+const handleChange = (
+  path: string,
+  value: string | number | bookAssignedTeam[]
+) => {
+  if (!hiringRequest) return;
+
+  const updated = { ...hiringRequest };
+  const keys = path.split(".");
+
+  let obj: Record<string, unknown> = updated;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (typeof obj[key] !== "object" || obj[key] === null) {
+      throw new Error(`Invalid path: ${path}`);
+    }
+    obj = obj[key] as Record<string, unknown>;
+  }
+
+  obj[keys[keys.length - 1]] = value;
+  setHiringRequest(updated);
+};
+
+
 
   const value = {
+    setHiringRequest,
+    hiringRequest,
+    handleChange,
     currentPage,
     setCurrentPage,
     mobileMenuOpen,

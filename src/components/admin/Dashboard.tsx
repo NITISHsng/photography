@@ -1,16 +1,12 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/contexts/AppContext";
 import { BookingData, TeamMember } from "@/contexts/fromType";
-import NearTeams from "@/components/NearTeams";
+import SearchTeams from "@/components/SearchTeams";
+import OurServiceLocation from "@/components/OurServiceLocation";
 
-import {
-  Users,
-  BarChart3,
-  UserCheck,
-  TrendingUp,
-} from "lucide-react";
+import { Users, BarChart3, UserCheck, TrendingUp } from "lucide-react";
 
 export type ExtendedBookingData = BookingData & {
   createdAt: Date | null;
@@ -60,8 +56,6 @@ const Dashboard = () => {
       (m.createdAt ? new Date(m.createdAt) >= lastUpdate : false) &&
       m.role === "equipment"
   );
-
-
 
   return (
     <div className="space-y-8">
@@ -209,8 +203,17 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      
-      <NearTeams/>
+
+      <div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <SearchTeams />
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <OurServiceLocation />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

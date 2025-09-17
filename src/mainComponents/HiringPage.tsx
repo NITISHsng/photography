@@ -14,13 +14,10 @@ import {
 import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
 import { initialBookingData,areaType } from "@/contexts/fromType";
-
 import { BookingData} from "@/contexts/fromType";
-import { categories } from "@/contexts/fromData";
 import { packages } from "@/contexts/fromData";
-
+import { generateMemberClientId } from "@/contexts/fromData";
 import BasicDetails from "@/components/fromComponents/BasicDetails";
 import Services from "@/components/fromComponents/Services";
 import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
@@ -118,7 +115,10 @@ const HiringPage: React.FC<headerType> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // validate event date at least 1 day ahead
+    //  create a id for client and 3 is the client's 3 letter
+     bookingData.id=generateMemberClientId(bookingData.details.name,bookingData.details.pinCode,3)
+  
+     // validate event date at least 1 day ahead
     const firstEventDate = bookingData.details.eventTimes[0]?.eventDate;
     if (!validateDate(firstEventDate)) return;
 
@@ -176,7 +176,6 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
 
         if (data[0].Status === "Success") {
           setDetails(data?.[0]);
-          // console.log(data?.[0].PostOffice)
           setBookingData((prev) => {
             return {
               ...initialBookingData,
@@ -288,7 +287,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                 className="flex justify-center md:mb-10 mb-6
               "
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 w-[100%] gap-4 max-w-[800px] bg-gray-100 dark:bg-gray-800 rounded-2xl p-2">
+                {/* <div className="grid grid-cols-2 md:grid-cols-4 w-[100%] gap-4 max-w-[800px] bg-gray-100 dark:bg-gray-800 rounded-2xl p-2">
                   {categories.map((category) => {
                     const IconComponent = category.icon;
                     return (
@@ -316,7 +315,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                       </button>
                     );
                   })}
-                </div>
+                </div> */}
               </div>
 
               {/* Packages Grid */}
@@ -413,7 +412,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
 
                   <div
                     id="booking-form"
-                    className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12"
+                    className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl  md:p-8"
                   >
                     <div className="text-center mb-8">
                       <h3 className="text-3xl font-bold mb-4">
@@ -541,10 +540,6 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                          {bookingData.selectedService.length > 0 && (
                           <PriceCalculate localBooking={bookingData}/>
                          )}
-
-
-
-
 
 
                         {isSubmitted && (

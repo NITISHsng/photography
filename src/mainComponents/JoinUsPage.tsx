@@ -31,6 +31,7 @@ import {
 } from "@/contexts/fromData";
 import { TeamMember } from "@/contexts/fromType";
 import { headerType } from "@/contexts/fromType";
+import { generateMemberClientId } from "@/contexts/fromData";
 
 const JoinUsPage: React.FC<headerType> = (props) => {
   const context = useAppContext();
@@ -66,6 +67,7 @@ const [formData, setFormData] = useState<TeamMember>({
   skills: [],
   message: "",
   pincode: "",
+  productionPrice:1200,
   district: "",
   avatar: 'https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
   rating: 4.8,
@@ -74,14 +76,12 @@ const [formData, setFormData] = useState<TeamMember>({
   country: "India",
   joinDate: today,
   memberId: "member",
-  status:"active",
-  password: "$2b$10$I4BZqXcYZ4ykoUPwwEYVD.y5lByPyOzAXf8IaN23HXCAYoYYDlscy",
+  status:"deactive",
+  password: "member",
   createdAt: new Date().toISOString(),
-  events: [
-    { date: "12/9/2025", title: "Wedding Ceremony", location: "Chopra Village", contact: "+91 9876543210" },
-    { date: "14/9/2025", title: "Reception Party", location: "Kolkata City Hall", contact: "+91 9123456780" },
-    { date: "1/10/2025", title: "Anniversary Gathering", location: "Town Community Center", contact: "+91 9988776655" },
-  ]
+  events: [],
+  totalEarn:0,
+  transactionHistory:[],
 });
 
 
@@ -109,9 +109,17 @@ const [formData, setFormData] = useState<TeamMember>({
     });
   };
 
+
+const [pinError, setpinError] = useState("");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    if(formData.pincode.length!=6){
+       setpinError("Pincode must be 6 digite");
+       return;
+    }else{
+      formData.id=generateMemberClientId(formData.name , formData.pincode ,4);
+    }
+      
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/join_us", {
@@ -588,6 +596,11 @@ const [formData, setFormData] = useState<TeamMember>({
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
                         placeholder="Enter 6-digit pincode"
                       />
+                      {
+                        pinError && (
+                          <p className="text-amber-600">{pinError}</p>
+                        )
+                      }
                     </div>
                     <div>
                       <label

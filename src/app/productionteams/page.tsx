@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import NearTeams from "@/components/NearTeams";
 import Header from "@/components/Header";
 import { useAppContext } from "@/contexts/AppContext";
-
+import SearchTeams from "@/components/SearchTeams";
+import OurServiceLocation from "@/components/OurServiceLocation";
 const ProductionTeamPage = () => {
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } =
     useAppContext();
@@ -34,7 +34,14 @@ const ProductionTeamPage = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 md:px-12 ">
-        <NearTeams />
+            <div className="grid lg:grid-cols-2 gap-8">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+         <SearchTeams/>
+      </div>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+         <OurServiceLocation/>
+      </div>
+    </div>
       </main>
     </div>
   );

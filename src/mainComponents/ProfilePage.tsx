@@ -162,11 +162,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
             <div>
               <strong>Location:</strong> {currentUser?.location}
             </div>
-            {currentUser?.operatorId && (
-              <div>
-                <strong>Operator ID:</strong> {currentUser?.operatorId}
-              </div>
-            )}
             <div>
               <strong>Pincode:</strong> {currentUser?.pincode}
             </div>

@@ -329,29 +329,49 @@ const generateInput = ({
           </div>
 
           {/* Pin Code */}
-          <div className="">
-            <label
-              htmlFor="pinCode"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-            >
-              Pin Code *
-            </label>
-            <input
-              type="number"
-              id="pinCode"
-              name="pinCode"
-              value={bookingData.details.pinCode}
-              onChange={handleDetailsChange}
-              required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
-              placeholder="Event address pincode 733207"
-            />
-            {bookingData.details.pinCode.length === 6 && !areaDetails?.[0] && (
-              <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
-                Sorry, this area our service is not available
-              </div>
-            )}
-          </div>
+      {/* Pin Code */}
+<div className="relative">
+  <label
+    htmlFor="pinCode"
+    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+  >
+    Pin Code *
+  </label>
+
+  <input
+    type="number"
+    id="pinCode"
+    name="pinCode"
+    value={bookingData.details.pinCode}
+    onChange={handleDetailsChange}
+    required
+    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
+    placeholder="Event address pincode 733207"
+  />
+
+  {/* Error or status messages */}
+  {bookingData.details.pinCode.length > 0 &&
+    bookingData.details.pinCode.length < 6 && (
+      <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
+        Pincode must be 6 digits
+      </div>
+    )}
+
+  {bookingData.details.pinCode.length === 6 && !areaDetails && (
+    <div className="absolute text-[12px] mt-1 border border-yellow-400 bg-yellow-100 text-yellow-700 px-4 py-1 rounded">
+      Fetching area details...
+    </div>
+  )}
+
+  {bookingData.details.pinCode.length === 6 &&
+    areaDetails &&
+    !areaDetails?.[0] && (
+      <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
+        Sorry, this area our service is not available
+      </div>
+    )}
+</div>
+
 
           <div className="">
             <label
@@ -369,7 +389,7 @@ const generateInput = ({
               required
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
             >
-              <option value="">-- Select Area --</option>
+              <option value="none" selected disabled>-- Select Area --</option>
               {areaDetails?.[0]?.PostOffice?.map((office, index) => (
                 <option key={index} value={office.Name}>
                   {office.Name}

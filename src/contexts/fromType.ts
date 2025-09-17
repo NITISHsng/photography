@@ -44,9 +44,27 @@ export type AssignedTeam = {
   totalProjects?: number;
   projects?: number;
 };
+export type bookAssignedTeam = {
+  name: string;
+  role: string;
+  productionPrice: number;
+  id?: string;
+  createdAt?: string;
+  location?: string;
+  pincode?: string;
+  avatar?: string;
+  status?: string;
+  rating?: number;
+  phone?: string;
+  email?: string;
+  experience?: string;
+  totalProjects?: number;
+  projects?: number;
+};
 
 export type BookingData = {
   createdAt: string;
+  id:string;
   details: {
     category: string;
     package: string;
@@ -65,7 +83,7 @@ export type BookingData = {
     totalAmount: number; 
     status:string;
     advance:number;
-    assignedTeam:AssignedTeam[] | null;
+    assignedTeam:bookAssignedTeam[] | null;
     completedAt:Date | null;
     photoVideoUse: boolean;
     paymentStatus:string;
@@ -154,6 +172,7 @@ export type PriceInfo = {
 
 export const initialBookingData :BookingData = {
   createdAt: new Date().toISOString(),
+  id:'',
   details: {
     category: "event",
     package: "event-premium",
@@ -164,7 +183,7 @@ export const initialBookingData :BookingData = {
     pinCode: "",
     dist: "",
     state: "",
-    nearArea: "",
+    nearArea: "none",
     areaType: "urban",
     location: "",
     forPersons: [],
@@ -174,9 +193,9 @@ export const initialBookingData :BookingData = {
     status:"pending",
     paymentStatus:"Panding",
     assignedTeam: [
-    { name: "Alice Johnson", role: "Video Editor", price: 12050 },
-    { name: "Bob Smith", role: "Camera Operator", price: 2000 },
-    { name: "Charlie Brown", role: "Sound Engineer", price: 4000 }
+    { name: "Alice Johnson", role: "Video Editor", productionPrice: 12050 },
+    { name: "Bob Smith", role: "Camera Operator", productionPrice: 2000 },
+    { name: "Charlie Brown", role: "Sound Engineer", productionPrice: 4000 }
   ],
     completedAt: new Date("2025-09-02T11:22:35.213+00:00"),
     photoVideoUse: true,
@@ -223,10 +242,26 @@ export const initialBookingData :BookingData = {
 
 // Event type
 export type MemberEvent = {
-  date: string;
-  title: string;
-  location: string;
-  contact: string;
+  id: string;          // hiringRequest.id
+  date: string;        // event date or assignment date
+  title: string;       // eventType
+  location: string;    // location
+  contact: string;     // phone
+  pinCode: string;     
+  nearArea: string;
+  district: string;
+  state: string;
+};
+
+export type TransactionHistory = {
+  transactionId: string;
+  amount: number;
+  date: string;        // ISO timestamp (e.g., "2025-09-17T12:30:00Z")
+  currency: string;    // e.g., "INR", "USD"
+  description?: string;
+  status: "pending" | "completed" | "failed";
+  from?: string;       
+  to?: string;        
 };
 
 
@@ -255,12 +290,14 @@ export type TeamMember = {
   status:string;
   totalProjects: number;
   country: string;
+  productionPrice:number;
   joinDate: string; // assuming `today` is a string
   memberId: string;
   password: string;
   events: MemberEvent[];
   createdAt: string; // Adding missing createdAt property
-  operatorId?: string; // Adding optional operatorId property
+  totalEarn:number;
+  transactionHistory:TransactionHistory[] | null;
 };
 
 
@@ -284,11 +321,6 @@ export interface areaType {
   Status: string;
   PostOffice: PostOffice[];
 }
-
-
-
-
-
 
 
 

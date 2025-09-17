@@ -1559,7 +1559,18 @@ export  const basicConditions = {
   };
 
 
+export function generateMemberClientId(name, pincode , length ) {
+  const today = new Date();
+  // Take first 4 and 5 letters of name (lowercase, remove spaces)
+  const namePart = name.trim().substring(0, length).toLowerCase();
+  // Format date as YYMMDD
+  const yy = String(today.getFullYear()).slice(-2);
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const datePart = `${yy}${mm}${dd}`;
 
+  return `${namePart}${pincode}${datePart}`;
+}
 
 
 
