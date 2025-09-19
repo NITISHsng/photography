@@ -23,12 +23,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // helper function to get collection
-export async function getCollection(
+export async function getCollection<T extends Document = Document>(
   name: string
-): Promise<Collection<Document>> {
+): Promise<Collection<T>> {
   const client = await clientPromise;
   const db: Db = client.db();
-  return db.collection<Document>(name);
+  return db.collection<T>(name);
 }
 
 export default clientPromise;

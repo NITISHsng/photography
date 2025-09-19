@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAppContext } from "@/contexts/AppContext";
-import { EventsDateAndTimes } from "@/contexts/fromType";
+// import { EventsDateAndTimes } from "@/contexts/fromType";
 import {
   Users,
   Star,
@@ -38,7 +38,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
   const context = useAppContext();
 
   const mobileMenuOpen = props.mobileMenuOpen ?? context.mobileMenuOpen;
-  
+
   const toggleMobileMenu =
     props.toggleMobileMenu ??
     (() => context.setMobileMenuOpen(!context.mobileMenuOpen));
@@ -48,43 +48,43 @@ const JoinUsPage: React.FC<headerType> = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedRole, setSelectedRole] = useState("cameraman");
   const [selectedLevel, setSelectedLevel] = useState("experienced");
-   const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
 
-// Example usage
-const [formData, setFormData] = useState<TeamMember>({
-  id: "demoId",
-  name: "",
-  email: "",
-  phone: "",
-  age: "", 
-  gender: "",
-  role: "team",
-  experience: "",
-  location: "",
-  availability: "",
-  expectedSalary: "",
-  resumeLink: "", 
-  agree: false, 
-  skills: [],
-  message: "",
-  pincode: "",
-  productionPrice:1200,
-  district: "",
-  avatar: 'https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
-  rating: 4.8,
-  state: "",
-  totalProjects: 0,
-  country: "India",
-  joinDate: today,
-  memberId: "member",
-  status:"deactive",
-  password: "member",
-  createdAt: new Date().toISOString(),
-  events: [],
-  totalEarn:0,
-  transactionHistory:[],
-});
-
+  // Example usage
+  const [formData, setFormData] = useState<TeamMember>({
+    id: "demoId",
+    name: "",
+    email: "",
+    phone: "",
+    age: "",
+    gender: "",
+    role: "team",
+    experience: "",
+    location: "",
+    availability: "",
+    expectedSalary: "",
+    resumeLink: "",
+    agree: false,
+    skills: [],
+    message: "",
+    pincode: "",
+    productionPrice: 1200,
+    district: "",
+    avatar:
+      "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+    rating: 4.8,
+    state: "",
+    totalProjects: 0,
+    country: "India",
+    // joinDate: today,
+    memberId: "member",
+    status: "deactive",
+    password: "member",
+    createdAt: new Date().toISOString(),
+    events: [],
+    totalEarn: 0,
+    transactionHistory: [],
+  });
 
   const handleRoleChange = (roleId: string) => {
     console.log(roleId);
@@ -110,17 +110,20 @@ const [formData, setFormData] = useState<TeamMember>({
     });
   };
 
-
-const [pinError, setpinError] = useState("");
+  const [pinError, setpinError] = useState("");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(formData.pincode.length!=6){
-       setpinError("Pincode must be 6 digite");
-       return;
-    }else{
-      formData.memberId=generateMemberClientId(formData.name , formData.pincode ,4);
+    if (formData.pincode.length != 6) {
+      setpinError("Pincode must be 6 digite");
+      return;
+    } else {
+      formData.memberId = generateMemberClientId(
+        formData.name,
+        formData.pincode,
+        4
+      );
     }
-      
+
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/join_us", {
@@ -146,7 +149,6 @@ const [pinError, setpinError] = useState("");
   };
 
   const getCurrentRequirements = () => {
-
     try {
       switch (selectedLevel) {
         case "experienced":
@@ -192,10 +194,9 @@ const [pinError, setpinError] = useState("");
     return basicConditions[selectedLevel as keyof typeof basicConditions] || [];
   };
 
-
   return (
     <div
-      // className="min-h-screen transition-colors duration-300"
+    // className="min-h-screen transition-colors duration-300"
     >
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Header
@@ -213,7 +214,7 @@ const [pinError, setpinError] = useState("");
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 py-16"
+            className="relative bg-gradient-to-br max-h-[150px] lg:max-h-[500px] from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 lg:py-16 py-12 "
           >
             {/* Dark center overlay */}
             <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,1)_100%)]"></div>
@@ -223,7 +224,7 @@ const [pinError, setpinError] = useState("");
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   <span className="text-white">Join Our Creative Team</span>
                 </h1>
-                <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+                <p className="text-xl text-gray-200 max-w-3xl mx-auto  hidden lg:block">
                   Whether you&apos;re an experienced professional, have moderate
                   experience, or just starting your career, we have
                   opportunities for you. Take our skills test and join
@@ -236,16 +237,17 @@ const [pinError, setpinError] = useState("");
           {/* Experience Level Selection */}
           <div className="py-12 bg-white dark:bg-gray-900">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-8">
+              <div className="text-center mb-2">
                 <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">
                   Choose Your Path
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Select your experience level to see relevant opportunities
+                  Select your experience level 
+                  {/* to see relevant opportunities */}
                 </p>
               </div>
 
-              <div className="flex justify-center mb-12">
+              <div className="flex justify-center mb-4">
                 <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-2 gap-2">
                   {experienceLevels.map((level) => {
                     const IconComponent = level.icon;
@@ -269,39 +271,43 @@ const [pinError, setpinError] = useState("");
                 </div>
               </div>
 
-              {/* Role Selection */}
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-                  Select Your Role
-                </h3>
+              <div className="flex justify-center mb-4">
+                {selectedLevel === "fresher" ? (
+                  <div className="text-red-400 font-bold text-2xl">Currently we are not Hiring Fresher</div>
+                ) : (
+                  <div>
+                    {/* Role Selection */}
+                    <div className="text-center mb-2">
+                      <p className="text-lg text-gray-600 dark:text-gray-300">
+                        Select Your Role
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-2 gap-2">
+                      {roles.map((role) => {
+                        const IconComponent = role.icon;
+                        return (
+                          <button
+                            key={role.id}
+                            onClick={() => handleRoleChange(role.id)}
+                            className={`flex items-center space-x-2 px-4 py-3 rounded-full font-medium transition-all duration-200 ${
+                              selectedRole === role.id
+                                ? "bg-gray-300 dark:bg-black/50 text-black dark:text-white shadow-lg"
+                                : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                            }`}
+                          >
+                            <IconComponent className="h-5 w-5" />
+                            <span className="text-sm md:text-base">
+                              {role.title}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
-
-              <div className="flex justify-center mb-12">
-                <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-2 gap-2">
-                  {roles.map((role) => {
-                    const IconComponent = role.icon;
-                    return (
-                      <button
-                        key={role.id}
-                        onClick={() => handleRoleChange(role.id)}
-                        className={`flex items-center space-x-2 px-4 py-3 rounded-full font-medium transition-all duration-200 ${
-                          selectedRole === role.id
-                            ? "bg-gray-300 dark:bg-black/50 text-black dark:text-white shadow-lg"
-                            : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
-                        }`}
-                      >
-                        <IconComponent className="h-5 w-5" />
-                        <span className="text-sm md:text-base">
-                          {role.title}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Three Column Layout: Requirements, Benefits, Conditions */}
-              <div className="grid lg:grid-cols-3 gap-8 mb-16">
+              <div className="grid lg:grid-cols-3 gap-8 mb-8">
                 {/* Requirements/Training */}
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8">
                   <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
@@ -378,7 +384,7 @@ const [pinError, setpinError] = useState("");
               </div>
 
               {/* Skills Test Section */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12 mb-16">
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-4 md:p-8 mb-8">
                 <div className="text-center mb-8">
                   <h3 className="text-3xl font-bold mb-4">
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -435,7 +441,7 @@ const [pinError, setpinError] = useState("");
               </div>
 
               {/* Application Form */}
-              <div className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12">
+              <div className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-2 md:p-12">
                 <div className="text-center mb-8">
                   <h3 className="text-3xl font-bold mb-4">
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -447,8 +453,6 @@ const [pinError, setpinError] = useState("");
                     schedule your skills assessment
                   </p>
                 </div>
-
-
 
                 <form
                   onSubmit={handleSubmit}
@@ -597,11 +601,7 @@ const [pinError, setpinError] = useState("");
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
                         placeholder="Enter 6-digit pincode"
                       />
-                      {
-                        pinError && (
-                          <p className="text-amber-600">{pinError}</p>
-                        )
-                      }
+                      {pinError && <p className="text-amber-600">{pinError}</p>}
                     </div>
                     <div>
                       <label
@@ -764,9 +764,7 @@ const [pinError, setpinError] = useState("");
                       >
                         Expected Salary{" "}
                         {/* Changed from "cameraman" to check if role includes "team" since the type is restricted */}
-                        {formData.role === "team"
-                          ? "(per day)"
-                          : "(per hour)"}{" "}
+                        {formData.role === "team" ? "(per day)" : "(per hour)"}{" "}
                         *
                       </label>
                       <input
@@ -855,35 +853,35 @@ const [pinError, setpinError] = useState("");
                   </div>
 
                   {/* Social Media Agreement */}
-                    <div className="flex items-start space-x-3">
-                      <input
-                        type="checkbox"
-                        id="agree"
-                        name="agree"
-                        checked={formData.agree}
-                        onChange={handleInputChange}
-                        required // ✅ required belongs here
-                        className="w-4 h-4 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <label
-                        htmlFor="agree"
-                        className="text-sm text-gray-700 dark:text-gray-300"
-                      >
-                        I agree that my submitted work/portfolio may be
-                        showcased on the company&apos;s social media and marketing
-                        platforms.
-                      </label>
-                    </div>
-                
-              {isSubmitted && (
-                  <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg flex items-center space-x-3 max-w-2xl mx-auto">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="text-green-700 dark:text-green-300">
-                      Thank you for your application! We&apos;ll contact you within
-                      24 hours to schedule your skills test.
-                    </span>
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      id="agree"
+                      name="agree"
+                      checked={formData.agree}
+                      onChange={handleInputChange}
+                      required // ✅ required belongs here
+                      className="w-4 h-4 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <label
+                      htmlFor="agree"
+                      className="text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      I agree that my submitted work/portfolio may be showcased
+                      on the company&apos;s social media and marketing
+                      platforms.
+                    </label>
                   </div>
-                )}
+
+                  {isSubmitted && (
+                    <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg flex items-center space-x-3 max-w-2xl mx-auto">
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <span className="text-green-700 dark:text-green-300">
+                        Thank you for your application! We&apos;ll contact you
+                        within 24 hours to schedule your skills test.
+                      </span>
+                    </div>
+                  )}
                   {/* Submit */}
                   <button
                     type="submit"
@@ -1020,7 +1018,7 @@ const [pinError, setpinError] = useState("");
                 </div>
               )}
 
-              {selectedLevel === "experienced" && (
+              {/* {selectedLevel === "experienced" && (
                 <div className="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12">
                   <div className="text-center mb-8">
                     <h3 className="text-3xl font-bold mb-4">
@@ -1077,7 +1075,7 @@ const [pinError, setpinError] = useState("");
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

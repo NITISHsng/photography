@@ -58,7 +58,7 @@ const WhyChooseUs = () => {
   return (
     <div>
       {/* Why Choose Us Section */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-6 md:p-12 relative overflow-hidden mb-12 md:mb-20">
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 p-6 md:p-12 relative overflow-hidden mb-12 md:mb-20">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-4 right-4 w-24 h-24 bg-blue-500 rounded-full blur-2xl"></div>

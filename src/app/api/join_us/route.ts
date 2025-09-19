@@ -42,7 +42,6 @@ export async function POST(request: Request) {
   const collection=await getCollection('joinUsApplicants');
     const result = await collection.insertOne({
       ...formData,
-      createdAt: new Date(),
     });
 
     return NextResponse.json({ message: 'Application submitted', id: result.insertedId }, { status: 201 });

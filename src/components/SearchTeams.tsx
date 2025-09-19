@@ -148,7 +148,7 @@ const SearchTeams = () => {
                   </h4>
                   <div className="text-sm text-gray-600 dark:text-gray-300 gap-2">
                     <span className="mr-4">Role:{member.role}</span>
-                    <span>ID: {member.id}</span>
+                    <span>ID: {member.memberId}</span>
                   </div>
                 </div>
               </div>
@@ -156,7 +156,7 @@ const SearchTeams = () => {
               {/* Right: Status + Rating */}
               <div className="flex flex-col items-end space-y-2">
                 <button
-                  onClick={() => toggleMemberStatus(member.id)}
+                  onClick={() => toggleMemberStatus(member.memberId)}
                   className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
                     member.status === "active"
                       ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/30"
@@ -227,12 +227,12 @@ const SearchTeams = () => {
               <div className="flex justify-end px-2 relative bottom-4">
                 <Button
                   disabled={hiringRequest?.details.assignedTeam?.some(
-                    (m) => m.memberId === member.id
+                    (m) => m.memberId === member.memberId
                   )}
                   onClick={() => {
                     if (
                       !hiringRequest?.details.assignedTeam?.some(
-                        (m) => m.memberId === member.id
+                        (m) => m.memberId === member.memberId
                       )
                     ) {
                       const updatedTeam = [
@@ -251,7 +251,7 @@ const SearchTeams = () => {
                   }`}
                 >
                   {hiringRequest?.details.assignedTeam?.some(
-                    (m) => m.memberId === member.id
+                    (m) => m.memberId === member.memberId
                   )
                     ? "Added"
                     : "Add Team"}

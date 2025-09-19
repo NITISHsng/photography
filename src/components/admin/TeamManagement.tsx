@@ -170,7 +170,6 @@ const TeamManagement: React.FC = () => {
   const handleAddPayment = () => {
     if (selectedMember) {
       alert(`Payment added successfully for ${selectedMember.name}!\n\nPayment Details:\n- Amount: ₹25,000\n- Type: Project Payment\n- Date: ${new Date().toLocaleDateString()}\n- Description: Wedding videography project`);
-      console.log(`Add payment for: ${selectedMember.id}`, selectedMember);
       setShowPaymentModal(false);
       setSelectedMember(null);
     }
@@ -505,7 +504,6 @@ const TeamManagement: React.FC = () => {
             </div>
             <div className="mb-4">
               <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">Member: {selectedMember.name}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">ID: {selectedMember.id}</div>
             </div>
             <div className="space-y-4 mb-6">
               <input

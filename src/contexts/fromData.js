@@ -1277,7 +1277,7 @@ export const experiencedRequirements = {
     "Client testimonials or references",
   ],
   editor: [
-    "2+ years of video editing experience",
+    "3+ years of video editing experience",
     "Proficiency in Adobe Premiere Pro/Final Cut Pro",
     "Color grading and audio mixing skills",
     "Motion graphics experience (After Effects)",
@@ -1398,8 +1398,8 @@ export const fresherPrograms = {
 export const benefits = {
   experienced: {
     cameraman: [
-      "Competitive daily rates: ₹8,000-25,000/day",
-      "Performance bonuses up to ₹50,000/month",
+      "Competitive daily rates: ₹1000-5,000/day",
+      "Performance bonuses up to ₹10,000/month",
       "Flexible scheduling and project selection",
       "Equipment provided for major projects",
       "Professional development workshops",
@@ -1408,7 +1408,7 @@ export const benefits = {
       "Annual equipment upgrade allowance",
     ],
     editor: [
-      "Hourly rates: ₹2,000-6,000/hour",
+      "Hourly rates: ₹200-1,000/hour",
       "Project completion bonuses",
       "Work-from-home flexibility",
       "Latest software licenses provided",
@@ -1428,7 +1428,7 @@ export const benefits = {
       "Expansion funding opportunities",
     ],
     team: [
-      "Project-based compensation: ₹50,000-2,00,000/project",
+      "Project-based compensation: ₹10,000-50,000/project",
       "Performance bonuses for large events",
       "Priority allocation for premium clients",
       "Dedicated project management support",
@@ -1440,7 +1440,7 @@ export const benefits = {
   },
   moderate: {
     cameraman: [
-      "Starting rates: ₹5,000-12,000/day",
+      "Starting rates: ₹500-3,000/day",
       "Free 2-week skill enhancement program",
       "Mentorship from senior professionals",
       "Equipment training and access",
@@ -1450,7 +1450,7 @@ export const benefits = {
       "Guaranteed rate increase after 6 months",
     ],
     editor: [
-      "Starting rates: ₹1,500-3,500/hour",
+      "Starting rates: ₹100-500/hour",
       "Free 2-week intensive training",
       "Advanced software training",
       "Portfolio development support",
@@ -1470,7 +1470,7 @@ export const benefits = {
       "Growth funding opportunities",
     ],
     team: [
-      "Starting project rates: ₹30,000-80,000/project",
+      "Starting project rates: ₹5,000-20,000/project",
       "Free 3-week teamwork and coordination training",
       "Mentorship from senior production teams",
       "Access to advanced project management tools",
@@ -1485,7 +1485,7 @@ export const benefits = {
       "Free 6-week comprehensive training",
       "Mentorship from industry professionals",
       "2-month unpaid internship with real projects",
-      "Starting salary: ₹4,000-8,000/day after internship",
+      "Starting salary: ₹200-1,000/day after internship",
       "Career growth path to senior positions",
       "Certification upon completion",
       "Equipment training and access",
@@ -1495,7 +1495,7 @@ export const benefits = {
       "Free 4-week intensive bootcamp",
       "Software training and licenses",
       "2-month unpaid internship with portfolio building",
-      "Starting rate: ₹1,000-2,500/hour after internship",
+      "Starting rate: ₹50-300/hour after internship",
       "Mentorship and skill development",
       "Industry networking opportunities",
       "Certification in video editing",
@@ -1515,7 +1515,7 @@ export const benefits = {
       "Free 4-week collaborative training program",
       "Hands-on internship with live events",
       "Mentorship from senior production leads",
-      "Starting stipend: ₹15,000-30,000/project after internship",
+      "Starting stipend: ₹3,000-15,000/project after internship",
       "Certification in teamwork and production management",
       "Guaranteed placement in collaborative projects",
       "Career growth into specialized team roles",

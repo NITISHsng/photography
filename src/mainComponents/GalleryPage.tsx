@@ -82,7 +82,7 @@ What made Priya and Bipul’s wedding truly unforgettable was its simplicity and
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 py-16"
+            className="relative bg-gradient-to-br max-h-[150px] lg:max-h-[500px] from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 lg:py-16 py-12 "
       >
         {/* Dark center overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,.6)_100%,white_100%) dark:bg-[radial-gradient(circle,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,1)_100%)]"></div>
@@ -92,10 +92,10 @@ What made Priya and Bipul’s wedding truly unforgettable was its simplicity and
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-white">Our Beautiful Memories</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
+            <h2 className="  hidden lg:block text-2xl md:text-3xl font-semibold mb-6 text-white">
               Cherished Moments, Captured Forever
             </h2>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+                <p className="text-xl text-gray-200 max-w-3xl mx-auto  hidden lg:block">
               Explore our gallery filled with weddings, celebrations, and
               special events. Every picture tells a story of love, joy, and
               timeless memories.

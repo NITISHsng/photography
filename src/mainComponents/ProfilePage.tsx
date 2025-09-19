@@ -6,20 +6,8 @@ import "react-calendar/dist/Calendar.css";
 import Header from "@/components/Header";
 import { useAppContext } from "@/contexts/AppContext";
 import { LogOut } from "lucide-react";
-import { EventsDateAndTimes } from "@/contexts/fromType";
-interface EventDetail {
-  id: string;
-  eventsDate: EventsDateAndTimes[];
-  title: string;
-  location: string;
-  contact: string;
-  pinCode: string;
-  nearArea: string;
-  district: string;
-  state: string;
-}
+import { AssignedEvents } from "@/contexts/fromType";
 
-// type UserType = "admin" | "operator" | "member";
 
 interface ProfilePageProps {
   onLogout: () => void;
@@ -34,7 +22,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
   };
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<AssignedEvents | null>(null);
   const currentUser = currentUserData;
   console.log(currentUser);
   // Convert ISO date string to DD/MM/YYYY (safe from timezone issues)
@@ -52,10 +40,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
   };
 
   // Highlight dates array
-  // const highlightDates =["12/09/2025"]
   const highlightDates =
     currentUser?.events?.flatMap((e) =>
-      e.eventsDate.map((ev) => normalizeDate(ev.eventDate))
+      e.eventsDateTime.map((ev) => normalizeDate(ev.eventDate))
     ) ?? [];
 
   console.log(selectedEvent);
@@ -67,7 +54,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
 
     // Find the event whose eventsDate includes the clicked date
     const event = currentUser?.events.find((e) =>
-      e.eventsDate.some((ev) => normalizeDate(ev.eventDate) === formatted)
+      e.eventsDateTime.some((ev) => normalizeDate(ev.eventDate) === formatted)
     );
 
     if (event) setSelectedEvent(event);
@@ -125,7 +112,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
               </p> */}
               <p>
                 <strong>Time:</strong>{" "}
-                {selectedEvent?.eventsDate
+                {selectedEvent?.eventsDateTime
                   .map((ev) => `${ev.startTime} - ${ev.endTime}`)
                   .join(", ")}
               </p>

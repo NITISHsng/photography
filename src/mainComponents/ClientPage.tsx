@@ -48,6 +48,7 @@ export default function ClientPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+      if (!id) return;
     const fetchClient = async () => {
       try {
         const res = await fetch(`/api/hiring?id=${id}`);
@@ -62,7 +63,7 @@ export default function ClientPage() {
     };
 
     fetchClient();
-  }, []);
+  }, [id]);
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:

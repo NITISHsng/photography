@@ -5,7 +5,7 @@ import { getCollection } from "@/lib/mongodb";
 const uri = process.env.MONGODB_URI!;
 const client = new MongoClient(uri);
 import { ObjectId } from "mongodb";
-
+import { AssignedEvents, TeamMember } from "@/contexts/fromType";
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
@@ -17,7 +17,7 @@ export async function PUT(request: Request) {
 
     const objectId = new ObjectId(_id);
     const hiringRequestsCol = await getCollection("hiringRequests");
-    const joinUsApplicantsCol = await getCollection("joinUsApplicants");
+    const joinUsApplicantsCol = await getCollection<TeamMember>("joinUsApplicants");
 
     // update hiringRequest itself
     const result = await hiringRequestsCol.updateOne(
@@ -34,17 +34,18 @@ export async function PUT(request: Request) {
 
     // if assignedTeam exists, update each member in joinUsApplicants
     if (hiringRequest.details?.assignedTeam?.length > 0) {
-      const eventPayload = {
-        id: hiringRequest.id, // hiringRequest id
-        eventsDate: hiringRequest.details.eventTimes, // you might replace with eventTimes[0]?.eventDate
-        title: hiringRequest.details.eventType,
-        location: hiringRequest.details.location,
-        contact: hiringRequest.details.phone,
-        pinCode: hiringRequest.details.pinCode,
-        nearArea: hiringRequest.details.nearArea,
-        district: hiringRequest.details.dist,
-        state: hiringRequest.details.state,
-      };
+const eventPayload: AssignedEvents = {
+  id: hiringRequest.id, 
+  eventsDateTime: hiringRequest.details.eventTimes,
+  title: hiringRequest.details.eventType,
+  location: hiringRequest.details.location,
+  contact: hiringRequest.details.phone,
+  pinCode: hiringRequest.details.pinCode,
+  nearArea: hiringRequest.details.nearArea,
+  district: hiringRequest.details.dist,
+  state: hiringRequest.details.state,
+};
+
 
       for (const member of hiringRequest.details.assignedTeam) {
         if (!member?.id) continue;

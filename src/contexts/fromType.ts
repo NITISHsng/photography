@@ -243,17 +243,17 @@ export const initialBookingData :BookingData = {
 
 
 // Event type
-// export type MemberEvent = {
-//   id: string;          // hiringRequest.id
-//   date: string;        // event date or assignment date
-//   title: string;       // eventType
-//   location: string;    // location
-//   contact: string;     // phone
-//   pinCode: string;     
-//   nearArea: string;
-//   district: string;
-//   state: string;
-// };
+export type AssignedEvents = {
+  id: string;          // hiringRequest.id
+  eventsDateTime: EventsDateAndTimes[];        // event date or assignment date
+  title: string;       // eventType
+  location: string;    // location
+  contact: string;     // phone
+  pinCode: string;     
+  nearArea: string;
+  district: string;
+  state: string;
+};
 
 export type TransactionHistory = {
   transactionId: string;
@@ -293,13 +293,12 @@ export type TeamMember = {
   totalProjects: number;
   country: string;
   productionPrice:number;
-  joinDate: string; // assuming `today` is a string
   memberId: string;
   password: string;
-  events: EventsDateAndTimes[];
-  createdAt: string; // Adding missing createdAt property
+  events: AssignedEvents[];
   totalEarn:number;
   transactionHistory:TransactionHistory[] | null;
+  createdAt:string;
 };
 
 
