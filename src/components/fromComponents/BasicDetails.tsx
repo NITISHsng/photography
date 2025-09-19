@@ -389,7 +389,7 @@ const generateInput = ({
               required
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
             >
-              <option value="none" selected disabled>-- Select Area --</option>
+              <option value="">-- Select Area --</option>
               {areaDetails?.[0]?.PostOffice?.map((office, index) => (
                 <option key={index} value={office.Name}>
                   {office.Name}

@@ -22,6 +22,7 @@ import {
   Package,
   X,
   Crown,
+  IdCard,
 } from "lucide-react";
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
@@ -321,10 +322,9 @@ const Bookings: React.FC = () => {
                   <td className="px-6 py-4">
                     <div>
                       <div className="flex items-center space-x-2 mb-1">
-                        {getServiceIcon(booking.details.eventType)}
-
+                        <IdCard className="h-4 w-4"/>
                         <span className="font-medium text-gray-900 dark:text-white">
-                          {booking.details.category}_id
+                          {booking.id}
                         </span>
                       </div>
                       <div className="text-sm text-gray-600 dark:text-gray-300">

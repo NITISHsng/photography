@@ -48,7 +48,7 @@ export type bookAssignedTeam = {
   name: string;
   role: string;
   productionPrice: number;
-  id?: string;
+  memberId?: string;
   createdAt?: string;
   location?: string;
   pincode?: string;
@@ -61,6 +61,8 @@ export type bookAssignedTeam = {
   totalProjects?: number;
   projects?: number;
 };
+
+export type EventsDateAndTimes={ eventDate: string; startTime: string; endTime: string };
 
 export type BookingData = {
   createdAt: string;
@@ -87,7 +89,7 @@ export type BookingData = {
     completedAt:Date | null;
     photoVideoUse: boolean;
     paymentStatus:string;
-    eventTimes: { eventDate: string; startTime: string; endTime: string }[];
+    eventTimes: EventsDateAndTimes[];
   };
 
   selectedService: { id: string; price: number }[];
@@ -241,17 +243,17 @@ export const initialBookingData :BookingData = {
 
 
 // Event type
-export type MemberEvent = {
-  id: string;          // hiringRequest.id
-  date: string;        // event date or assignment date
-  title: string;       // eventType
-  location: string;    // location
-  contact: string;     // phone
-  pinCode: string;     
-  nearArea: string;
-  district: string;
-  state: string;
-};
+// export type MemberEvent = {
+//   id: string;          // hiringRequest.id
+//   date: string;        // event date or assignment date
+//   title: string;       // eventType
+//   location: string;    // location
+//   contact: string;     // phone
+//   pinCode: string;     
+//   nearArea: string;
+//   district: string;
+//   state: string;
+// };
 
 export type TransactionHistory = {
   transactionId: string;
@@ -294,7 +296,7 @@ export type TeamMember = {
   joinDate: string; // assuming `today` is a string
   memberId: string;
   password: string;
-  events: MemberEvent[];
+  events: EventsDateAndTimes[];
   createdAt: string; // Adding missing createdAt property
   totalEarn:number;
   transactionHistory:TransactionHistory[] | null;

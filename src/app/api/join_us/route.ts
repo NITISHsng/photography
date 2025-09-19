@@ -1,9 +1,5 @@
 import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
-
-const uri = process.env.MONGODB_URI!;
-const client = new MongoClient(uri);
-
+import { getCollection } from '@/lib/mongodb';
 export async function POST(request: Request) {
   try {
     const formData = await request.json();
@@ -43,10 +39,7 @@ export async function POST(request: Request) {
       }
     }
 
-    await client.connect();
-    const db = client.db();
-    const collection = db.collection('joinUsApplicants');
-
+  const collection=await getCollection('joinUsApplicants');
     const result = await collection.insertOne({
       ...formData,
       createdAt: new Date(),
@@ -57,7 +50,5 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error('Error saving application:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  } finally {
-    await client.close();
   }
 }

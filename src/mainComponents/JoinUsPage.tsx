@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAppContext } from "@/contexts/AppContext";
+import { EventsDateAndTimes } from "@/contexts/fromType";
 import {
   Users,
   Star,
@@ -117,7 +118,7 @@ const [pinError, setpinError] = useState("");
        setpinError("Pincode must be 6 digite");
        return;
     }else{
-      formData.id=generateMemberClientId(formData.name , formData.pincode ,4);
+      formData.memberId=generateMemberClientId(formData.name , formData.pincode ,4);
     }
       
     setIsSubmitting(true);

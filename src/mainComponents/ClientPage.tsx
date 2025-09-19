@@ -62,7 +62,7 @@ export default function ClientPage() {
     };
 
     fetchClient();
-  }, [id]);
+  }, []);
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:
@@ -434,7 +434,7 @@ export default function ClientPage() {
                             <p className="text-sm text-gray-400 dark:text-white/60">
                               {member.role.charAt(0).toUpperCase() +
                                 member.role.slice(1).toLowerCase()}{" "}
-                              - {member.id}
+                              - {member.memberId}
                             </p>
                           </div>
                         </div>

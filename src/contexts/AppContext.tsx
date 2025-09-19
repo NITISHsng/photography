@@ -108,8 +108,6 @@ const handleChange = (
   setHiringRequest(updated);
 };
 
-
-
   const value = {
     setHiringRequest,
     hiringRequest,

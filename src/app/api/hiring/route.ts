@@ -6,32 +6,73 @@ const uri = process.env.MONGODB_URI!;
 const client = new MongoClient(uri);
 import { ObjectId } from "mongodb";
 
-
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { _id, ...hiringRequest } = body; // Extract _id directly
+    const { _id, ...hiringRequest } = body;
 
-    const objectId = new ObjectId(_id); // Create ObjectId from the extracted _id
+    if (!_id) {
+      return NextResponse.json({ error: "Missing _id" }, { status: 400 });
+    }
 
-    const collection = await getCollection("hiringRequests");
+    const objectId = new ObjectId(_id);
+    const hiringRequestsCol = await getCollection("hiringRequests");
+    const joinUsApplicantsCol = await getCollection("joinUsApplicants");
 
-    const result = await collection.updateOne(
-      { _id: objectId },           // Filter by ObjectId
+    // update hiringRequest itself
+    const result = await hiringRequestsCol.updateOne(
+      { _id: objectId },
       { $set: hiringRequest }
     );
 
     if (result.matchedCount === 0) {
-      return NextResponse.json({ message: "No document found with that id" }, { status: 404 });
+      return NextResponse.json(
+        { message: "No hiring request found with that id" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({ message: "Updated successfully", updatedData: hiringRequest }, { status: 200 });
+    // if assignedTeam exists, update each member in joinUsApplicants
+    if (hiringRequest.details?.assignedTeam?.length > 0) {
+      const eventPayload = {
+        id: hiringRequest.id, // hiringRequest id
+        eventsDate: hiringRequest.details.eventTimes, // you might replace with eventTimes[0]?.eventDate
+        title: hiringRequest.details.eventType,
+        location: hiringRequest.details.location,
+        contact: hiringRequest.details.phone,
+        pinCode: hiringRequest.details.pinCode,
+        nearArea: hiringRequest.details.nearArea,
+        district: hiringRequest.details.dist,
+        state: hiringRequest.details.state,
+      };
 
+      for (const member of hiringRequest.details.assignedTeam) {
+        if (!member?.id) continue;
+
+        await joinUsApplicantsCol.updateOne(
+          { id: member.id }, 
+          {
+            $push: {
+              events: eventPayload,
+            },
+          } 
+        );
+      }
+    }
+
+    return NextResponse.json(
+      { message: "Updated successfully", updatedData: hiringRequest },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("PUT error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
+
 
 
 export async function GET(request: Request) {
@@ -65,8 +106,6 @@ export async function GET(request: Request) {
     );
   }
 }
-
-
 
 export async function POST(request: Request) {
   try {   
@@ -123,19 +162,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // await client.connect();
-    // const db = client.db();
-    // const collection = db.collection("hiringRequests");
-
-    // const result = await collection.insertOne({
-    //   ...hiringForm,
-    //   createdAt: new Date(),
-    // });
-
      const collection = await getCollection("hiringRequests");
     const result = await collection.insertOne({
       ...hiringForm,
-      createdAt: new Date(),
     });
 
 

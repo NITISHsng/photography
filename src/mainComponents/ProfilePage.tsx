@@ -6,30 +6,28 @@ import "react-calendar/dist/Calendar.css";
 import Header from "@/components/Header";
 import { useAppContext } from "@/contexts/AppContext";
 import { LogOut } from "lucide-react";
-// import { headerType } from "@/contexts/fromType";
+import { EventsDateAndTimes } from "@/contexts/fromType";
 interface EventDetail {
-  date: string;
+  id: string;
+  eventsDate: EventsDateAndTimes[];
   title: string;
   location: string;
   contact: string;
+  pinCode: string;
+  nearArea: string;
+  district: string;
+  state: string;
 }
 
 // type UserType = "admin" | "operator" | "member";
 
 interface ProfilePageProps {
-  
   onLogout: () => void;
 }
 
-
-const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
-
-  const {
-    mobileMenuOpen,
-    setMobileMenuOpen,
-    currentPage,
-    currentUserData,
-  } = useAppContext();
+const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
+  const { mobileMenuOpen, setMobileMenuOpen, currentPage, currentUserData } =
+    useAppContext();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -37,32 +35,44 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
-  const currentUser =currentUserData;
-
+  const currentUser = currentUserData;
+  console.log(currentUser);
+  // Convert ISO date string to DD/MM/YYYY (safe from timezone issues)
   const normalizeDate = (dateStr: string) => {
-    const [d, m, y] = dateStr.split("/");
-    return `${parseInt(d)}/${parseInt(m)}/${y}`;
+    const [y, m, d] = dateStr.split("-"); // YYYY-MM-DD
+    return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
   };
 
-  const highlightDates =
-    currentUser?.events?.map((e) => normalizeDate(e.date)) ?? [];
+  // Zero-padded format for Calendar comparison
+  const formatDate = (date: Date) => {
+    const d = date.getDate().toString().padStart(2, "0");
+    const m = (date.getMonth() + 1).toString().padStart(2, "0");
+    const y = date.getFullYear();
+    return `${d}/${m}/${y}`;
+  };
 
-  const formatDate = (date: Date) =>
-    `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  // Highlight dates array
+  // const highlightDates =["12/09/2025"]
+  const highlightDates =
+    currentUser?.events?.flatMap((e) =>
+      e.eventsDate.map((ev) => normalizeDate(ev.eventDate))
+    ) ?? [];
+
+  console.log(selectedEvent);
 
   const isEventDate = (date: Date) => highlightDates.includes(formatDate(date));
 
-  // ✅ Handle date click
   const handleDateClick = (date: Date) => {
     const formatted = formatDate(date);
-    const event = currentUser?.events.find(
-      (e) => normalizeDate(e.date) === formatted
+
+    // Find the event whose eventsDate includes the clicked date
+    const event = currentUser?.events.find((e) =>
+      e.eventsDate.some((ev) => normalizeDate(ev.eventDate) === formatted)
     );
-    if (event) {
-      setSelectedEvent(event);
-    } else {
-      setSelectedEvent(null);
-    }
+
+    if (event) setSelectedEvent(event);
+    else setSelectedEvent(null);
+
     setSelectedDate(date);
   };
 
@@ -74,25 +84,20 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
         toggleMobileMenu={toggleMobileMenu}
         currentPage={currentPage}
       />
-
       <div className="max-w-4xl mx-auto pt-5 px-6 mt-14 space-y-4">
         {/* Calendar */}
         <div
-          // className={p-4 rounded-2xl shadow-lg transition-colors duration-300}
+        // className={p-4 rounded-2xl shadow-lg transition-colors duration-300}
         >
           <div className="flex justify-between items-center">
-
-              <h2 className="text-xl  font-semibold mb-4">
-                Your Event Schedule
-              </h2>
-
+            <h2 className="text-xl  font-semibold mb-4">Your Event Schedule</h2>
 
             <button
               onClick={onLogout}
               className="p-2 flex items-center rounded-lg hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors duration-200"
               aria-label="Logout"
             >
-             Logout <LogOut className="h-5 w-5 ml-2" />
+              Logout <LogOut className="h-5 w-5 ml-2" />
             </button>
           </div>
 
@@ -106,24 +111,42 @@ const ProfilePage: React.FC<ProfilePageProps> = ({onLogout }) => {
               }
             />
           </div>
-
         </div>
 
         {/* Event Popup */}
         {selectedEvent && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div
-              // className={p-6 rounded-2xl shadow-lg max-w-md w-full}
-            >
-              <h3 className="text-xl font-bold mb-4">{selectedEvent?.title}</h3>
+          <div className="fixed inset-0 flex items-center justify-center text-white dark:text-white dark:bg-white/50 bg-black/50 bg-opacity-50 z-50">
+            <div className="p-6 rounded-2xl shadow-lg max-w-md w-full bg-black">
+              <h3 className="text-xl font-bold mb-4">
+                {selectedEvent?.title}-{selectedEvent?.id}
+              </h3>
+              {/* <p>
+                <strong>Date:</strong> {normalizeDate(selectedEvent?.date)}
+              </p> */}
               <p>
-                <strong>Date:</strong> {selectedEvent?.date}
+                <strong>Time:</strong>{" "}
+                {selectedEvent?.eventsDate
+                  .map((ev) => `${ev.startTime} - ${ev.endTime}`)
+                  .join(", ")}
               </p>
+
               <p>
                 <strong>Location:</strong> {selectedEvent?.location}
               </p>
               <p>
                 <strong>Contact:</strong> {selectedEvent?.contact}
+              </p>
+              <p>
+                <strong>Pin Code:</strong> {selectedEvent?.pinCode}
+              </p>
+              <p>
+                <strong>Near Area:</strong> {selectedEvent?.nearArea}
+              </p>
+              <p>
+                <strong>District:</strong> {selectedEvent?.district}
+              </p>
+              <p>
+                <strong>State:</strong> {selectedEvent?.state}
               </p>
               <button
                 onClick={() => setSelectedEvent(null)}
