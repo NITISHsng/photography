@@ -4,12 +4,6 @@ export type EventTimeSlot = {
   endTime: string;
 };
 
-export type PersonRole = {
-  eventName: string;
-  role: "groom" | "bride" | "birthday-person" | "other" | "babyName";
-  name: string;
-};
-
   export type headerType= {
     mobileMenuOpen?: boolean;
     toggleMobileMenu?: () => void;
@@ -27,6 +21,12 @@ export interface UserType {
   password: string;      
   lastLogin: string;      
 }
+
+export type PersonRole = {
+  eventName: string;
+  role: "groom" | "bride" | "birthday-person" | "other" | "babyName";
+  name: string;
+};
 export type AssignedTeam = {
   name: string;
   role: string;
@@ -110,7 +110,7 @@ export type BookingData = {
     stageLights: { id: string; price: number }[];
   };
 };
-
+export type BookingWithId = BookingData & { _id: string };
 
 export type AdminUser = {
   id: string

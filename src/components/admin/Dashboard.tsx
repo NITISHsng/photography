@@ -93,7 +93,7 @@ const Dashboard = () => {
     <select
       value={timeFilter}
       onChange={(e) => setTimeFilter(Number(e.target.value))}
-      className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+      className="w-full px-2 mx-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
     >
       {[
         { label: "Week", value: 7 },

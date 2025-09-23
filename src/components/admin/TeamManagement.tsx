@@ -138,11 +138,6 @@ const TeamManagement: React.FC = () => {
     setShowAddModal(true);
   };
 
-  // const openPaymentModal = (member: TeamMember) => {
-  //   setSelectedMember(member);
-  //   setShowPaymentModal(true);
-  // };
-
   const handleEditMember = (memberId: string) => {
     const member = teamMembers.find(m => m.id === memberId);
     if (member) {

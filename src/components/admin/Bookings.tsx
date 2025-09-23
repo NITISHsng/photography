@@ -5,7 +5,6 @@ import {
   Calendar,
   Clock,
   MapPin,
-  User,
   Phone,
   Mail,
   Filter,
@@ -16,19 +15,13 @@ import {
   XCircle,
   AlertCircle,
   Plus,
-  Camera,
-  Video,
-  Edit3,
-  Package,
   X,
-  Crown,
   IdCard,
 } from "lucide-react";
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
-import PriceCalculate from "../sub_Components/PriceCalculate";
 import { BookingData, EventTimeSlot} from "@/contexts/fromType";
-
+import BookingInformation from "../sub_Components/BookingInformation";
 const Bookings: React.FC = () => {
   type BookingWithId = BookingData & { _id: string };
   const { bookings } = useAppContext();
@@ -70,20 +63,6 @@ const Bookings: React.FC = () => {
     }
   };
 
-  const getServiceIcon = (service: string) => {
-    switch (service) {
-      case "Cameraman":
-        return <Camera className="h-4 w-4" />;
-      case "Equipment Rental":
-        return <Video className="h-4 w-4" />;
-      case "Video Editing":
-        return <Edit3 className="h-4 w-4" />;
-      case "Complete Event":
-        return <Package className="h-4 w-4" />;
-      default:
-        return <Calendar className="h-4 w-4" />;
-    }
-  };
 
   const filteredBookings = bookings.filter((booking: BookingData) => {
     const name = booking.details?.name?.toLowerCase() || "";
@@ -143,20 +122,6 @@ const Bookings: React.FC = () => {
   const closeModals = () => {
     setShowAddModal(false);
     setShowViewModal(false);
-    setSelectedBooking(null);
-  };
-
-  const paymentStatusClasses: Record<string, string> = {
-    Completed:
-      "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400",
-    "Advance Paid":
-      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400",
-    Pending: "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400",
-    Failed: "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400",
-    Refunded:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400",
-    Cancelled:
-      "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400",
   };
 
   if (!filteredBookings) {
@@ -287,146 +252,153 @@ const Bookings: React.FC = () => {
         </div>
       </div>
 
-      {/* Bookings List */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 dark:bg-gray-700">
-              <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Booking Details
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Client Info
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Event Details
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Amount
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {(filteredBookings as BookingWithId[]).map((booking) => (
-                <tr
-                  key={booking._id}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+{/* Bookings List */}
+<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-4">
+  {/* Table for large screens */}
+  <div className="hidden lg:block overflow-x-auto">
+    <table className="min-w-full table-auto">
+      <thead className="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
+        <tr>
+          {["Booking Details", "Client Info", "Event Details", "Status", "Amount", "Actions"].map((col) => (
+            <th
+              key={col}
+              className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              {col}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+        {(filteredBookings as BookingWithId[]).map((booking) => (
+          <tr
+            key={booking._id}
+            className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="flex flex-col">
+                <div className="flex items-center space-x-2 mb-1">
+                  <IdCard className="h-4 w-4" />
+                  <span className="font-medium text-gray-900 dark:text-white">{booking.id}</span>
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">{booking.details.category}</div>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="font-medium text-gray-900 dark:text-white">{booking.details.name}</div>
+              <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
+                <Mail className="h-3 w-3" />
+                <span className="truncate max-w-32">{booking.details.email}</span>
+              </div>
+              <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
+                <Phone className="h-3 w-3" />
+                <span>{booking.details.phone}</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="font-medium text-gray-900 dark:text-white">{booking.details.eventType}</div>
+              <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
+                <Calendar className="h-3 w-3" />
+                <span>{booking.details?.eventTimes?.[0]?.eventDate}</span>
+              </div>
+              <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
+                <Clock className="h-3 w-3" />
+                <span>{booking.details?.eventTimes?.[0]?.startTime} - {booking.details?.eventTimes?.[0]?.endTime}</span>
+              </div>
+              <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
+                <MapPin className="h-3 w-3" />
+                <span className="truncate max-w-32">{booking.details.pinCode}</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <span className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.details.status)}`}>
+                {getStatusIcon(booking.details.status)}
+                <span className="capitalize">{booking.details.status}</span>
+              </span>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="font-medium text-gray-900 dark:text-white">₹{booking.details.totalAmount}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">₹{booking.details.advance}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">₹{booking.details.totalAmount - booking.details.advance}</div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleViewBooking(booking)}
+                  className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200"
+                  title="View Details"
                 >
-                  <td className="px-6 py-4">
-                    <div>
-                      <div className="flex items-center space-x-2 mb-1">
-                        <IdCard className="h-4 w-4"/>
-                        <span className="font-medium text-gray-900 dark:text-white">
-                          {booking.id}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">
-                        {booking.details.category}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-white">
-                        {booking.details.name}
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                        <Mail className="h-3 w-3" />
-                        <span className="truncate max-w-32">
-                          {booking.details.email}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                        <Phone className="h-3 w-3" />
-                        <span>{booking.details.phone}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-white">
-                        {booking.details.eventType}
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                        <Calendar className="h-3 w-3" />
-                        <span>
-                          {booking.details?.eventTimes?.[0]?.eventDate}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                        <Clock className="h-3 w-3" />
-                        <span>
-                          {booking.details?.eventTimes?.[0]?.startTime} -{" "}
-                          {booking.details?.eventTimes?.[0]?.endTime}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                        <MapPin className="h-3 w-3" />
-                        <span className="truncate max-w-32">
-                          {booking.details.pinCode}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                        booking.details.status
-                      )}`}
-                    >
-                      {getStatusIcon(booking.details.status)}
-                      <span className="capitalize">
-                        {booking.details.status}
-                      </span>
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="font-medium text-gray-900 dark:text-white">
-                      ₹{booking.details.totalAmount}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      ₹{booking.details.advance}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      ₹{booking.details.totalAmount - booking.details.advance}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => handleViewBooking(booking)}
-                        className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200"
-                        title="View Details"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        className="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200"
-                        title="Edit Booking"
-                      >
-                        <Link
-                          rel="stylesheet"
-                          href={`edit/client/${booking._id}`}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Link>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  <Eye className="h-4 w-4" />
+                </button>
+                <button
+                  className="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200"
+                  title="Edit Booking"
+                >
+                  <Link rel="stylesheet" href={`edit/client/${booking._id}`}>
+                    <Edit className="h-4 w-4" />
+                  </Link>
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </div>
+  
+  {/* Cards for mobile and md screens */}
+  <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+    {(filteredBookings as BookingWithId[]).map((booking) => (
+      <div
+        key={booking._id}
+        className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 shadow transition hover:shadow-md"
+      >
+        <div className="flex justify-between mb-2">
+          <span className="font-bold text-gray-900 dark:text-white">{booking.details.name}</span>
+          <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(booking.details.status)}`}>
+            {booking.details.status}
+          </span>
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+          <IdCard className="inline h-4 w-4 mr-1"/> {booking.id} - {booking.details.category}
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+          <Mail className="inline h-3 w-3 mr-1"/> {booking.details.email}
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+          <Phone className="inline h-3 w-3 mr-1"/> {booking.details.phone}
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+          <Calendar className="inline h-3 w-3 mr-1"/> {booking.details?.eventTimes?.[0]?.eventDate} &nbsp;
+          <Clock className="inline h-3 w-3 mr-1"/> {booking.details?.eventTimes?.[0]?.startTime} - {booking.details?.eventTimes?.[0]?.endTime}
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          <MapPin className="inline h-3 w-3 mr-1"/> {booking.details.pinCode}
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="font-medium text-gray-900 dark:text-white">₹{booking.details.totalAmount}</span>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => handleViewBooking(booking)}
+              className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200"
+            >
+              <Eye className="h-4 w-4" />
+            </button>
+            <button
+              className="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200"
+            >
+              <Link rel="stylesheet" href={`edit/client/${booking._id}`}>
+                <Edit className="h-4 w-4" />
+              </Link>
+            </button>
+          </div>
         </div>
       </div>
+    ))}
+  </div>
+
+
 
       {/* Add New Booking Modal */}
       {showAddModal && (
@@ -499,207 +471,7 @@ const Bookings: React.FC = () => {
 
       {/* View Booking Details Modal */}
       {showViewModal && selectedBooking && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
-                Booking Details - {selectedBooking._id}
-              </h3>
-              <button
-                onClick={closeModals}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            <div className="grid mb-6 lg:grid-cols-2 gap-8">
-              {/* Left Column - Basic Info */}
-              <div className="space-y-6">
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                  <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                    Client Information
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <User className="h-5 w-5 text-blue-600" />
-                      <span className="font-medium text-gray-800 dark:text-white">
-                        {selectedBooking.details.name}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Mail className="h-5 w-5 text-green-600" />
-                      <span className="text-gray-600 dark:text-gray-300">
-                        {selectedBooking.details.email}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Phone className="h-5 w-5 text-purple-600" />
-                      <span className="text-gray-600 dark:text-gray-300">
-                        {selectedBooking.details.phone}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                  <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                    Event Details
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <Crown className="size-5" />
-                      <span className="font-medium text-gray-800 dark:text-white">
-                        {selectedBooking.details.package}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      {getServiceIcon(selectedBooking.details.eventType)}
-                      <span className="font-medium text-gray-800 dark:text-white">
-                        {selectedBooking.details.eventType}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="h-5 w-5 text-blue-600" />
-
-                      <div className="items-start w-full">
-                        {selectedBooking.details.eventTimes.map(
-                          (event: EventTimeSlot, index: number) => {
-                            return (
-                              <div
-                                key={index}
-                                className="w-full flex justify-between"
-                              >
-                                <span>{event.eventDate}</span>
-
-                                <span className="flex gap-4">
-                                  <span>{event.startTime}</span>
-                                  <span>{event.endTime}</span>
-                                </span>
-                              </div>
-                            );
-                          }
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-3">
-                      <MapPin className="h-5 w-5 text-red-600" />
-                      <span className="text-gray-600 dark:text-gray-300">
-                        {selectedBooking.details.location} {","}
-                        {selectedBooking.details.nearArea} {","}
-                        {selectedBooking.details.pinCode} {","}
-                        {selectedBooking.details.dist} {","}
-                        {selectedBooking.details.state} {","}
-                        India
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                {selectedBooking.details.message && (
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
-                    <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                      Additional Notes
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {selectedBooking.details.message}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Column - Status & Team */}
-              <div className="space-y-6">
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                  <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                    Status & Payment
-                  </h4>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Booking Status:{" "}
-                        {selectedBooking.details.status
-                          .charAt(0)
-                          .toUpperCase() +
-                          selectedBooking.details.status.slice(1)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Total Amount: {selectedBooking.details.totalAmount}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Payment Status:
-                      </span>
-
-                      <span
-                        className={`px-3 rounded-full text-sm font-medium ${
-                          paymentStatusClasses[
-                            selectedBooking.details.paymentStatus
-                          ] || "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {selectedBooking.details.paymentStatus}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Advance Paid:{selectedBooking.details.advance}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Remaining:
-                        {selectedBooking.details.totalAmount -
-                          selectedBooking.details.advance}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
-                  <h2 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                    Assigned Team
-                  </h2>
-                  {selectedBooking.details.assignedTeam.length === 0 ? (
-                    <p>No team assigned yet.</p>
-                  ) : (
-                    <ul className="space-y-2">
-                      {selectedBooking.details.assignedTeam.map(
-                        (member: PersonRole, index: number) => (
-                          <li
-                            key={index}
-                            className="rounded-lg flex justify-between items-center text-gray-600 dark:text-gray-300"
-                          >
-                            <div className="flex gap-2">
-                              <p className="font-semibold">{member.name}</p>
-                              <p className="text-sm text-gray-500">
-                                {member.role}
-                              </p>
-                            </div>
-                            <div className="font-medium">₹{1000}</div>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  )}
-                </div> */}
-              </div>
-            </div>
-            <PriceCalculate localBooking={selectedBooking} />
-
-            <div className="flex space-x-4 mt-8">
-              <button
-                onClick={closeModals}
-                className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
+        <BookingInformation selectedBooking={selectedBooking} setShowViewModal={setShowViewModal}/>
       )}
     </div>
   );
