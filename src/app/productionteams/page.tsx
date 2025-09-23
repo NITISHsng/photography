@@ -35,10 +35,10 @@ const ProductionTeamPage = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 md:px-12 ">
             <div className="grid lg:grid-cols-2 gap-8">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border-gray-200 dark:border-gray-700 ">
          <SearchTeams/>
       </div>
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border-gray-200 dark:border-gray-700 ">
          <OurServiceLocation/>
       </div>
     </div>

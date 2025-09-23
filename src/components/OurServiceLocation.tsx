@@ -26,7 +26,7 @@ const OurServiceLocation = () => {
 
   return (
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border-gray-200 dark:border-gray-700 p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold flex items-center">
             <MapPin className="h-6 w-6 mr-2 text-green-600" />

@@ -5,7 +5,6 @@ import PincodeLookup from '@/mainComponents/PinToLocation'
 export default function JoinUs() {
   return (
       <AppProvider>
-
         <PincodeLookup />
       </AppProvider>
   )

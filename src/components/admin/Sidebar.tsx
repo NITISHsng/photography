@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   ]
 
   return (
-    <div className={`fixed left-0 top-0 h-full z-40 ${sidebarOpen ? 'w-64' : 'w-16'} bg-white dark:bg-gray-800 shadow-2xl transition-all duration-300 flex flex-col border-r border-gray-200 dark:border-gray-700 overflow-hidden`}>
+    <div className={`fixed left-0 top-0 h-full z-40 ${sidebarOpen ? 'w-64' : 'w-0'} bg-white dark:bg-gray-800 shadow-2xl transition-all duration-300 flex flex-col border-r border-gray-200 dark:border-gray-700 overflow-hidden`}>
       {/* Admin Panel Header */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">

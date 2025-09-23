@@ -12,9 +12,10 @@ import TeamManagement from '@/components/admin/TeamManagement'
 import Analysis from '@/components/admin/Analysis'
 import EquipmentPartner from '@/components/admin/EquipmentPartner'
 
-interface OperatorPageProps {
-  onLogout: () => void
+interface OperatorPageProps{
+  onLogout: () => void;
 }
+
 
 const OperatorPage: React.FC<OperatorPageProps> = ({ 
   onLogout
@@ -52,10 +53,12 @@ const OperatorPage: React.FC<OperatorPageProps> = ({
         />
 
         {/* Main Content */}
-        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'}`}>
+        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
           {/* Header */}
           <Header 
             onLogout={onLogout}
+           sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
           />
 
           {/* Content */}

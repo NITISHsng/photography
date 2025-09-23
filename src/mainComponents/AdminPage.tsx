@@ -14,8 +14,9 @@ import Operator from '@/components/admin/Operator'
 import { useAppContext } from "@/contexts/AppContext";
 
 interface AdminPageProps {
-  onLogout: () => void
+  onLogout: () => void;
 }
+
 
 const AdminPage: React.FC<AdminPageProps> = ({ 
   onLogout
@@ -55,10 +56,11 @@ const {adminOperatorData}=useAppContext();
         />
 
         {/* Main Content */}
-        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'}`}>
+        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
           {/* Header */}
           <Header
-            onLogout={onLogout}
+            onLogout={onLogout} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}
+            // onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
           />
 
           {/* Content */}
