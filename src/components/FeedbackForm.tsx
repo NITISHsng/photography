@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import toast from "react-hot-toast";
 // import use
 const FeedbackForm: React.FC = () => {
@@ -10,32 +10,32 @@ const FeedbackForm: React.FC = () => {
   const [isValidClient, setIsValidClient] = useState<boolean | null>(null);
 
   // ✅ Auto-check when ID length == 15
-const checkClient = async () => {
-  if (clientId.length === 15) {
-    try {
-      const res = await fetch("/api/check-client", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: clientId }),
-      });
+useEffect(() => {
+  const checkClient = async () => {
+    if (clientId.length === 15) {
+      try {
+        const res = await fetch("/api/check-client", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: clientId }),
+        });
 
-      if (!res.ok) throw new Error("Failed to check client");
+        if (!res.ok) throw new Error("Failed to check client");
 
-      const data = await res.json();
-      setIsValidClient(data.valid);
-
-    } catch (err) {
-      console.error("Error checking client:", err);
-      setIsValidClient(false);
+        const data = await res.json();
+        setIsValidClient(data.valid);
+      } catch (err) {
+        console.error("Error checking client:", err);
+        setIsValidClient(false);
+      }
+    } else {
+      setIsValidClient(null);
     }
-  } else {
-    setIsValidClient(null);
-  }
-};
+  };
 
-  useEffect(() => {
-    checkClient();
-  }, [clientId]);
+  checkClient();
+}, [clientId]); 
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

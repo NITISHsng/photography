@@ -172,7 +172,7 @@ const TeamManagement: React.FC = () => {
   };
 
   const handleAddMember = () => {
-    alert('New team member added successfully!\n\nMember Details:\n- Name: New Member\n- Role: Cameraman\n- Location: Mumbai\n- Status: Active\n- ID: TM006');
+    toast.success('New team member added successfully!\n\nMember Details:\n- Name: New Member\n- Role: Cameraman\n- Location: Mumbai\n- Status: Active\n- ID: TM006');
     console.log('Add new team member');
     setShowAddModal(false);
   };

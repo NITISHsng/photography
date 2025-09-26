@@ -49,22 +49,24 @@ export default function ClientPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-      if (!id) return;
-    const fetchClient = async () => {
-      try {
-        const res = await fetch(`/api/hiring?id=${id}`);
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data: BookingData = await res.json();
-        setHiringRequest(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (!id) return;
+  const fetchClient = async () => {
+    try {
+      const res = await fetch(`/api/hiring?id=${id}`);
+      if (!res.ok) throw new Error("Failed to fetch");
+      const data: BookingData = await res.json();
+      setHiringRequest(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchClient();
-  }, [id]);
+  fetchClient();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [id]);
+
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:

@@ -14,6 +14,7 @@ import {
   Crown,
   IdCardLanyard
 } from "lucide-react";
+// import Image from 'next/image';
 interface BookingInformationProps {
   selectedBooking: BookingWithId;
   setShowViewModal: React.Dispatch<React.SetStateAction<boolean>>;
