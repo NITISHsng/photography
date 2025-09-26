@@ -1,5 +1,5 @@
 "use client";
-
+import toast from "react-hot-toast";
 import React, { useState, useEffect } from "react";
 import {
   ArrowRight,
@@ -134,7 +134,7 @@ const HiringPage: React.FC<headerType> = () => {
 
       if (!response.ok) {
         const { error } = await response.json();
-        alert(error || "Failed to submit form");
+        toast.error(error || "Failed to submit form");
         return;
       }
 
@@ -150,7 +150,7 @@ const HiringPage: React.FC<headerType> = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Something went wrong. Please try again.");
+     toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

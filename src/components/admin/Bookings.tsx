@@ -20,8 +20,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
-import { BookingData, EventTimeSlot} from "@/contexts/fromType";
+import { BookingData} from "@/contexts/fromType";
 import BookingInformation from "../sub_Components/BookingInformation";
+import toast from "react-hot-toast";
 const Bookings: React.FC = () => {
   type BookingWithId = BookingData & { _id: string };
   const { bookings } = useAppContext();
@@ -114,7 +115,7 @@ const Bookings: React.FC = () => {
   };
 
   const handleSaveBooking = () => {
-    alert("Booking saved successfully!");
+    toast.success("Booking saved successfully!");
     setShowAddModal(false);
     setSelectedBooking(null);
   };

@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { 
   Package, Search, Filter, Plus, Eye, Edit,
   Camera, Video, Mic, Lightbulb, Settings, MapPin,
@@ -158,21 +159,18 @@ const EquipmentPartner: React.FC = () => {
   const handleViewHistory = (partnerId: string) => {
     const partner = equipmentPartners.find(p => p.id === partnerId);
     if (partner) {
-      alert(`Payment History for ${partner.name}:\n\nJan 2024: ₹${partner.monthlyRevenue.toLocaleString()}\nDec 2023: ₹${(partner.monthlyRevenue * 0.9).toLocaleString()}\nNov 2023: ₹${(partner.monthlyRevenue * 0.85).toLocaleString()}\nOct 2023: ₹${(partner.monthlyRevenue * 0.8).toLocaleString()}\n\nTotal Revenue: ₹${(partner.monthlyRevenue * 12).toLocaleString()}/year`);
-      console.log(`View history for partner: ${partnerId}`, partner);
+      toast.success(`Payment History for ${partner.name}:\n\nJan 2024: ₹${partner.monthlyRevenue.toLocaleString()}\nDec 2023: ₹${(partner.monthlyRevenue * 0.9).toLocaleString()}\nNov 2023: ₹${(partner.monthlyRevenue * 0.85).toLocaleString()}\nOct 2023: ₹${(partner.monthlyRevenue * 0.8).toLocaleString()}\n\nTotal Revenue: ₹${(partner.monthlyRevenue * 12).toLocaleString()}/year`);
     }
   };
 
   const handleSavePartner = () => {
-    alert('Equipment partner added successfully!\n\nPartner Details:\n- Name: New Equipment Partner\n- Location: Mumbai\n- Equipment: 25 items\n- Status: Active');
-    console.log('Add new equipment partner');
+    toast.success('Equipment partner added successfully!\n\nPartner Details:\n- Name: New Equipment Partner\n- Location: Mumbai\n- Equipment: 25 items\n- Status: Active');
     setShowAddModal(false);
   };
 
   const handleSavePayment = () => {
     if (selectedPartner) {
-      alert(`Payment processed successfully for ${selectedPartner.name}!\n\nPayment Details:\n- Amount: ₹15,000\n- Type: Revenue Share\n- Date: ${new Date().toLocaleDateString()}\n- Description: Monthly equipment rental revenue`);
-      console.log(`Add payment for partner: ${selectedPartner.id}`, selectedPartner);
+      toast.success(`Payment processed successfully for ${selectedPartner.name}!\n\nPayment Details:\n- Amount: ₹15,000\n- Type: Revenue Share\n- Date: ${new Date().toLocaleDateString()}\n- Description: Monthly equipment rental revenue`);
       setShowPaymentModal(false);
       setSelectedPartner(null);
     }

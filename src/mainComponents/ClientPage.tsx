@@ -5,6 +5,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { serviceOptions } from "@/contexts/fromData";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
+import toast from "react-hot-toast";
 import {
   photoPackages,
   albumOptions,
@@ -108,10 +109,10 @@ export default function ClientPage() {
 
       const data = await res.json();
       console.log("Updated successfully:", data);
-      alert("Saved successfully!");
+      toast.success("Saved successfully!");
     } catch (err) {
       console.error(err);
-      alert("Failed to save");
+      toast.error("Failed to save");
     } finally {
       setSaving(false);
     }

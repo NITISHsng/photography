@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAppContext } from "@/contexts/AppContext";
-// import { EventsDateAndTimes } from "@/contexts/fromType";
+import toast from "react-hot-toast";
 import {
   Users,
   Star,
@@ -135,14 +135,14 @@ const JoinUsPage: React.FC<headerType> = (props) => {
       });
       if (!response.ok) {
         const { error } = await response.json();
-        alert(error || "Failed to submit form");
+        toast.error(error || "Failed to submit form");
         return;
       }
       setIsSubmitted(true);
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

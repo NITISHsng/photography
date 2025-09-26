@@ -47,6 +47,15 @@ export async function POST(req: Request) {
 
     if (!user) return errorResponse("User not found", 401);
 
+
+    const loginHistoryCollection = await getCollection("loginHistory"); // you can rename the collection
+    await loginHistoryCollection.insertOne({
+      userId: user.userId || user.operatorId,
+      userType,
+      name: user.name || null,
+      loginAt: new Date(),
+    });
+
     // ✅ Build safe response
     const response = NextResponse.json(
       {

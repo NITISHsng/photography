@@ -6,6 +6,7 @@ import {
   Calendar,  Edit, Plus, Eye, User,
   Camera,  Edit3, Package, TrendingUp, Clock, X
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { TeamMember } from '@/contexts/fromType';
 const TeamManagement: React.FC = () => {

@@ -65,7 +65,6 @@ const handleSubmit = async (e: React.FormEvent) => {
     setTimeout(() => setIsSubmitted(false), 5000);
   } catch (err) {
     console.error(err);
-    // alert('Something went wrong.');
      toast.error(`Failed to send message.${err}`);
   } finally {
     setIsSubmitting(false);

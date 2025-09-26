@@ -13,7 +13,6 @@ import {
 import { ArrowRight, Play } from "lucide-react";
 import Link from "next/link";
 const Hero: React.FC = () => {
-
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -59,6 +58,26 @@ const Hero: React.FC = () => {
         {/* Overlay for readability */}
         <div className="h-full w-full absolute inset-0 dark:bg-black/30 bg-black/10 rounded-xl"></div>
       </div>
+      {/* <div className="absolute top-0 left-0 h-full w-full overflow-hidden md:mt-[55px] mt-[50px]">
+        <div className="relative grid lg:grid-cols-2">
+          <div className="w-full h-screen">
+            <img
+              src="/homeImages/left.png"
+              alt="sdac"
+              className="w-full h-full object-cover object-[left_bottom]"
+            />
+          </div>
+
+          <div className="overflow-x-hidden hidden lg:block">
+            {renderRow(imageUrlsRow1, "left", "row1")}
+            {renderRow(imageUrlsRow2, "right", "row2")}
+            {renderRow(imageUrlsRow3, "left", "row3")}
+            {renderRow(imageUrlsRow4, "right", "row4")}
+          </div>
+        </div>
+
+        <div className="h-full w-full absolute inset-0 dark:bg-black/30 bg-black/10 rounded-xl"></div>
+      </div> */}
 
       {/* Hero Content */}
       <div className="container mx-auto px-6 lg:px-8 md:py-36 md:pt-32 pb-20 relative z-10 items-center">
@@ -108,13 +127,11 @@ const Hero: React.FC = () => {
                     <span>Contact Us</span>
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </button>
-                  <button
-                    className="group max-w-[200px] mb-4 inline-flex items-center justify-center px-8 py-2.5 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 md:rounded-tl-[0px] md:rounded-br-[0px] rounded-tr-[40px] rounded-bl-[40px] font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
-                  >
+                  <button className="group max-w-[200px] mb-4 inline-flex items-center justify-center px-8 py-2.5 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 md:rounded-tl-[0px] md:rounded-br-[0px] rounded-tr-[40px] rounded-bl-[40px] font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
                     <Play className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                   <Link href={"/hiring"}>
-                    <span>Book Us</span>
-                   </Link>
+                    <Link href={"/hiring"}>
+                      <span>Book Us</span>
+                    </Link>
                   </button>
                 </div>
               </div>

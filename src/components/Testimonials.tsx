@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
 import CountUp from "./sub_Components/numberAnimation";
-
+import Link from "next/link";
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -13,7 +13,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Vikram Paul",
       role: "Wedding Couple",
-      content:
+      feedbackText:
         "আসানক্যাপচার আমাদের বিয়ের দিনটিকে স্বপ্নময় করে তুলেছিল! তারা প্রতিটি মুহূর্ত অসাধারণভাবে ধারণ করেছে। ভিডিওটি দেখে চোখে জল এসে যায়।",
       rating: 5,
       image:
@@ -23,7 +23,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Rohan Singha",
       role: "Marketing Director",
-      content:
+      feedbackText:
         "আমাদের প্রোডাক্ট লঞ্চ ভিডিওটি অসাধারণ হয়েছে! তাদের কাজের মান ছিল দারুণ এবং তারা পুরোপুরি আমাদের ধারণা বাস্তবায়ন করেছে। বিক্রি 4০% বেড়েছে।",
       rating: 5,
       image:
@@ -33,7 +33,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Ananya Paul",
       role: "Event Coordinator",
-      content:
+      feedbackText:
         "আমরা একাধিক কর্পোরেট ইভেন্টে তাদের সাথে কাজ করেছি। প্রতিবারই তারা আমাদের প্রত্যাশা ছাড়িয়ে গেছে। তাদের পেশাদারিত্ব প্রশংসনীয়।",
       rating: 5,
       image:
@@ -43,7 +43,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Aarav Roy",
       role: "Music Producer",
-      content:
+      feedbackText:
         "তাদের তৈরি করা মিউজিক ভিডিওটি চমৎকার হয়েছে! সৃজনশীলতা ও দক্ষতায় ভরা কাজটি খুব দ্রুত ভাইরাল হয়ে যায়।",
       rating: 5,
       image:
@@ -53,7 +53,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Sneha Singha",
       role: "Restaurant Owner",
-      content:
+      feedbackText:
         "আমাদের রেস্টুরেন্টের প্রোমো ভিডিওটি দারুণভাবে পরিবেশ ও খাবারের সৌন্দর্য তুলে ধরেছে। বুকিং 36% বৃদ্ধি পেয়েছে।",
       rating: 5,
       image:
@@ -63,7 +63,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Priya Roy",
       role: "Documentary Filmmaker",
-      content:
+      feedbackText:
         "আসানক্যাপচারের সঙ্গে ডকুমেন্টারি বানাতে দারুণ অভিজ্ঞতা হয়েছে। তাদের প্রযুক্তিগত দক্ষতা আমাদের কাজকে উৎসবে পুরস্কৃত করেছে।",
       rating: 5,
       image:
@@ -156,7 +156,7 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <section className="py-10 md:py-12 bg-white dark:bg-gray-900 relative overflow-hidden">
+    <section className="py-6 md:py-12 bg-white dark:bg-gray-900 relative overflow-hidden">
       {/* Background decoration */}
       {/* <div className="absolute inset-0 opacity-5 dark:opacity-3">
         <div className="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
@@ -227,7 +227,7 @@ const Testimonials: React.FC = () => {
 
                 {/* Content */}
                 <blockquote className="text-lg font-medium text-gray-800 dark:text-white mb-6 leading-relaxed">
-                  {'"' + testimonial.content + '"'}
+                  {'"' + testimonial.feedbackText + '"'}
                 </blockquote>
 
                 {/* Author */}
@@ -298,6 +298,14 @@ const Testimonials: React.FC = () => {
             </div>
           ))}
         </div>
+<div className="flex justify-center mt-6">
+  <Link href="/feedback">
+    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+      Share your feedback
+    </button>
+  </Link>
+</div>
+
       </div>
 
       <style jsx>{`
