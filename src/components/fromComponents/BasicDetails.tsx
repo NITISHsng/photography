@@ -1,5 +1,5 @@
 "use Client";
-import React, {useEffect } from "react";
+import React, {useEffect,useState } from "react";
 import { BookingData } from "@/contexts/fromType";
 import { EventTimeSlot } from "@/contexts/fromType";
 import { PersonRole } from "@/contexts/fromType";
@@ -239,6 +239,22 @@ const generateInput = ({
     }
   };
 
+    const [showUnavailable, setShowUnavailable] = useState(false);
+
+  useEffect(() => {
+    if (bookingData.details.pinCode.length === 6 && areaDetails && !areaDetails?.[0]) {
+      // delay 2-5 seconds (e.g., 3000 ms = 3 sec)
+    setTimeout(() => {
+        setShowUnavailable(true);
+      }, 5000);
+    } else {
+      // reset if conditions change
+      setShowUnavailable(false);
+    }
+  }, [bookingData.details.pinCode, areaDetails]);
+
+  // console.log(showUnavailable);
+
   return (
     <div>
       {/* Basic Information */}
@@ -365,10 +381,11 @@ const generateInput = ({
 
   {bookingData.details.pinCode.length === 6 &&
     areaDetails &&
-    !areaDetails?.[0] && (
-      <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
-        Sorry, this area our service is not available
-      </div>
+    !areaDetails?.[0] && showUnavailable && (
+        <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
+          Sorry, this area our service is not available
+        </div>
+    
     )}
 </div>
 
