@@ -103,6 +103,7 @@ const Header: React.FC<headerType> = ({
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
                   className="relative px-6 py-3 font-bold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 group overflow-hidden rounded-lg"
+                  aria-label={link.label}
                 >
                   <span className="relative z-10">{link.label}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -118,13 +119,12 @@ const Header: React.FC<headerType> = ({
               {/* Conditional Home Button */}
 
               {actionButtons.map((btn) => (
-                <Link key={btn.label} href={btn.href}>
-                  <button
-                    className={`hidden md:inline-flex items-center relative px-4 py-2.5 font-bold text-white bg-gradient-to-r ${btn.gradient} ${btn.darkGradient} shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105`}
-                  >
-                    <span className="relative z-10">{btn.label}</span>
-                    <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
-                  </button>
+                <Link key={btn.label} href={btn.href}
+                  className={`hidden md:inline-flex items-center relative px-4 py-2.5 font-bold text-white bg-gradient-to-r ${btn.gradient} ${btn.darkGradient} shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105`}
+                  aria-label={btn.label}
+                >
+                  <span className="relative z-10">{btn.label}</span>
+                  <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
                 </Link>
               ))}
             </span>
@@ -156,6 +156,7 @@ const Header: React.FC<headerType> = ({
                     key={link.id}
                     onClick={() => scrollToSection(link.id)}
                     className="w-full relative px-6 py-4 font-bold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 group overflow-hidden rounded-lg"
+                    aria-label={link.label}
                   >
                     <span className="relative z-10">{link.label}</span>
                   </button>
@@ -163,13 +164,12 @@ const Header: React.FC<headerType> = ({
 
 
               {actionButtons.slice(1).map((btn) => (
-                <Link key={btn.label} href={btn.href}>
-                  <button
-                    className={`w-full relative px-6 py-4 mb-4 font-bold text-white bg-gradient-to-r ${btn.gradient} ${btn.darkGradient} shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105`}
-                  >
-                    <span className="relative z-10">{btn.label}</span>
-                    <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
-                  </button>
+                <Link key={btn.label} href={btn.href}
+                  className={`w-full relative px-6 py-4 mb-4 font-bold text-white bg-gradient-to-r ${btn.gradient} ${btn.darkGradient} shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105`}
+                  aria-label={btn.label}
+                >
+                  <span className="relative z-10">{btn.label}</span>
+                  <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
                 </Link>
               ))}
 

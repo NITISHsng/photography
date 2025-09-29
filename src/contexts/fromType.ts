@@ -324,6 +324,29 @@ export interface areaType {
 }
 
 
+export type Post = {
+  id: string; // internal id
+  slug: string; // clean URL slug e.g. "best-wedding-photography-tips"
+  title: string;
+  excerpt: string;
+  content: string; // HTML or markdown-rendered HTML
+  publishedAt: string; // ISO date
+  author: {
+    name: string;
+    role?: string;
+    avatar?: string;
+  };
+  tags: string[];
+  readingTime?: string;
+  coverImage?: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
+  relatedSlugs?: string[]; // optional for related posts
+};
+
 
 
 
