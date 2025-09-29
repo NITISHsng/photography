@@ -5,6 +5,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { serviceOptions } from "@/contexts/fromData";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
+import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
 import {
   photoPackages,
@@ -35,6 +36,7 @@ import { useParams } from "next/navigation";
 import SearchTeams from "@/components/SearchTeams";
 
 export default function ClientPage() {
+  const router = useRouter();
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
   const { hiringRequest, setHiringRequest, handleChange } = useAppContext();
 
@@ -118,6 +120,8 @@ export default function ClientPage() {
       console.log("Updated successfully:", data);
       toast.success("Saved successfully!");
       setRemoveMemberId([]);
+       localStorage.setItem('activeTab', "bookings");
+       router.back();
     } catch (err) {
       console.error(err);
       toast.error("Failed to save");

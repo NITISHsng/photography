@@ -1,9 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
-// import { Video } from 'lucide-react'
-
-// Import admin components (reusing existing components)
+import React, { useState, useEffect } from 'react'
 import Sidebar from '@/components/admin/Sidebar'
 import Header from '@/components/admin/Header'
 import Dashboard from '@/components/admin/Dashboard'
@@ -12,16 +9,27 @@ import TeamManagement from '@/components/admin/TeamManagement'
 import Analysis from '@/components/admin/Analysis'
 import EquipmentPartner from '@/components/admin/EquipmentPartner'
 
-interface OperatorPageProps{
-  onLogout: () => void;
+interface OperatorPageProps {
+  onLogout: () => void
 }
 
-
-const OperatorPage: React.FC<OperatorPageProps> = ({ 
-  onLogout
-}) => {
+const OperatorPage: React.FC<OperatorPageProps> = ({ onLogout }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activeSection, setActiveSection] = useState('dashboard')
+
+  // Load saved active tab on mount
+  useEffect(() => {
+    try {
+      const savedTab = localStorage.getItem('activeTab')
+      if (savedTab) {
+        setActiveSection(savedTab)
+      }
+    } catch (error) {
+      console.error('Error loading activeTab from localStorage:', error)
+    }
+  }, [])
+
+  
 
   const renderContent = () => {
     switch (activeSection) {
@@ -43,26 +51,31 @@ const OperatorPage: React.FC<OperatorPageProps> = ({
   return (
     <div className="min-h-screen transition-colors duration-300">
       <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex">
-        {/* Fixed Sidebar - Operator doesn't have access to Operator management */}
-        <Sidebar 
+        {/* Sidebar - Operator (no Operator Management) */}
+        <Sidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          // userType="operator" // Force operator type to hide operator management
         />
 
         {/* Main Content */}
-        <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
-          {/* Header */}
-          <Header 
+        <div
+          className={`flex-1 flex flex-col transition-all duration-300 ${
+            sidebarOpen ? 'ml-64' : 'ml-0'
+          }`}
+        >
+          <Header
             onLogout={onLogout}
-           sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
           />
 
           {/* Content */}
-          <main className="flex-1 p-6 overflow-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <main
+            className="flex-1 p-6 overflow-auto"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             <style jsx>{`
               main::-webkit-scrollbar {
                 display: none;
