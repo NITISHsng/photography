@@ -6,10 +6,12 @@ const uri = process.env.MONGODB_URI!;
 const client = new MongoClient(uri);
 import { ObjectId } from "mongodb";
 import { AssignedEvents, TeamMember } from "@/contexts/fromType";
+
+
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { _id, ...hiringRequest } = body;
+    const { _id, removeMemberId = [], ...hiringRequest } = body;
 
     if (!_id) {
       return NextResponse.json({ error: "Missing _id" }, { status: 400 });
@@ -32,39 +34,47 @@ export async function PUT(request: Request) {
       );
     }
 
-    // if assignedTeam exists, update each member in joinUsApplicants
-    if (hiringRequest.details?.assignedTeam?.length > 0) {
-const eventPayload: AssignedEvents = {
-  id: hiringRequest.id, 
-  eventsDateTime: hiringRequest.details.eventTimes,
-  title: hiringRequest.details.eventType,
-  location: hiringRequest.details.location,
-  contact: hiringRequest.details.phone,
-  pinCode: hiringRequest.details.pinCode,
-  nearArea: hiringRequest.details.nearArea,
-  district: hiringRequest.details.dist,
-  state: hiringRequest.details.state,
-};
+    // event payload
+    const eventPayload: AssignedEvents = {
+      id: hiringRequest.id,
+      eventsDateTime: hiringRequest.details.eventTimes,
+      title: hiringRequest.details.eventType,
+      location: hiringRequest.details.location,
+      contact: hiringRequest.details.phone,
+      pinCode: hiringRequest.details.pinCode,
+      nearArea: hiringRequest.details.nearArea,
+      district: hiringRequest.details.dist,
+      state: hiringRequest.details.state,
+    };
 
+    // 🔹 Remove members (if any)
+    await joinUsApplicantsCol.updateMany(
+  { memberId: { $in: removeMemberId } },
+  { $pull: { events: { id: hiringRequest.id } } }
+);
 
-      for (const member of hiringRequest.details.assignedTeam) {
-        if (!member?.id) continue;
+ // 🔹 Add events for all assigned team members at once
+if (hiringRequest.details?.assignedTeam?.length > 0) {
+  const memberIds = hiringRequest.details.assignedTeam
+    .map((m: { id?: string }) => m.id)
+    .filter(Boolean);
 
-        await joinUsApplicantsCol.updateOne(
-          { id: member.id }, 
-          {
-            $push: {
-              events: eventPayload,
-            },
-          } 
-        );
+  if (memberIds.length > 0) {
+    await joinUsApplicantsCol.updateMany(
+      { id: { $in: memberIds } }, // all assigned members
+      {
+        $addToSet: { events: eventPayload }, // avoid duplicates
       }
-    }
+    );
+  }
+}
+
 
     return NextResponse.json(
       { message: "Updated successfully", updatedData: hiringRequest },
       { status: 200 }
     );
+
   } catch (error) {
     console.error("PUT error:", error);
     return NextResponse.json(

@@ -45,7 +45,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onLogout }) => {
       e.eventsDateTime.map((ev) => normalizeDate(ev.eventDate))
     ) ?? [];
 
-  console.log(selectedEvent);
 
   const isEventDate = (date: Date) => highlightDates.includes(formatDate(date));
 

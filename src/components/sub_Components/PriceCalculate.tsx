@@ -185,11 +185,6 @@ const calculateServicePrice = (bookingData: BookingData) => {
     );
   };
 
-useEffect(() => {
-
-  console.log("bookingData")
-  console.log(bookingData)
-}, [bookingData])
 
   return (
                             <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-2xl border border-blue-200 dark:border-blue-700 ">

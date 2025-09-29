@@ -26,8 +26,9 @@ import {
   Edit3,
   Package,
   Crown,
-  IdCard
+  IdCard,
 } from "lucide-react";
+
 import Header from "@/components/Header";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { useParams } from "next/navigation";
@@ -49,24 +50,23 @@ export default function ClientPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-  if (!id) return;
-  const fetchClient = async () => {
-    try {
-      const res = await fetch(`/api/hiring?id=${id}`);
-      if (!res.ok) throw new Error("Failed to fetch");
-      const data: BookingData = await res.json();
-      setHiringRequest(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!id) return;
+    const fetchClient = async () => {
+      try {
+        const res = await fetch(`/api/hiring?id=${id}`);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data: BookingData = await res.json();
+        setHiringRequest(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchClient();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [id]);
-
+    fetchClient();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:
@@ -96,15 +96,20 @@ export default function ClientPage() {
     }
   };
 
+  const [removeMemberId, setRemoveMemberId] = useState<string[]>([]);
+  const deleteTeamMember = (id: string | null) => {
+    if (!id) return;
+    setRemoveMemberId((prev) => [...prev, id]);
+  };
+
   const handleSave = async () => {
-    console.log(hiringRequest);
     try {
       setSaving(true);
 
       const res = await fetch(`/api/hiring?id=${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ _id: id, ...hiringRequest }), // Combine _id and data
+        body: JSON.stringify({ _id: id,removeMemberId, ...hiringRequest ,}), // Combine _id and data
       });
 
       if (!res.ok) throw new Error("Failed to save");
@@ -112,6 +117,7 @@ export default function ClientPage() {
       const data = await res.json();
       console.log("Updated successfully:", data);
       toast.success("Saved successfully!");
+      setRemoveMemberId([]);
     } catch (err) {
       console.error(err);
       toast.error("Failed to save");
@@ -141,7 +147,10 @@ export default function ClientPage() {
                 Client Information
               </h4>
               <div className="space-y-3">
-                <div className="flex items-center text-gray-400 dark:text-white/60"><IdCard className="h-5 w-5 text-green-600"/> <span className="px-3"> {hiringRequest.id}</span></div>
+                <div className="flex items-center text-gray-400 dark:text-white/60">
+                  <IdCard className="h-5 w-5 text-green-600" />{" "}
+                  <span className="px-3"> {hiringRequest.id}</span>
+                </div>
                 <div className="flex items-center space-x-3">
                   <User className="h-5 w-5 text-blue-600" />
                   <input
@@ -463,10 +472,12 @@ export default function ClientPage() {
                           {/* Remove Button */}
                           <button
                             onClick={() => {
+                              deleteTeamMember(member.memberId ?? null);
                               const updatedTeam =
                                 hiringRequest.details.assignedTeam!.filter(
                                   (_, i) => i !== idx
                                 );
+
                               handleChange("details.assignedTeam", updatedTeam);
                             }}
                             className="text-red-500 hover:text-red-700"
