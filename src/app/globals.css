@@ -111,6 +111,30 @@ html, body {
   animation: scroll-right 80s linear infinite;
 }
 
+.spin {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 3px dotted #10b981; /* Emerald */
+  animation: spin 2s linear infinite, pulseDots 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseDots {
+  0%, 100% {
+    border-color: #10b981;
+  }
+  50% {
+    border-color: #34d399; /* Lighter emerald */
+  }
+}
+
+
 
 
 

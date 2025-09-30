@@ -44,6 +44,8 @@ export type AssignedTeam = {
   totalProjects?: number;
   projects?: number;
 };
+export type EventsDateAndTimes={ eventDate: string; startTime: string; endTime: string };
+
 export type bookAssignedTeam = {
   name: string;
   role: string;
@@ -62,7 +64,6 @@ export type bookAssignedTeam = {
   projects?: number;
 };
 
-export type EventsDateAndTimes={ eventDate: string; startTime: string; endTime: string };
 
 export type BookingData = {
   createdAt: string;
@@ -269,7 +270,6 @@ export type TransactionHistory = {
 
 // Main form data type
 export type TeamMember = {
-  id: string;
   name: string;
   email: string;
   phone: string;

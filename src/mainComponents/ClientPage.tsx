@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { BookingData } from "@/contexts/fromType";
-import { useAppContext } from "@/contexts/AppContext";
 import { serviceOptions } from "@/contexts/fromData";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import {
   photoPackages,
@@ -34,41 +32,44 @@ import Header from "@/components/Header";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { useParams } from "next/navigation";
 import SearchTeams from "@/components/SearchTeams";
+import { useAppContext } from "@/contexts/AppContext";
+import { BookingData } from "@/contexts/fromType";
 
 export default function ClientPage() {
   const router = useRouter();
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
-  const { hiringRequest, setHiringRequest, handleChange } = useAppContext();
-
   const params = useParams();
+  const { hiringRequest, setHiringRequest, handleChange } = useAppContext();
+  type AppContextType = {
+    bookings: BookingData[];
+  };
+  const [saving, setSaving] = useState(false);
+  const [removeMemberId, setRemoveMemberId] = useState<string[]>([]);
+  const { bookings } = useAppContext() as AppContextType;
   const id = params?.id;
+
+  useEffect(() => {
+    if (!id || !bookings) return;
+
+    const booking = bookings.find((b) => b.id === id) || null;
+    setHiringRequest(booking);
+
+    if (booking) {
+      console.log("Found booking:", booking);
+    }
+  }, [id, bookings, setHiringRequest]);
+
+if (!hiringRequest) {
+  return (
+    <div className="h-screen w-screen grid place-items-center">
+      <span className="spin p-5"></span>
+    </div>
+  );
+}
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
-  // const [hiringRequest, setHiringRequest] = useState<BookingData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (!id) return;
-    const fetchClient = async () => {
-      try {
-        const res = await fetch(`/api/hiring?id=${id}`);
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data: BookingData = await res.json();
-        setHiringRequest(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchClient();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
 
   const paymentStatusClasses: Record<string, string> = {
     Completed:
@@ -98,7 +99,6 @@ export default function ClientPage() {
     }
   };
 
-  const [removeMemberId, setRemoveMemberId] = useState<string[]>([]);
   const deleteTeamMember = (id: string | null) => {
     if (!id) return;
     setRemoveMemberId((prev) => [...prev, id]);
@@ -111,7 +111,7 @@ export default function ClientPage() {
       const res = await fetch(`/api/hiring?id=${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ _id: id,removeMemberId, ...hiringRequest ,}), // Combine _id and data
+        body: JSON.stringify({ _id: id, removeMemberId, ...hiringRequest }), // Combine _id and data
       });
 
       if (!res.ok) throw new Error("Failed to save");
@@ -120,8 +120,8 @@ export default function ClientPage() {
       console.log("Updated successfully:", data);
       toast.success("Saved successfully!");
       setRemoveMemberId([]);
-       localStorage.setItem('activeTab', "bookings");
-       router.back();
+      localStorage.setItem("activeTab", "bookings");
+      router.back();
     } catch (err) {
       console.error(err);
       toast.error("Failed to save");
@@ -129,9 +129,6 @@ export default function ClientPage() {
       setSaving(false);
     }
   };
-
-  if (loading) return <div className="p-6">Loading...</div>;
-  if (!hiringRequest) return <div className="p-6">Client not found</div>;
 
   return (
     <div className="pt-16 bg-gray-50 dark:bg-gray-900 flex justify-center">

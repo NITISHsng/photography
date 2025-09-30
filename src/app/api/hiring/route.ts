@@ -53,21 +53,22 @@ export async function PUT(request: Request) {
   { $pull: { events: { id: hiringRequest.id } } }
 );
 
- // 🔹 Add events for all assigned team members at once
-if (hiringRequest.details?.assignedTeam?.length > 0) {
-  const memberIds = hiringRequest.details.assignedTeam
-    .map((m: { id?: string }) => m.id)
-    .filter(Boolean);
 
-  if (memberIds.length > 0) {
-    await joinUsApplicantsCol.updateMany(
-      { id: { $in: memberIds } }, // all assigned members
-      {
-        $addToSet: { events: eventPayload }, // avoid duplicates
-      }
-    );
+
+ // 🔹 Add events for all assigned team members at once
+if (hiringRequest.details?.assignedTeam?.length) {
+  const bulkOps = hiringRequest.details.assignedTeam.map((member: { memberId: string }) => ({
+    updateOne: {
+      filter: { memberId: member.memberId }, // use memberId
+      update: { $addToSet: { events: eventPayload } },
+    },
+  }));
+
+  if (bulkOps.length > 0) {
+    await joinUsApplicantsCol.bulkWrite(bulkOps);
   }
 }
+
 
 
     return NextResponse.json(

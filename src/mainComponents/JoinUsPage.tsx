@@ -52,7 +52,6 @@ const JoinUsPage: React.FC<headerType> = (props) => {
 
   // Example usage
   const [formData, setFormData] = useState<TeamMember>({
-    id: "demoId",
     name: "",
     email: "",
     phone: "",

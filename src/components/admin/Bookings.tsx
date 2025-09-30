@@ -18,6 +18,8 @@ import {
   X,
   IdCard,
 } from "lucide-react";
+
+
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
 import { BookingData} from "@/contexts/fromType";
@@ -335,7 +337,7 @@ const Bookings: React.FC = () => {
                   className="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200"
                   title="Edit Booking"
                 >
-                  <Link rel="stylesheet" href={`edit/client/${booking._id}`}>
+                  <Link rel="stylesheet" href={`edit/client/${booking.id}`}>
                     <Edit className="h-4 w-4" />
                   </Link>
                 </button>
