@@ -135,12 +135,23 @@ const SearchTeams = () => {
             <div className="flex items-start justify-between mb-4">
               {/* Left: Avatar + Name + ID */}
               <div className="flex items-center space-x-3">
-                <Image
-                  src={member.avatar}
+                <img
                   alt={member.name}
                   width={48}
                   height={48}
-                  className="rounded-full border-2 border-white dark:border-gray-700 shadow-md object-cover"
+                  src={
+                    member.gender === "male"
+                      ? "https://avatar.iran.liara.run/public/boy"
+                      : "https://avatar.iran.liara.run/public/girl"
+                  }
+                  className={`w-12 h-12 rounded-full object-cover border-2
+    ${
+      member.gender === "male"
+        ? "border-blue-300 dark:border-blue-600"
+        : "border-pink-300 dark:border-pink-600"
+    } 
+    shadow-sm
+  `}
                 />
                 <div>
                   <h4 className="font-bold text-lg text-gray-800 dark:text-white">
@@ -186,7 +197,9 @@ const SearchTeams = () => {
             </div>
 
             {/* Phone and Email */}
-            {(userPath == "admin" || userPath == "operator" || userPath == "client") && (
+            {(userPath == "admin" ||
+              userPath == "operator" ||
+              userPath == "client") && (
               <div className="grid grid-cols-1 gap-2 mb-3">
                 <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
                   <Phone className="h-4 w-4 text-green-500" />

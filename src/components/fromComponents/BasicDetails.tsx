@@ -1,12 +1,11 @@
 "use Client";
-import React, {useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookingData } from "@/contexts/fromType";
 import { EventTimeSlot } from "@/contexts/fromType";
 import { PersonRole } from "@/contexts/fromType";
 import { getEventTypeOptions } from "@/contexts/fromData";
 import { calculateDuration } from "@/contexts/fromType";
 import { areaType } from "@/contexts/fromType";
-
 
 interface BasicDetailsProps {
   bookingData: BookingData;
@@ -47,15 +46,13 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     });
   };
 
-
   useEffect(() => {
     if (areaDetails?.[0]?.Message) {
       console.log("Message:", areaDetails[0].Message);
     }
   }, [areaDetails]);
 
-
-  const handleEventTimeChange =async (
+  const handleEventTimeChange = async (
     index: number,
     field: keyof EventTimeSlot,
     value: string
@@ -76,15 +73,13 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       };
     });
 
-  const res=await fetch("/api/hiring", {
+    const res = await fetch("/api/hiring", {
       method: "POST",
       body: JSON.stringify({ warmup: true }),
       headers: { "Content-Type": "application/json" },
     });
-    const data = await res.json();
-    console.log(data);
-
-  };
+    const data = await res.json()
+    };
 
   const addEventTimeBlock = async () => {
     setBookingData((prev) => ({
@@ -97,8 +92,6 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         ],
       },
     }));
-
-    
   };
 
   const removeEventTimeBlock = (index: number) => {
@@ -131,38 +124,37 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   };
 
-
-const generateInput = ({
-  htmlFor,
-  label,
-  type,
-  id,
-  value,
-  required,
-  placeholder,
-  handleInputChange,
-}: GenerateInputProps): React.ReactElement => {
-  return (
-    <div>
-      <label
-        htmlFor={htmlFor}
-        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-      >
-        {label} {required && "*"}
-      </label>
-      <input
-        type={type}
-        id={id}
-        name={id}
-        value={value}
-        onChange={handleInputChange}
-        required={required}
-        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
-        placeholder={placeholder}
-      />
-    </div>
-  );
-};
+  const generateInput = ({
+    htmlFor,
+    label,
+    type,
+    id,
+    value,
+    required,
+    placeholder,
+    handleInputChange,
+  }: GenerateInputProps): React.ReactElement => {
+    return (
+      <div>
+        <label
+          htmlFor={htmlFor}
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
+          {label} {required && "*"}
+        </label>
+        <input
+          type={type}
+          id={id}
+          name={id}
+          value={value}
+          onChange={handleInputChange}
+          required={required}
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
+          placeholder={placeholder}
+        />
+      </div>
+    );
+  };
 
   const handlePersonChange = (
     eventName: string,
@@ -239,12 +231,16 @@ const generateInput = ({
     }
   };
 
-    const [showUnavailable, setShowUnavailable] = useState(false);
+  const [showUnavailable, setShowUnavailable] = useState(false);
 
   useEffect(() => {
-    if (bookingData.details.pinCode.length === 6 && areaDetails && !areaDetails?.[0]) {
+    if (
+      bookingData.details.pinCode.length === 6 &&
+      areaDetails &&
+      !areaDetails?.[0]
+    ) {
       // delay 2-5 seconds (e.g., 3000 ms = 3 sec)
-    setTimeout(() => {
+      setTimeout(() => {
         setShowUnavailable(true);
       }, 5000);
     } else {
@@ -345,50 +341,48 @@ const generateInput = ({
           </div>
 
           {/* Pin Code */}
-      {/* Pin Code */}
-<div className="relative">
-  <label
-    htmlFor="pinCode"
-    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-  >
-    Pin Code *
-  </label>
+          <div className="relative">
+            <label
+              htmlFor="pinCode"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Pin Code *
+            </label>
 
-  <input
-    type="number"
-    id="pinCode"
-    name="pinCode"
-    value={bookingData.details.pinCode}
-    onChange={handleDetailsChange}
-    required
-    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
-    placeholder="Event address pincode 733207"
-  />
+            <input
+              type="number"
+              id="pinCode"
+              name="pinCode"
+              value={bookingData.details.pinCode}
+              onChange={handleDetailsChange}
+              required
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
+              placeholder="Event address pincode 733207"
+            />
 
-  {/* Error or status messages */}
-  {bookingData.details.pinCode.length > 0 &&
-    bookingData.details.pinCode.length < 6 && (
-      <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
-        Pincode must be 6 digits
-      </div>
-    )}
+            {/* Error or status messages */}
+            {bookingData.details.pinCode.length > 0 &&
+              bookingData.details.pinCode.length < 6 && (
+                <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
+                  Pincode must be 6 digits
+                </div>
+              )}
 
-  {bookingData.details.pinCode.length === 6 && !areaDetails && (
-    <div className="absolute text-[12px] mt-1 border border-yellow-400 bg-yellow-100 text-yellow-700 px-4 py-1 rounded">
-      Fetching area details...
-    </div>
-  )}
+            {bookingData.details.pinCode.length === 6 && !areaDetails && (
+              <div className="absolute text-[12px] mt-1 border border-yellow-400 bg-yellow-100 text-yellow-700 px-4 py-1 rounded">
+                Fetching area details...
+              </div>
+            )}
 
-  {bookingData.details.pinCode.length === 6 &&
-    areaDetails &&
-    !areaDetails?.[0] && showUnavailable && (
-        <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
-          Sorry, this area our service is not available
-        </div>
-    
-    )}
-</div>
-
+            {bookingData.details.pinCode.length === 6 &&
+              areaDetails &&
+              !areaDetails?.[0] &&
+              showUnavailable && (
+                <div className="absolute text-[12px] mt-1 border border-red-400 bg-red-100 text-red-700 px-4 py-1 rounded">
+                  Sorry, this area our service is not available
+                </div>
+              )}
+          </div>
 
           <div className="">
             <label

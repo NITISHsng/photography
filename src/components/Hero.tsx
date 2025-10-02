@@ -33,7 +33,6 @@ const Hero: React.FC = () => {
           alt={`Photography ${index + 1}`}
           width={300}
           height={200}
-          loading="lazy"
           className="h-full w-auto object-cover"
         />
       ))}

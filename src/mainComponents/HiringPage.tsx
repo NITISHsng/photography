@@ -117,7 +117,7 @@ const HiringPage: React.FC<headerType> = () => {
 
     //  create a id for client and 3 is the client's 3 letter
     bookingData.createdAt = new Date().toISOString();
-     bookingData.id=generateMemberClientId(bookingData.details.name,bookingData.details.pinCode,3)
+     bookingData.id=generateMemberClientId(bookingData.details.name,"client")
   
      // validate event date at least 1 day ahead
     const firstEventDate = bookingData.details.eventTimes[0]?.eventDate;

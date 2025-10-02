@@ -48,7 +48,6 @@ const JoinUsPage: React.FC<headerType> = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedRole, setSelectedRole] = useState("cameraman");
   const [selectedLevel, setSelectedLevel] = useState("experienced");
-  // const today = new Date().toISOString().split("T")[0];
 
   // Example usage
   const [formData, setFormData] = useState<TeamMember>({
@@ -70,14 +69,13 @@ const JoinUsPage: React.FC<headerType> = (props) => {
     productionPrice: 1200,
     district: "",
     avatar:
-      "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+      "",
     rating: 4.8,
     state: "",
     totalProjects: 0,
     country: "India",
-    // joinDate: today,
     memberId: "member",
-    status: "deactive",
+    status: "active",
     password: "member",
     createdAt: new Date().toISOString(),
     events: [],
@@ -118,8 +116,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
     } else {
       formData.memberId = generateMemberClientId(
         formData.name,
-        formData.pincode,
-        4
+        formData.role,
       );
     }
 

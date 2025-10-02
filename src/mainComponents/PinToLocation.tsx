@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 type User = {
-  id: string;
+  staffId: string;
   name: string;
   email: string;
   role: string;

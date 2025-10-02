@@ -37,7 +37,7 @@ useEffect(() => {
 
     if (uType === currentUserType) {
       // Only re-validate if creds exist
-      if (creds?.userId || creds?.operatorId || creds?.memberId) {
+      if (creds?.staffId || creds?.staffId || creds?.memberId) {
         onLogin(); // ✅ call parent callback instead of undefined handleLogin
       }
     }
@@ -49,8 +49,7 @@ useEffect(() => {
 
 
   const [formData, setFormData] = useState({
-    userId: "",
-    operatorId: "",
+    staffId: "",
     memberId: "",
     password: "",
   });
@@ -61,7 +60,7 @@ useEffect(() => {
 
    const handleLogin = async (
     uType: "admin" | "operator" | "member",
-    creds: { userId: string; operatorId: string; memberId: string; password: string }
+    creds: { staffId?: string; memberId?: string; password: string }
   ) => {
     setIsLoading(true);
     setError(null);
@@ -89,7 +88,7 @@ useEffect(() => {
       // Notify parent
       onLogin();
 
-      setFormData({ userId: "", operatorId: "", memberId: "", password: "" });
+      setFormData({ staffId: "", memberId: "", password: "" });
     } catch (err) {
       console.error("Login error:", err);
       setError("Something went wrong, try again.");
@@ -100,7 +99,13 @@ useEffect(() => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await handleLogin(userType, formData);
+    
+    // Create credentials object based on user type
+    const credentials = userType === "member" 
+      ? { memberId: formData.memberId, password: formData.password }
+      : { staffId: formData.staffId, password: formData.password };
+      
+    await handleLogin(userType, credentials);
   };
 
 
@@ -155,23 +160,23 @@ useEffect(() => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {userType === "admin" && (
                 <InputField
-                  label="Admin User ID"
-                  id="userId"
-                  name="userId"
-                  value={formData.userId}
+                  label="Admin ID"
+                  id="staffId"
+                  name="staffId"
+                  value={formData.staffId}
                   onChange={handleInputChange}
-                  placeholder="Enter admin user ID"
+                  placeholder="Enter Admin ID"
                 />
               )}
 
               {userType === "operator" && (
                 <InputField
                   label="Operator ID"
-                  id="operatorId"
-                  name="operatorId"
-                  value={formData.operatorId}
+                  id="staffId"
+                  name="staffId"
+                  value={formData.staffId}
                   onChange={handleInputChange}
-                  placeholder="Enter operator ID"
+                  placeholder="Enter Operator ID"
                 />
               )}
 
@@ -180,9 +185,9 @@ useEffect(() => {
                   label="Member ID"
                   id="memberId"
                   name="memberId"
-                  value={formData.memberId}
+                  value={formData.memberId || ""}
                   onChange={handleInputChange}
-                  placeholder="Enter member ID"
+                  placeholder="Enter your Member ID"
                 />
               )}
 

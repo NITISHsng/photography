@@ -8,7 +8,7 @@ const CreateOperator: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    operatorId: '',
+    staffId: '',
     password: '',
     confirmPassword: '',
     role: 'operator',
@@ -29,7 +29,7 @@ const CreateOperator: React.FC = () => {
   }
 
   const validateForm = () => {
-    if (!formData.name || !formData.email || !formData.operatorId || !formData.password) {
+    if (!formData.name || !formData.email || !formData.staffId || !formData.password) {
       setError('Please fill all required fields')
       return false
     }
@@ -64,7 +64,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       body: JSON.stringify({
         name: formData.name,
         email: formData.email,
-        operatorId: formData.operatorId,
+        staffId: formData.staffId,
         password: formData.password,
         role: formData.role,
         location: formData.location,
@@ -85,7 +85,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     setFormData({
       name: '',
       email: '',
-      operatorId: '',
+      staffId: '',
       password: '',
       confirmPassword: '',
       role: 'operator',
@@ -155,8 +155,8 @@ const handleSubmit = async (e: React.FormEvent) => {
             </label>
             <input
               type="text"
-              name="operatorId"
-              value={formData.operatorId}
+              name="staffId"
+              value={formData.staffId}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
               required

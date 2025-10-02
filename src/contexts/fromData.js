@@ -1,3 +1,13 @@
+  //permition list of admin and operator
+  export const permissionsList = [
+    { id: "bookings", name: "Bookings Management", color: "blue" },
+    { id: "team", name: "Team Management", color: "purple" },
+    { id: "equipment", name: "Equipment Management", color: "orange" },
+    { id: "clients", name: "Client Management", color: "green" },
+    { id: "inventory", name: "Inventory Control", color: "red" },
+    { id: "scheduling", name: "Scheduling", color: "pink" },
+  ];
+
 // categories
 import {
   Camera,
@@ -1559,21 +1569,46 @@ export  const basicConditions = {
   };
 
 
-export function generateMemberClientId(name, pincode , length ) {
-  const today = new Date();
-  // Take first 4 and 5 letters of name (lowercase, remove spaces)
-  const namePart = name.trim().substring(0, length).toLowerCase();
-  // Format date as YYMMDD
-  const yy = String(today.getFullYear()).slice(-2);
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const dd = String(today.getDate()).padStart(2, "0");
-  const datePart = `${yy}${mm}${dd}`;
-
-  return `${namePart}${pincode}${datePart}`;
+  function getShortName(name) {
+  return name.trim().substring(0, 3).toUpperCase();
 }
 
+function getRoleShort(role) {
+  const map = {
+    "Production Team": "PT",
+    "Cameraman": "CM",
+    "Video Editor": "VE",
+    "Equipment Partner": "EP",
+    "Album Designer": "ALD",
+    "Experienced Professional": "EXP",
+    "Moderate Experience": "MOD",
+    "Fresher": "FRE",
+    "Photography Specialist": "PHO",
+    "Videography Specialist": "VID",
+    "Drone Operator": "DRO",
+    "Lighting Technician": "LIG",
+    "Live Stream Technician": "LSO",
+    "Client":"CLt",
+    "team":"TM",
+    "admin":"A",
+    "operator":"O",
+  };
 
+  return map[role] || role;
+}
 
+export function generateMemberClientId(name, role) {
+  const today = new Date();
+
+  const nameShort = getShortName(name);
+  const roleShort = getRoleShort(role);
+
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const hh = String(today.getHours()).padStart(2, "0");
+  const mm = String(today.getMinutes()).padStart(2, "0");
+
+  return `${nameShort}${roleShort}-${month}-${hh}${mm}`;
+}
 
 
 

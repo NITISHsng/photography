@@ -4,22 +4,56 @@ export type EventTimeSlot = {
   endTime: string;
 };
 
-  export type headerType= {
-    mobileMenuOpen?: boolean;
-    toggleMobileMenu?: () => void;
-    currentPage?: string;
-  }
-  
+export type headerType = {
+  mobileMenuOpen?: boolean;
+  toggleMobileMenu?: () => void;
+  currentPage?: string;
+};
+
+export type MemberStatus = "active" | "inactive" | "suspended";
+export type PaymentDetails = {
+  staffId: string;
+  paymentId: string; // consider lowercase 'p' for consistency
+  amount: number;
+  description: string | null; // since you’re sometimes passing null
+  paymentType: string;
+  createdAt: Date;
+};
+
+export type Staff = {
+  staffId: string;
+  name: string;
+  role: string;
+  email: string;
+  phone: string;
+  location: string;
+  pincode: string;
+  status: MemberStatus;
+  rating: number;
+  joinDate: string; // ISO date string (YYYY-MM-DD)
+  lastLogin: string; // "YYYY-MM-DD HH:mm"
+  permissions: string[];
+  tasksCompleted: number;
+  efficiency: number; // percentage (0–100)
+  avatar: string; // image URL
+  address: string;
+  emergencyContact: string;
+  department: string;
+  workingHours: string; // e.g., "9 AM - 6 PM"
+  skills: string[];
+  password: string;
+  paymentHistory:PaymentDetails[];
+};
+export type StaffWithId= Staff & {_id:string};
 export interface UserType {
-  _id: string;             
-  userId: string;
-  operatorId?: string;     
-  memberId?: string;      
+  _id: string;
+  staffId: string;
+  memberId?: string;
   name: string;
   email: string;
   role: "admin" | "operator" | "member";
-  password: string;      
-  lastLogin: string;      
+  password: string;
+  lastLogin: string;
 }
 
 export type PersonRole = {
@@ -44,7 +78,11 @@ export type AssignedTeam = {
   totalProjects?: number;
   projects?: number;
 };
-export type EventsDateAndTimes={ eventDate: string; startTime: string; endTime: string };
+export type EventsDateAndTimes = {
+  eventDate: string;
+  startTime: string;
+  endTime: string;
+};
 
 export type bookAssignedTeam = {
   name: string;
@@ -64,10 +102,9 @@ export type bookAssignedTeam = {
   projects?: number;
 };
 
-
 export type BookingData = {
   createdAt: string;
-  id:string;
+  id: string;
   details: {
     category: string;
     package: string;
@@ -77,19 +114,19 @@ export type BookingData = {
     eventType: string;
     pinCode: string;
     location: string;
-    dist:string;
-    state:string;
-    nearArea:string;
-    areaType:string,
+    dist: string;
+    state: string;
+    nearArea: string;
+    areaType: string;
     forPersons: PersonRole[];
     message: string;
-    totalAmount: number; 
-    status:string;
-    advance:number;
-    assignedTeam:bookAssignedTeam[] | null;
-    completedAt:Date | null;
+    totalAmount: number;
+    status: string;
+    advance: number;
+    assignedTeam: bookAssignedTeam[] | null;
+    completedAt: Date | null;
     photoVideoUse: boolean;
-    paymentStatus:string;
+    paymentStatus: string;
     eventTimes: EventsDateAndTimes[];
   };
 
@@ -101,7 +138,10 @@ export type BookingData = {
     };
 
     videography: {
-      videoCategory: { id: "classic" | "cinematic" | "standard"; price: number };
+      videoCategory: {
+        id: "classic" | "cinematic" | "standard";
+        price: number;
+      };
       videoQuality: { id: "1080p" | "4k" | "8k" | ""; price: number };
       durationMinutes: number;
       extraVideos: { id: string; price: number }[];
@@ -114,30 +154,27 @@ export type BookingData = {
 export type BookingWithId = BookingData & { _id: string };
 
 export type AdminUser = {
-  id: string
-  name: string
-  email: string
-  role: 'admin'
-}
+  id: string;
+  name: string;
+  email: string;
+  role: "admin";
+};
 
 export type OperatorUser = {
-  id: string
-  operatorId: string
-  name: string
-  email: string
-  role: 'operator'
-}
+  id: string;
+  staffId: string;
+  name: string;
+  email: string;
+  role: "operator";
+};
 
 export type MemberUser = {
-  id: string
-  memberId: string
-  name: string
-  email: string
-  role: 'member'
-}
-
-
-
+  id: string;
+  memberId: string;
+  name: string;
+  email: string;
+  role: "member";
+};
 
 export type SelectedServices = {
   photography: boolean;
@@ -172,10 +209,9 @@ export type PriceInfo = {
   finalPrice: number;
 };
 
-
-export const initialBookingData :BookingData = {
+export const initialBookingData: BookingData = {
   createdAt: new Date().toISOString(),
-  id:'',
+  id: "",
   details: {
     category: "event",
     package: "event-premium",
@@ -192,14 +228,10 @@ export const initialBookingData :BookingData = {
     forPersons: [],
     message: "",
     totalAmount: 0,
-    advance:0,
-    status:"pending",
-    paymentStatus:"Panding",
-    assignedTeam: [
-    { name: "Alice Johnson", role: "Video Editor", productionPrice: 12050 },
-    { name: "Bob Smith", role: "Camera Operator", productionPrice: 2000 },
-    { name: "Charlie Brown", role: "Sound Engineer", productionPrice: 4000 }
-  ],
+    advance: 0,
+    status: "pending",
+    paymentStatus: "Panding",
+    assignedTeam: [],
     completedAt: new Date("2025-09-02T11:22:35.213+00:00"),
     photoVideoUse: true,
     eventTimes: [{ eventDate: "", startTime: "", endTime: "" }],
@@ -222,35 +254,35 @@ export const initialBookingData :BookingData = {
   selectedService: [],
 };
 
+// Helper function to calculate time difference in hours
+export const calculateDuration = (
+  startTime: string,
+  endTime: string
+): number => {
+  if (!startTime || !endTime) return 0;
 
+  const [startHour, startMinute] = startTime.split(":").map(Number);
+  const [endHour, endMinute] = endTime.split(":").map(Number);
 
-    // Helper function to calculate time difference in hours
-   export const calculateDuration = (startTime: string, endTime: string): number => {
-    if (!startTime || !endTime) return 0;
+  const start = new Date();
+  const end = new Date();
+  start.setHours(startHour, startMinute, 0);
+  end.setHours(endHour, endMinute, 0);
 
-    const [startHour, startMinute] = startTime.split(":").map(Number);
-    const [endHour, endMinute] = endTime.split(":").map(Number);
+  if (end <= start) end.setDate(end.getDate() + 1);
 
-    const start = new Date();
-    const end = new Date();
-    start.setHours(startHour, startMinute, 0);
-    end.setHours(endHour, endMinute, 0);
-
-    if (end <= start) end.setDate(end.getDate() + 1);
-
-    const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
-    return parseFloat(duration.toFixed(2));
-  };
-
+  const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+  return parseFloat(duration.toFixed(2));
+};
 
 // Event type
 export type AssignedEvents = {
-  id: string;          // hiringRequest.id
-  eventsDateTime: EventsDateAndTimes[];        // event date or assignment date
-  title: string;       // eventType
-  location: string;    // location
-  contact: string;     // phone
-  pinCode: string;     
+  id: string; // hiringRequest.id
+  eventsDateTime: EventsDateAndTimes[]; // event date or assignment date
+  title: string; // eventType
+  location: string; // location
+  contact: string; // phone
+  pinCode: string;
   nearArea: string;
   district: string;
   state: string;
@@ -259,29 +291,28 @@ export type AssignedEvents = {
 export type TransactionHistory = {
   transactionId: string;
   amount: number;
-  date: string;        // ISO timestamp (e.g., "2025-09-17T12:30:00Z")
-  currency: string;    // e.g., "INR", "USD"
+  date: string; 
+  currency: string; 
   description?: string;
   status: "pending" | "completed" | "failed";
-  from?: string;       
-  to?: string;        
+  from?: string;
+  to?: string;
 };
-
 
 // Main form data type
 export type TeamMember = {
   name: string;
   email: string;
   phone: string;
-  age: string; 
+  age: string;
   gender: string;
   role: string; // adjust as needed
   experience: string;
   location: string;
   availability: string;
   expectedSalary: string;
-  resumeLink: string; 
-  agree: boolean; 
+  resumeLink: string;
+  agree: boolean;
   skills: string[];
   message: string;
   pincode: string;
@@ -289,18 +320,17 @@ export type TeamMember = {
   avatar: string;
   rating: number;
   state: string;
-  status:string;
+  status: string;
   totalProjects: number;
   country: string;
-  productionPrice:number;
+  productionPrice: number;
   memberId: string;
   password: string;
   events: AssignedEvents[];
-  totalEarn:number;
-  transactionHistory:TransactionHistory[] | null;
-  createdAt:string;
+  totalEarn: number;
+  transactionHistory: TransactionHistory[] | null;
+  createdAt: string;
 };
-
 
 export interface PostOffice {
   Name: string;
@@ -322,7 +352,6 @@ export interface areaType {
   Status: string;
   PostOffice: PostOffice[];
 }
-
 
 export type Post = {
   id: string; // internal id
@@ -347,18 +376,9 @@ export type Post = {
   relatedSlugs?: string[]; // optional for related posts
 };
 
-
-
-
-
-
-
-
-
-
-export type Item = { id: string; price: number } ;
+export type Item = { id: string; price: number };
 
 export type ExpandablePriceProps = {
-  title: string; 
-  items: Item | Item[]; 
+  title: string;
+  items: Item | Item[];
 };

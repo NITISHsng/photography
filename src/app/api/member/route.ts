@@ -7,14 +7,14 @@ import { getCollection } from "@/lib/mongodb";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const userId = body.userId; // make sure body has { userId: "..." }
+    const staffId = body.staffId; // make sure body has { staffId: "..." }
 
-    if (!userId) {
-      return NextResponse.json({ error: "userId is required" }, { status: 400 });
+    if (!staffId) {
+      return NextResponse.json({ error: "staffId is required" }, { status: 400 });
     }
 
     const collection = await getCollection("joinUsApplicants");
-    const doc = await collection.findOne({ _id: new ObjectId(userId) });
+    const doc = await collection.findOne({ _id: new ObjectId(staffId) });
     
     if (!doc) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });

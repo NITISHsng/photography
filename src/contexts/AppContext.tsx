@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { TeamMember,UserType, BookingData , bookAssignedTeam} from './fromType'
+import { TeamMember,UserType, BookingData , bookAssignedTeam, Staff} from './fromType'
 import { Dispatch, SetStateAction } from "react";
 
 interface AppContextType {
@@ -62,7 +62,7 @@ useEffect(() => {
 const [bookings, setHiringRequests] = useState<BookingData[]>([]);
 const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 const [messages, setMessages] = useState<string[]>([]);
-
+const [staffs, setStaffs] = useState<Staff[]>([]);
 async function getDashboardData() {
   try {
     const res = await fetch("/api/dashboardData", {
@@ -76,6 +76,7 @@ async function getDashboardData() {
     setHiringRequests(data.hiringRequests || []);
     setTeamMembers(data.joinUsApplicants || []);
     setMessages(data.contactMessages || []);
+    setStaffs(data.staff)
   } catch (err) {
     console.error("Error fetching dashboard data:", err);
   }
@@ -108,6 +109,7 @@ const handleChange = (
   setHiringRequest(updated);
 };
 
+// console.log(staffs)
   const value = {
     setHiringRequest,
     hiringRequest,
@@ -124,7 +126,8 @@ const handleChange = (
     adminOperatorData,
     teamMembers,
     bookings,
-    messages
+    messages,
+    staffs,
   }
 
   return (

@@ -6,8 +6,7 @@ type UserType = "admin" | "operator" | "member";
 
 interface LoginRequest {
   userType: UserType;
-  userId?: string;
-  operatorId?: string;
+  staffId?: string;
   memberId?: string;
   password: string;
 }
@@ -18,7 +17,7 @@ function errorResponse(message: string, status: number) {
 
 export async function POST(req: Request) {
   try {
-    const { userType, userId, operatorId, memberId, password }: LoginRequest =
+    const { userType, staffId, memberId, password }: LoginRequest =
       await req.json();
 
     if (!["admin", "operator", "member"].includes(userType)) {
@@ -26,31 +25,34 @@ export async function POST(req: Request) {
     }
 
     // ✅ Build queries with proper typing (no `any`)
-    type Queries = {
-      admin: { userId: string; role: "admin"; password: string };
-      operator: { operatorId: string; role: "operator"; password: string };
-      member: { memberId: string; password: string };
-    };
+type Queries = {
+  admin: { staffId: string; password: string };
+  operator: { staffId: string; password: string };
+  member: { memberId: string; password: string };
+};
 
-    const queries: Queries = {
-      admin: { userId: userId ?? "", role: "admin", password },
-      operator: { operatorId: operatorId ?? "", role: "operator", password },
-      member: { memberId: memberId ?? "", password },
-    };
+const queries: Queries = {
+  member: { memberId: memberId ?? "", password },
+  admin: { staffId: staffId ?? "", password },
+  operator: { staffId: staffId ?? "", password },
+};
 
     const collection =
       userType === "member"
         ? await getCollection("joinUsApplicants")
         : await getCollection("staff");
 
+    // Debug log to help troubleshoot
+    // console.log("Login attempt:", { userType, query: queries[userType] });
+    
     const user = await collection.findOne(queries[userType]);
 
     if (!user) return errorResponse("User not found", 401);
 
 
-    const loginHistoryCollection = await getCollection("loginHistory"); // you can rename the collection
+    const loginHistoryCollection = await getCollection("loginHistory");
     await loginHistoryCollection.insertOne({
-      userId: user.userId || user.operatorId,
+      staffId: user.staffId || user.memberId,
       userType,
       name: user.name || null,
       loginAt: new Date(),
