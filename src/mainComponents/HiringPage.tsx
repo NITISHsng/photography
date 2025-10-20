@@ -2,14 +2,14 @@
 import toast from "react-hot-toast";
 import React, { useState, useEffect } from "react";
 import {
-  ArrowRight,
+  // ArrowRight,
   Check,
-  Star,
+  // Star,
   Calendar,
   DollarSign,
   Send,
   CheckCircle,
-  Divide,
+  // Divide,
 } from "lucide-react";
 
 import { useAppContext } from "@/contexts/AppContext";
@@ -17,7 +17,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { initialBookingData, areaType } from "@/contexts/fromType";
 import { BookingData } from "@/contexts/fromType";
-import { packages } from "@/contexts/fromData";
+// import { packages } from "@/contexts/fromData";
 import { categories } from "@/contexts/fromData";
 import { generateMemberClientId } from "@/contexts/fromData";
 import BasicDetails from "@/components/fromComponents/BasicDetails";
@@ -26,7 +26,6 @@ import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
 import Lights from "@/components/fromComponents/Lights";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { headerType } from "@/contexts/fromType";
-import { Span } from "next/dist/trace";
 
 const HiringPage: React.FC<headerType> = () => {
   const [bookingData, setBookingData] =
@@ -38,20 +37,20 @@ const HiringPage: React.FC<headerType> = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleBooking = (packageId: string) => {
-    setBookingData((prev) => ({
-      ...initialBookingData,
-      details: {
-        ...prev.details,
-        package: packageId,
-      },
-    }));
+  // const handleBooking = (packageId: string) => {
+  //   setBookingData((prev) => ({
+  //     ...initialBookingData,
+  //     details: {
+  //       ...prev.details,
+  //       package: packageId,
+  //     },
+  //   }));
 
-    const bookingElement = document.getElementById("booking-form");
-    if (bookingElement) {
-      bookingElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  //   const bookingElement = document.getElementById("booking-form");
+  //   if (bookingElement) {
+  //     bookingElement.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -224,11 +223,11 @@ const HiringPage: React.FC<headerType> = () => {
     }
   };
 
-  const [openId, setOpenId] = useState<string | null>(null);
+  // const [openId, setOpenId] = useState<string | null>(null);
 
-  const toggleDetails = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
+  // const toggleDetails = (id: string) => {
+  //   setOpenId((prev) => (prev === id ? null : id));
+  // };
 
   return (
     <div className="min-h-screen transition-colors duration-300">

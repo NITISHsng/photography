@@ -72,13 +72,6 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         },
       };
     });
-
-    const res = await fetch("/api/hiring", {
-      method: "POST",
-      body: JSON.stringify({ warmup: true }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await res.json()
     };
 
   const addEventTimeBlock = async () => {

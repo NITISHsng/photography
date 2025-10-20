@@ -58,15 +58,15 @@ const Operator: React.FC = () => {
     return matchesSearch && matchesStatus && matchesRole && matchesLocation;
   });
 
-  const getPermissionColor = (permission: string) => {
-    const perm = permissionsList.find((p) => p.id === permission);
-    return perm ? perm.color : "gray";
-  };
+  // const getPermissionColor = (permission: string) => {
+  //   const perm = permissionsList.find((p) => p.id === permission);
+  //   return perm ? perm.color : "gray";
+  // };
 
-  const getPermissionName = (permission: string) => {
-    const perm = permissionsList.find((p) => p.id === permission);
-    return perm ? perm.name : permission;
-  };
+  // const getPermissionName = (permission: string) => {
+  //   const perm = permissionsList.find((p) => p.id === permission);
+  //   return perm ? perm.name : permission;
+  // };
 
   const stats = {
     total: staffs.length,

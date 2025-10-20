@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/contexts/AppContext";
 import { TeamMember } from "@/contexts/fromType";
-import Image from "next/image";
+// import Image from "next/image";
 import { Button } from "./ui/button";
 
 import {

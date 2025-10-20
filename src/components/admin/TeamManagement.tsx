@@ -20,8 +20,6 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import toast from "react-hot-toast";
-import Image from "next/image";
 import { TeamMember } from "@/contexts/fromType";
 import { AssignedEvents, EventsDateAndTimes } from "@/contexts/fromType";
 import { useAppContext } from "@/contexts/AppContext";
@@ -95,6 +93,7 @@ const TeamManagement: React.FC = () => {
     //   alert(`Opening task assignment for: ${member.name}\n\nCurrent Task: ${member.nextTask}\nDate: ${member.taskDate}\nRole: ${member.taskRole}`);
     //   console.log(`Assign task to member: ${memberId}`, member);
     // }
+    console.log(memberId)
   };
 
   const handleAddPayment = () => {
@@ -119,10 +118,10 @@ const TeamManagement: React.FC = () => {
     team: teamMembers.filter((m) => m.role.includes("team")).length,
   };
 
-  function getEventDateTime(event: EventsDateAndTimes): Date {
-    // Combine date + startTime
-    return new Date(`${event.eventDate}T${event.startTime}:00`);
-  }
+  // function getEventDateTime(event: EventsDateAndTimes): Date {
+  //   // Combine date + startTime
+  //   return new Date(`${event.eventDate}T${event.startTime}:00`);
+  // }
 
   function getNextTask(
     member: TeamMember
