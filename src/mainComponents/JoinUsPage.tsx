@@ -201,7 +201,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
           currentPage={currentPage}
         />
 
-        <div className="pt-16 min-h-screen bg-white dark:bg-gray-900">
+        <div className="pt-14 min-h-screen bg-white dark:bg-gray-900">
           {/* heero section */}
           <div
             style={{
@@ -231,7 +231,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
           </div>
 
           {/* Experience Level Selection */}
-          <div className="py-12 bg-white dark:bg-gray-900">
+          <div className="py-10 bg-white dark:bg-gray-900">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-2">
                 <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">
@@ -758,7 +758,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                         htmlFor="expectedSalary"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                       >
-                        Expected Salary{" "}
+                        Expected Salary
                         {/* Changed from "cameraman" to check if role includes "team" since the type is restricted */}
                         {formData.role === "team" ? "(per day)" : "(per hour)"}{" "}
                         *
@@ -774,7 +774,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                         placeholder={
                           formData.role === "team"
                             ? "₹8,000 - ₹25,000"
-                            : "₹2,000 - ₹6,000"
+                            : "₹500 - ₹1,000"
                         }
                       />
                     </div>
