@@ -9,14 +9,16 @@ import {
   DollarSign,
   Send,
   CheckCircle,
+  Divide,
 } from "lucide-react";
 
 import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { initialBookingData,areaType } from "@/contexts/fromType";
-import { BookingData} from "@/contexts/fromType";
+import { initialBookingData, areaType } from "@/contexts/fromType";
+import { BookingData } from "@/contexts/fromType";
 import { packages } from "@/contexts/fromData";
+import { categories } from "@/contexts/fromData";
 import { generateMemberClientId } from "@/contexts/fromData";
 import BasicDetails from "@/components/fromComponents/BasicDetails";
 import Services from "@/components/fromComponents/Services";
@@ -24,23 +26,17 @@ import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
 import Lights from "@/components/fromComponents/Lights";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { headerType } from "@/contexts/fromType";
-
-
+import { Span } from "next/dist/trace";
 
 const HiringPage: React.FC<headerType> = () => {
   const [bookingData, setBookingData] =
     useState<BookingData>(initialBookingData);
-  
-  const {
-    mobileMenuOpen,
-    setMobileMenuOpen,
-    currentPage,
-  } = useAppContext();
+
+  const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-  
 
   const handleBooking = (packageId: string) => {
     setBookingData((prev) => ({
@@ -117,9 +113,9 @@ const HiringPage: React.FC<headerType> = () => {
 
     //  create a id for client and 3 is the client's 3 letter
     bookingData.createdAt = new Date().toISOString();
-     bookingData.id=generateMemberClientId(bookingData.details.name,"client")
-  
-     // validate event date at least 1 day ahead
+    bookingData.id = generateMemberClientId(bookingData.details.name, "client");
+
+    // validate event date at least 1 day ahead
     const firstEventDate = bookingData.details.eventTimes[0]?.eventDate;
     if (!validateDate(firstEventDate)) return;
 
@@ -150,7 +146,7 @@ const HiringPage: React.FC<headerType> = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
-     toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -158,7 +154,7 @@ const HiringPage: React.FC<headerType> = () => {
 
   // pincode to find details
 
-const [areaDetails, setDetails] = useState< areaType | null>(null);
+  const [areaDetails, setDetails] = useState<areaType | null>(null);
 
   useEffect(() => {
     const pin = bookingData?.details?.pinCode;
@@ -168,7 +164,6 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
     }
 
     const fetchDetails = async () => {
-
       setDetails(null);
 
       try {
@@ -235,13 +230,8 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-
-
- 
   return (
-    <div
-      className="min-h-screen transition-colors duration-300"
-    >
+    <div className="min-h-screen transition-colors duration-300">
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Header
           mobileMenuOpen={mobileMenuOpen}
@@ -251,6 +241,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
 
         <div className="pt-8 min-h-screen bg-white dark:bg-gray-900">
           {/* heero section */}
+
           <div
             style={{
               backgroundImage:
@@ -258,22 +249,20 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 py-16"
+            className="relative bg-gradient-to-br max-h-[150px] lg:max-h-[500px] from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 lg:py-16 py-12 "
           >
             {/* Dark center overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,.6)_100%,white_100%) dark:bg-[radial-gradient(circle,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,1)_100%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_40%,rgba(0,0,0,1)_100%)]"></div>
 
             <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center ">
-                <h1 className="text-4xl md:text-5xl text-black/70 dark:text-white font-bold mb-6">
-                  <span className="">
-                    Professional Video Services
+              <div className="text-center">
+                <div className="text-2xl md:text-4xl font-bold mb-6">
+                  <div className="text-white"> Professional Video Services</div>
+                  <span className="text-xl md:text-2xl text-white/60  font-semibold mb-6">
+                    Customizable Packages for Every Need
                   </span>
-                </h1>
-                <h2 className="text-2xl text-black/60 dark:text-white md:text-3xl font-semibold mb-6">
-                  Customizable Packages for Every Need
-                </h2>
-                <p className="text-xl text-black/40 dark:text-gray-200 max-w-3xl mx-auto">
+                </div>
+                <p className="text-xl text-gray-200 max-w-3xl mx-auto  hidden lg:block">
                   Choose exactly what you need from our comprehensive range of
                   services. Mix and match to create your perfect package.
                 </p>
@@ -288,7 +277,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                 className="flex justify-center md:mb-10 mb-6
               "
               >
-                {/* <div className="grid grid-cols-2 md:grid-cols-4 w-[100%] gap-4 max-w-[800px] bg-gray-100 dark:bg-gray-800 rounded-2xl p-2">
+                <div className="grid grid-cols-2 md:grid-cols-4 w-[100%] gap-4 max-w-[800px] bg-gray-100 dark:bg-gray-800 rounded-2xl p-2">
                   {categories.map((category) => {
                     const IconComponent = category.icon;
                     return (
@@ -312,15 +301,23 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                         }`}
                       >
                         <IconComponent className="h-5 w-5" />
-                        <span>{category.title}</span>
+                        <span>
+                          {category.title !== "Complete Event" ? (
+                            <div className="text-gray-500">
+                              {category.title}
+                            </div>
+                          ) : (
+                            <span>{category.title}</span>
+                          )}
+                        </span>
                       </button>
                     );
                   })}
-                </div> */}
+                </div>
               </div>
 
               {/* Packages Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+              {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
                 <h3 className="text-2xl md:hidden font-bold text-center mt-8 text-gray-800 dark:text-white">
                   OUR PACKAGES
                 </h3>
@@ -352,15 +349,12 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                             {pkg.name}
                           </h3>
 
-                          {/* Conditional Details */}
                           <div
                             className={`${
                               isOpen ? "block" : "hidden"
                             } lg:block`}
                           >
-                            {/* <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                                {pkg.price}
-                              </div> */}
+              
 
                             <div className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                               {pkg.duration}
@@ -381,7 +375,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                             </ul>
                           </div>
                         </div>
-                        {/* Toggle Button - hidden on lg+ */}
+                       
                         <button
                           onClick={() => toggleDetails(pkg.id)}
                           className="lg:hidden w-full py-2 px-6 mb-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
@@ -405,7 +399,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
 
               {bookingData.details.package && (
                 <div className="mb-4">
@@ -422,7 +416,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                         </span>
                       </h3>
                       {getFormTitle() == "Book Complete Event" && (
-                        <p className="text-lg text-gray-600 dark:text-gray-300">
+                        <p className="text-sm md:text-lg text-gray-600 dark:text-gray-300">
                           Fill out the form below and select your required
                           services
                         </p>
@@ -535,13 +529,10 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                           </div>
                         )}
 
-
                         {/* price Calculate */}
-
-                         {bookingData.selectedService.length > 0 && (
-                          <PriceCalculate localBooking={bookingData}/>
-                         )}
-
+                        {bookingData.selectedService.length > 0 && (
+                          <PriceCalculate localBooking={bookingData} />
+                        )}
 
                         {isSubmitted && (
                           <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg flex items-center space-x-3 max-w-2xl mx-auto">
@@ -554,6 +545,8 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                           </div>
                         )}
                         {/* Submit Button */}
+                        <div className="px-3">
+
                         <button
                           type="submit"
                           disabled={
@@ -575,6 +568,7 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                             </>
                           )}
                         </button>
+                        </div>
 
                         {!bookingData.selectedService.length && (
                           <div className="text-center text-red-600 dark:text-red-400 text-sm">
@@ -614,7 +608,8 @@ const [areaDetails, setDetails] = useState< areaType | null>(null);
                           Multiple Options Available
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300">
-                       Mix and match lights and album types to create the package that’s perfect for you.
+                          Mix and match lights and album types to create the
+                          package that’s perfect for you.
                         </p>
                       </div>
                     </div>

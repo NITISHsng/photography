@@ -244,7 +244,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
               </div>
 
               <div className="flex justify-center mb-4">
-                <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-2 gap-2">
+                <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-2xl lg:rounded-full p-2 md:gap-2">
                   {experienceLevels.map((level) => {
                     const IconComponent = level.icon;
                     return (
@@ -278,7 +278,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                         Select Your Role
                       </p>
                     </div>
-                    <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-full p-2 gap-2">
+                    <div className="flex flex-wrap justify-center bg-gray-100 dark:bg-gray-800 rounded-2xl lg:rounded-full py-2">
                       {roles.map((role) => {
                         const IconComponent = role.icon;
                         return (
@@ -619,7 +619,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label
                         htmlFor="state"
@@ -703,7 +703,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                   </div>
 
                   {/* Role & Experience */}
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label
                         htmlFor="role"
@@ -752,7 +752,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                   </div>
 
                   {/* Salary & Resume (Drive Link) */}
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label
                         htmlFor="expectedSalary"
@@ -783,7 +783,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                         htmlFor="resumeLink"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                       >
-                        Resume (Google Drive/Portfolio Link) *
+                        Resume (Portfolio Link) *
                       </label>
                       <input
                         type="url"
@@ -962,7 +962,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
 
               {selectedLevel === "moderate" && (
                 <div className="mt-16 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-12">
-                  <div className="text-center mb-8">
+                  <div className="text-center mb-4">
                     <h3 className="text-3xl font-bold mb-4">
                       <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
                         📈 Moderate Experience Enhancement Program
