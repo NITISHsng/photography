@@ -764,30 +764,37 @@ export const servicesPreWedding = [
     id: "photography",
     name: "Photography",
     discount: 30,
-    price:6000,
+    price: 6000,
     icon: Camera,
     description: "Professional event photography",
+    fullDescription: "Our photography service captures every cherished moment of your event with an artistic and natural approach. From candid interactions to formal portraits, we document the emotion, atmosphere and details so you can relive your special day for years to come.",  // based on photography/videography overview :contentReference[oaicite:0]{index=0}
     required: [camera, cameraLights, operator],
+    imageurl: "/servicesImage/camera.jpg"
   },
   {
     id: "videography",
     name: "Videography",
     discount: 60,
-    price:12000,
+    price: 12000,
     icon: Video,
     description: "High-quality video recording",
+    fullDescription: "Our videography service combines professional equipment, skilled operators and creative editing to transform your event into a compelling visual story. Whether it’s speeches, performances or candid moments, we tailor a film that evokes the atmosphere and memories of the day.",  // based on event videography definition :contentReference[oaicite:1]{index=1}
     required: [camera, mic, cameraLights, operator],
+    imageurl: "/servicesImage/video.jpg"
   },
   {
     id: "drone-coverage",
     name: "Drone Coverage",
     discount: 50,
-    price:16000,
+    price: 16000,
     icon: Video,
     description: "Aerial photography and videography",
+    fullDescription: "Take your event to new heights with our drone coverage service. A certified operator and advanced drone capture dramatic aerial views, sweeping landscapes and unique perspectives that conventional cameras cannot. Perfect for outdoor venues, large gatherings and adding wow-factor imagery to your memories.",
     required: [drone, droneOperator],
+    imageurl: "/servicesImage/drone.jpg"
   },
 ];
+
 // Enhanced service options with individual pricing
 export const serviceOptions = {
   event: [
@@ -800,6 +807,8 @@ export const serviceOptions = {
       icon: Lightbulb,
       description: "Professional stage lighting setup",
       required: [stageLights],
+      fullDescription: "Our stage lighting service creates a dynamic and immersive atmosphere for your event. With programmable LED systems, lighting rigs and experienced technicians, we enhance the mood, highlight key moments and ensure your venue shines both literally and figuratively.",
+       imageurl: "/servicesImage/light.jpg",
     },
     {
       id: "led-screen",
@@ -809,6 +818,9 @@ export const serviceOptions = {
       icon: ScreenShare,
       description: "High-resolution dynamic event display",
       // required: [Laptop, Led],
+       imageurl: "/servicesImage/led.jpg",
+     fullDescription: "Our LED screen service offers crisp, high-definition visual displays that bring your event content to life. From live feeds to custom animations and presentation material, the LED screens provide a bold focal point partner for your speeches, entertainments or brand moments.",
+  
     },
     {
       id: "live-streaming",
@@ -818,7 +830,9 @@ export const serviceOptions = {
       price:40000,
       icon: Monitor,
       description: "Real-time event streaming",
+       imageurl: "/servicesImage/livestrim.jpg",
       required: [camera, mic, streamingRig, operator],
+      fullDescription: "Our live streaming service ensures your event reaches remote audiences seamlessly. Using high-quality cameras, audio feeds, streaming rigs and skilled operators, we deliver broadcast-quality live streams to any platform — ensuring every moment is captured and shared as it happens.",
     },
   ],
 

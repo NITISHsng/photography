@@ -33,6 +33,10 @@ const HiringPage: React.FC<headerType> = () => {
 
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
 
+//imagePopup
+  const [imageUrl, setImageUrl] = useState("");
+const [fullDescription, setfullDescription] = useState("");
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -314,7 +318,30 @@ const HiringPage: React.FC<headerType> = () => {
                   })}
                 </div>
               </div>
+{
+  imageUrl && (
 
+        <div onClick={()=>{setImageUrl(""), setfullDescription("")}}
+         className="fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm z-50">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden max-w-lg w-[90%] transform transition-all duration-300 scale-100 hover:scale-[1.02]">
+        <img
+          src={imageUrl}
+          alt="Service preview"
+          className="w-full h-64 object-cover"
+        />
+        <div className="p-5">
+          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Service Details
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            {fullDescription}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+  ) 
+}
               {/* Packages Grid */}
               {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
                 <h3 className="text-2xl md:hidden font-bold text-center mt-8 text-gray-800 dark:text-white">
@@ -442,6 +469,8 @@ const HiringPage: React.FC<headerType> = () => {
                         <Services
                           bookingData={bookingData}
                           setBookingData={setBookingData}
+                          setfullDescription={setfullDescription}
+                          setImageUrl={setImageUrl}
                         />
 
                         {/* Professional Requirements */}
