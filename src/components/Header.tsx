@@ -119,24 +119,21 @@ const Header: React.FC<headerType> = ({
               ))}
             </span>
 
-       <a
-  href="https://docs.google.com/forms/d/e/1FAIpQLSddzpoV2P_rZyhXmUcu8DxrotWZgzHBxDj3drUZE1c0FSSxcw/viewform?pli=1"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <div
-    className="hidden md:inline-flex items-center relative px-4 py-2.5 font-bold text-white 
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSddzpoV2P_rZyhXmUcu8DxrotWZgzHBxDj3drUZE1c0FSSxcw/viewform?pli=1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div
+                className="hidden md:inline-flex items-center relative px-4 py-2.5 font-bold text-white 
     bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 
     hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 
     shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
-  >
-    Your Image
-    <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
-  </div>
-</a>
-
-
-
+              >
+                Your Image
+                <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
+              </div>
+            </a>
             {/* Mobile Menu Button */}
 
             <button
@@ -179,6 +176,21 @@ const Header: React.FC<headerType> = ({
                   </button>
                 </Link>
               ))}
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSddzpoV2P_rZyhXmUcu8DxrotWZgzHBxDj3drUZE1c0FSSxcw/viewform?pli=1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div
+                  className=" `w-full relative px-6 py-4 mb-4 font-bold text-white flex justify-center md:inline-flex items-center  
+    bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 
+    hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 
+    shadow-md hover:shadow-xl rounded-lg overflow-hidden group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+                >
+                  Your Image
+                  <div className="absolute inset-0 bg-white/20 dark:bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg"></div>
+                </div>
+              </a>
             </div>
           </div>
         )}

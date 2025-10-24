@@ -29,7 +29,7 @@ import {
   fresherPrograms,
   moderateRequirements,
   experiencedRequirements,
-} from "@/contexts/fromData";
+} from "@/contexts/joinUsFormdata";
 import { TeamMember } from "@/contexts/fromType";
 import { headerType } from "@/contexts/fromType";
 import { generateMemberClientId } from "@/contexts/fromData";
