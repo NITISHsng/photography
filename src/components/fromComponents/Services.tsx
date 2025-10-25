@@ -45,6 +45,7 @@ const Services: React.FC<ServicesProps> = ({
     }
   };
 
+  
   return (
     <div>
       {Array.isArray(bookingData.details.eventTimes) &&
@@ -56,6 +57,7 @@ const Services: React.FC<ServicesProps> = ({
               <h5 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
                 Required Services
               </h5>
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {servicesToRender.map((service) => {
                   const IconComponent = service.icon;

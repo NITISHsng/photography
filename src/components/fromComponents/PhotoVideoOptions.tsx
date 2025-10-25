@@ -227,7 +227,7 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
           }))
         }
         className={`flex-1 justify-center px-4 py-3 rounded-xl border-2 flex flex-col-2 items-center gap-3 ${
-          bookingData.requiredServices.videography.videoCategory.id === opt.id
+          bookingData.requiredServices.videography.videoCategory?.id === opt.id
             ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
             : "border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-600"
         }`}
@@ -262,7 +262,7 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
           <div className="flex items-center gap-6 mt-3 mb-4">
             <div className="flex-1">
               <label className="block font-medium mb-1 ">
-                Duration (minutes) * — min 10, max 180
+                Duration (30 minutes Free) 
               </label>
               <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 border-orange-400" />
@@ -292,15 +292,16 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
                   {bookingData.requiredServices.videography.durationMinutes} min
                 </span>
               </div>
-              <p className="text-sm text-gray-600 mt-1 dark:text-white">
+              {/* <p className="text-sm text-gray-600 mt-1 dark:text-white">
                 Cost: <span className="line-through px-2 text-[16px]">₹80</span>
                 ₹50 per minute ={" "}
+                    {(bookingData.requiredServices.videography.videoCategory === "" )}
                 <span className="font-semibold border-orange-400">
                   ₹
-                  {bookingData.requiredServices.videography.durationMinutes *
+                  {(bookingData.requiredServices.videography.durationMinutes -15)* 
                     50}
                 </span>
-              </p>
+              </p> */}
             </div>
           </div>
 

@@ -51,28 +51,44 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       console.log("Message:", areaDetails[0].Message);
     }
   }, [areaDetails]);
+const handleEventTimeChange = (
+  index: number,
+  field: keyof EventTimeSlot,
+  value: string
+) => {
+  setBookingData((prev) => {
+    // Clone eventTimes array
+    const updatedTimes = prev.details.eventTimes.map((time, i) =>
+      i === index ? { ...time, [field]: value } : time
+    );
 
-  const handleEventTimeChange = async (
-    index: number,
-    field: keyof EventTimeSlot,
-    value: string
-  ) => {
-    setBookingData((prev) => {
-      const updatedTimes = [...prev.details.eventTimes];
-      updatedTimes[index] = {
-        ...updatedTimes[index],
-        [field]: value,
-      };
-
-      return {
-        ...prev,
-        details: {
-          ...prev.details,
-          eventTimes: updatedTimes,
-        },
-      };
-    });
+    return {
+      ...prev,
+        requiredServices: {
+    photography: {
+      photoTypes: [],
+      albumTypes: [],
+    },
+    videography: {
+      videoCategory: { id: "standard", price: 0 },
+      videoQuality: { id: "720p", price: 0 },
+      durationMinutes: 10,
+      extraVideos: [],
+    },
+    preWedding: [],
+    stageLights: [],
+    ledscreen: [],
+    droneselected: [],
+  },
+      selectedService: [],
+      details: {
+        ...prev.details,
+        eventTimes: updatedTimes,
+      },
     };
+  });
+};
+
 
   const addEventTimeBlock = async () => {
     setBookingData((prev) => ({
@@ -93,6 +109,23 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       updatedTimes.splice(index, 1);
       return {
         ...prev,
+                requiredServices: {
+    photography: {
+      photoTypes: [],
+      albumTypes: [],
+    },
+    videography: {
+      videoCategory: { id: "standard", price: 0 },
+      videoQuality: { id: "720p", price: 0 },
+      durationMinutes: 10,
+      extraVideos: [],
+    },
+    preWedding: [],
+    stageLights: [],
+    ledscreen: [],
+    droneselected: [],
+  },
+      selectedService: [],
         details: {
           ...prev.details,
           eventTimes: updatedTimes,

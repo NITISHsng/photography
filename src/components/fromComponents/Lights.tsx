@@ -54,7 +54,7 @@ const Lights: React.FC<LightsProps> = ({ bookingData, setBookingData }) => {
                             : [
                                 ...prev.requiredServices.stageLights,
                                 { id: light.id, price: finalPrice }, // ✅ fixed
-                              ], // add
+                              ], 
                         },
                       };
                     })

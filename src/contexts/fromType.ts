@@ -142,13 +142,15 @@ export type BookingData = {
         id: "classic" | "cinematic" | "standard";
         price: number;
       };
-      videoQuality: { id: "1080p" | "4k" | "8k" | ""; price: number };
+      videoQuality: { id: "720p" | "1080p" | "4k" | "8k" | ""; price: number };
       durationMinutes: number;
       extraVideos: { id: string; price: number }[];
     };
 
     preWedding: { id: string; price: number }[];
     stageLights: { id: string; price: number }[];
+    ledscreen: { id: string; price: number }[];
+    droneselected: { id: string; price: number }[];
   };
 };
 export type BookingWithId = BookingData & { _id: string };
@@ -244,12 +246,14 @@ export const initialBookingData: BookingData = {
     },
     videography: {
       videoCategory: { id: "standard", price: 0 },
-      videoQuality: { id: "1080p", price: 0 },
+      videoQuality: { id: "720p", price: 0 },
       durationMinutes: 10,
       extraVideos: [],
     },
     preWedding: [],
     stageLights: [],
+    ledscreen: [],
+    droneselected: [],
   },
   selectedService: [],
 };

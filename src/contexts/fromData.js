@@ -1,12 +1,12 @@
-  //permition list of admin and operator
-  export const permissionsList = [
-    { id: "bookings", name: "Bookings Management", color: "blue" },
-    { id: "team", name: "Team Management", color: "purple" },
-    { id: "equipment", name: "Equipment Management", color: "orange" },
-    { id: "clients", name: "Client Management", color: "green" },
-    { id: "inventory", name: "Inventory Control", color: "red" },
-    { id: "scheduling", name: "Scheduling", color: "pink" },
-  ];
+//permition list of admin and operator
+export const permissionsList = [
+  { id: "bookings", name: "Bookings Management", color: "blue" },
+  { id: "team", name: "Team Management", color: "purple" },
+  { id: "equipment", name: "Equipment Management", color: "orange" },
+  { id: "clients", name: "Client Management", color: "green" },
+  { id: "inventory", name: "Inventory Control", color: "red" },
+  { id: "scheduling", name: "Scheduling", color: "pink" },
+];
 
 // categories
 import {
@@ -27,14 +27,19 @@ import {
   PictureInPicture,
 } from "lucide-react";
 
-
-export const ourServices = [ 
+export const ourServices = [
   { label: "Wedding", imageUrl: "/homeImages/l13.webp" },
   { label: "Pre-Wedding", imageUrl: "/homeImages/ser1.webp" },
   { label: "Engagement Ceremony", imageUrl: "/homeImages/l114.webp" },
-  { label: "Outdoor Wedding (Photo & Video)", imageUrl: "/homeImages/outdoor_wedding.webp" },
+  {
+    label: "Outdoor Wedding (Photo & Video)",
+    imageUrl: "/homeImages/outdoor_wedding.webp",
+  },
   { label: "Baby Photography", imageUrl: "/homeImages/l35.webp" },
-  { label: "Rice Ceremony Photography", imageUrl: "/homeImages/annaprashan.webp" },
+  {
+    label: "Rice Ceremony Photography",
+    imageUrl: "/homeImages/annaprashan.webp",
+  },
   { label: "Corporate Event", imageUrl: "/homeImages/l41.webp" },
   { label: "Birthday", imageUrl: "/homeImages/l37.webp" },
 ];
@@ -294,65 +299,13 @@ export const applyDiscount = (mrp, discount) => {
   return Math.round(mrp - (mrp * discount) / 100);
 };
 
-// Drone Options
-export const droneOptions = [
-  {
-    id: "drone-1",
-    name: "DJI Mini 3",
-    mrp: 2000,
-    discount: 25,
-    price: applyDiscount(2000, 25),
-    description: "Compact, beginner-friendly 4K drone",
-  },
-  {
-    id: "drone-2",
-    name: "DJI Air 2S",
-    mrp: 3000,
-    discount: 17,
-    price: applyDiscount(3000, 17),
-    description: "1-inch sensor, great for prosumers",
-  },
-  {
-    id: "drone-3",
-    name: "DJI Mavic 3",
-    mrp: 5000,
-    discount: 20,
-    price: applyDiscount(5000, 20),
-    description: "Hasselblad camera, cinematic quality",
-  },
-  {
-    id: "drone-4",
-    name: "DJI Inspire 2",
-    mrp: 7500,
-    discount: 25,
-    price: applyDiscount(7500, 25),
-    description: "Pro drone with dual-operator support",
-  },
-  {
-    id: "drone-5",
-    name: "DJI Matrice 30",
-    mrp: 11000,
-    discount: 18,
-    price: applyDiscount(11000, 18),
-    description: "Industrial-grade drone with advanced sensors",
-  },
-  {
-    id: "drone-6",
-    name: "Freefly Alta X",
-    mrp: 18000,
-    discount: 17,
-    price: applyDiscount(18000, 17),
-    description: "Heavy-lift drone for cinema cameras",
-  },
-];
-
 // Light Options
 export const lightOptions = [
   {
     id: "photography-umbrella",
     name: "Photography Lighting Umbrella",
     mrp: 0,
-    discount:100,
+    discount: 100,
     price: 2500,
     description:
       "Classic umbrella diffuser for soft lighting in photography and stage setups",
@@ -368,14 +321,14 @@ export const lightOptions = [
     id: "uplighting",
     name: "Stage Uplighting",
     discount: 50,
-    price:  2000,
+    price: 2000,
     description:
       "Ambient uplights that create colorful accents on walls, drapes, and stage décor",
   },
   {
     id: "short-wedding-led",
     name: "Decorative LED Light",
-    discount:80,
+    discount: 80,
     price: 2200,
     description:
       "Compact decorative LED lights designed for wedding stage ambience",
@@ -383,7 +336,7 @@ export const lightOptions = [
   {
     id: "flower-stand-lighted",
     name: "Lighted Flower Stand",
-    discount:60,
+    discount: 60,
     price: 3000,
     description:
       "Elegant flower stand with integrated lighting for stage décor",
@@ -577,16 +530,16 @@ export const videoCategory = [
     mrp: 12000,
     discount: 100,
     parMin: 50,
-    price: 20000,
+    price: 10000,
     icon: <Film className="h-6 w-6 text-orange-600" />,
   },
   {
     id: "cinematic",
     name: "Cinematic",
-    mrp: 30000,
+    mrp: 10000,
     discount: 30,
     parMin: 80,
-    price:20000,
+    price: 10000,
     icon: <Clapperboard className="h-6 w-6 text-orange-600" />,
   },
   {
@@ -595,45 +548,43 @@ export const videoCategory = [
     mrp: 50000,
     discount: 50,
     parMin: 100,
-    price: applyDiscount(50000, 50),
+    price: 15000,
     icon: <Clapperboard className="h-6 w-6 text-orange-600" />,
   },
 ];
 // Video quality options
 export const videoQualityOptions = [
-    {
+  {
     id: "720p",
     label: "720p",
-    mrp: 15000,
     discount: 100,
-    price: applyDiscount(15000, 100),
+    price: 3000,
     icon: <Tv2 className="h-5 w-5 text-orange-400" />,
   },
   {
     id: "1080p",
     label: "1080p",
-    discount: 40,
-    price: 20000,
+    discount: 50,
+    price: 5000,
     icon: <Monitor className="h-5 w-5 text-orange-400" />,
   },
   {
     id: "4k",
     label: "4K",
     mrp: 30000,
-    discount: 50,
-    price: applyDiscount(30000, 50),
+    discount: 60,
+    price: 8000,
     icon: <Tv className="h-5 w-5 text-orange-400" />,
   },
-
 ];
 
 // Deliverables options for photos
 
 export const photoPackages = [
-    {
+  {
     id: "pendrive",
     label: "Pendrive",
-    mrp: 6000,
+    mrp: 1000,
     discount: 50,
     get price() {
       return applyDiscount(this.mrp, this.discount);
@@ -643,7 +594,7 @@ export const photoPackages = [
   },
   {
     id: "edited-photos",
-    label: "Edited Photos (200-500)",
+    label: "Edited Photos (300-500)",
     mrp: 10000,
     discount: 50,
     get price() {
@@ -657,7 +608,7 @@ export const photoPackages = [
     label: "Raw Photos (All)",
     mrp: 6000,
     discount: 100,
-    price:6000,
+    price: 6000,
     icon: <ImageIcon className="h-5 w-5 text-cyan-600" />,
     desc: "All unedited raw photo files",
   },
@@ -665,7 +616,7 @@ export const photoPackages = [
   {
     id: "wall-frame",
     label: "Wall Frame (Large Size)",
-    mrp: 20000,
+    mrp: 5000,
     discount: 60,
     get price() {
       return applyDiscount(this.mrp, this.discount);
@@ -682,23 +633,23 @@ export const albumOptions = [
     label: "Digital(Basic)",
     desc: "Online gallery with downloads",
     discount: 100,
-    price:2000,
+    price: 2000,
   },
-  {
-    id: "digital-premium",
-    label: "Digital(Premium)",
-    desc: "Gallery + slideshow",
-    mrp: 3000,
-    discount: 33,
-    get price() {
-      return applyDiscount(this.mrp, this.discount);
-    },
-  },
+  // {
+  //   id: "digital-premium",
+  //   label: "Digital(Premium)",
+  //   desc: "Gallery + slideshow",
+  //   mrp: 3000,
+  //   discount: 33,
+  //   get price() {
+  //     return applyDiscount(this.mrp, this.discount);
+  //   },
+  // },
   {
     id: "printed-standard",
     label: "Printed(Standard)",
     desc: "50 pages, 8x10 matte",
-    mrp: 12000,
+    mrp: 9000,
     discount: 33,
     get price() {
       return applyDiscount(this.mrp, this.discount);
@@ -708,7 +659,7 @@ export const albumOptions = [
     id: "printed-premium",
     label: "Printed(Premium)",
     desc: "100 pages, 12x12 glossy",
-    mrp: 22500,
+    mrp: 20000,
     discount: 33,
     get price() {
       return applyDiscount(this.mrp, this.discount);
@@ -718,21 +669,109 @@ export const albumOptions = [
     id: "printed-luxury",
     label: "Printed(Luxury)",
     desc: "150 pages, 14x14 leather",
-    mrp: 37500,
+    mrp: 30000,
     discount: 33,
     get price() {
       return applyDiscount(this.mrp, this.discount);
     },
   },
+  // {
+  //   id: "canvas-prints",
+  //   label: "Canvas Prints (Set of 5)",
+  //   desc: "Professional canvas shots",
+  //   mrp: 10000,
+  //   discount: 33,
+  //   get price() {
+  //     return applyDiscount(this.mrp, this.discount);
+  //   },
+  // },
+];
+
+// Drone options (Rural Area Pricing)
+export const droneOptions = [
   {
-    id: "canvas-prints",
-    label: "Canvas Prints (Set of 5)",
-    desc: "Professional canvas shots",
-    mrp: 18000,
-    discount: 33,
-    get price() {
-      return applyDiscount(this.mrp, this.discount);
-    },
+    id: "drone-inspire3",
+    label: "DJI Inspire 3",
+    desc: "Professional 8K cinema drone with dual operator support for high-end productions",
+    mrp: 4000,
+    discount: 100,
+    price: 0, // 100% off (free / demo use)
+  },
+  {
+    id: "drone-mini4",
+    label: "DJI Mini 4 Pro",
+    desc: "Lightweight 4K drone ideal for quick aerial shots and close venue flyovers",
+    mrp: 6000,
+    discount: 30,
+    price: 6000, // 15% off
+  },
+  {
+    id: "drone-air3",
+    label: "DJI Air 3",
+    desc: "Dual-camera system (wide + telephoto), perfect for cinematic wedding visuals",
+    mrp: 9000,
+    discount: 30,
+    price: 9000, // 20% off
+  },
+  {
+    id: "drone-mavic3pro",
+    label: "DJI Mavic 3 Pro",
+    desc: "Flagship 5.1K drone with triple cameras for premium aerial cinematography",
+    mrp: 12000,
+    discount: 30,
+    price: 12000, // 25% off
+  },
+  {
+    id: "drone-mini3",
+    label: "DJI Mini 3",
+    desc: "Compact and affordable 4K drone ideal for beginner wedding videographers",
+    mrp: 15000,
+    discount: 30,
+    price: 15000, // 10% off
+  },
+];
+
+// LED Screen options
+export const ledScreenOptions = [
+  {
+    id: "led-32",
+    label: "LED Screen (32-inch)",
+    desc: "HD display, suitable for small venue previews or demo setups",
+    mrp: 5000,
+    discount: 100,
+    price: 0, // 100% off (Free)
+  },
+  {
+    id: "led-43",
+    label: "LED Screen (43-inch)",
+    desc: "Full HD, ideal for medium-size setups",
+    mrp: 9000,
+    discount: 25,
+    price: 9000, // 25% off
+  },
+  {
+    id: "led-55",
+    label: "LED Screen (55-inch)",
+    desc: "4K UHD, perfect for large hall displays",
+    mrp: 12000,
+    discount: 25,
+    price: 12000, // 25% off
+  },
+  {
+    id: "led-65",
+    label: "LED Screen (65-inch)",
+    desc: "4K UHD with premium color accuracy",
+    mrp: 15000,
+    discount: 30,
+    price: 15000, // 30% off
+  },
+  {
+    id: "led-75",
+    label: "LED Screen (75-inch)",
+    desc: "Ultra HD, ideal for large-scale event displays",
+    mrp: 20000,
+    discount: 30,
+    price: 20000, // 30% off
   },
 ];
 
@@ -751,8 +790,8 @@ export const extraVideos = [
   {
     id: "highlight",
     label: "Highlight Video",
-    desc: "5–7 min event recap",
-    mrp: 12000,
+    desc: "2–4 min event recap",
+    mrp: 10000,
     discount: 33,
     get price() {
       return applyDiscount(this.mrp, this.discount);
@@ -769,9 +808,10 @@ export const servicesPreWedding = [
     price: 6000,
     icon: Camera,
     description: "Professional event photography",
-    fullDescription: "Our photography service captures every cherished moment of your event with an artistic and natural approach. From candid interactions to formal portraits, we document the emotion, atmosphere and details so you can relive your special day for years to come.",  // based on photography/videography overview :contentReference[oaicite:0]{index=0}
+    fullDescription:
+      "Our photography service captures every cherished moment of your event with an artistic and natural approach. From candid interactions to formal portraits, we document the emotion, atmosphere and details so you can relive your special day for years to come.", // based on photography/videography overview :contentReference[oaicite:0]{index=0}
     required: [camera, cameraLights, operator],
-    imageurl: "/servicesImage/camera.jpg"
+    imageurl: "/servicesImage/camera.jpg",
   },
   {
     id: "videography",
@@ -780,20 +820,22 @@ export const servicesPreWedding = [
     price: 12000,
     icon: Video,
     description: "High-quality video recording",
-    fullDescription: "Our videography service combines professional equipment, skilled operators and creative editing to transform your event into a compelling visual story. Whether it’s speeches, performances or candid moments, we tailor a film that evokes the atmosphere and memories of the day.",  // based on event videography definition :contentReference[oaicite:1]{index=1}
+    fullDescription:
+      "Our videography service combines professional equipment, skilled operators and creative editing to transform your event into a compelling visual story. Whether it’s speeches, performances or candid moments, we tailor a film that evokes the atmosphere and memories of the day.", // based on event videography definition :contentReference[oaicite:1]{index=1}
     required: [camera, mic, cameraLights, operator],
-    imageurl: "/servicesImage/video.jpg"
+    imageurl: "/servicesImage/video.jpg",
   },
   {
     id: "drone-coverage",
     name: "Drone Coverage",
     discount: 50,
-    price: 16000,
+    price: 5000,
     icon: Video,
     description: "Aerial photography and videography",
-    fullDescription: "Take your event to new heights with our drone coverage service. A certified operator and advanced drone capture dramatic aerial views, sweeping landscapes and unique perspectives that conventional cameras cannot. Perfect for outdoor venues, large gatherings and adding wow-factor imagery to your memories.",
+    fullDescription:
+      "Take your event to new heights with our drone coverage service. A certified operator and advanced drone capture dramatic aerial views, sweeping landscapes and unique perspectives that conventional cameras cannot. Perfect for outdoor venues, large gatherings and adding wow-factor imagery to your memories.",
     required: [drone, droneOperator],
-    imageurl: "/servicesImage/drone.jpg"
+    imageurl: "/servicesImage/drone.jpg",
   },
 ];
 
@@ -805,36 +847,38 @@ export const serviceOptions = {
       id: "stage-lighting",
       name: "Stage Lighting",
       discount: 60,
-      price:8000,
+      price: 1200,
       icon: Lightbulb,
       description: "Professional stage lighting setup",
       required: [stageLights],
-      fullDescription: "Our stage lighting service creates a dynamic and immersive atmosphere for your event. With programmable LED systems, lighting rigs and experienced technicians, we enhance the mood, highlight key moments and ensure your venue shines both literally and figuratively.",
-       imageurl: "/servicesImage/light.jpg",
+      fullDescription:
+        "Our stage lighting service creates a dynamic and immersive atmosphere for your event. With programmable LED systems, lighting rigs and experienced technicians, we enhance the mood, highlight key moments and ensure your venue shines both literally and figuratively.",
+      imageurl: "/servicesImage/light.jpg",
     },
     {
       id: "led-screen",
       name: "LED Screen",
       discount: 50,
-      price:12000,
+      price: 4000,
       icon: ScreenShare,
       description: "High-resolution dynamic event display",
       // required: [Laptop, Led],
-       imageurl: "/servicesImage/led.jpg",
-     fullDescription: "Our LED screen service offers crisp, high-definition visual displays that bring your event content to life. From live feeds to custom animations and presentation material, the LED screens provide a bold focal point partner for your speeches, entertainments or brand moments.",
-  
+      imageurl: "/servicesImage/led.jpg",
+      fullDescription:
+        "Our LED screen service offers crisp, high-definition visual displays that bring your event content to life. From live feeds to custom animations and presentation material, the LED screens provide a bold focal point partner for your speeches, entertainments or brand moments.",
     },
     {
-      id: "live-streaming",
-      name: "Live Streaming",
+      id: "live-stream",
+      name: "Live Stream",
       mrp: 27000,
       discount: 60,
-      price:40000,
+      price: 40000,
       icon: Monitor,
       description: "Real-time event streaming",
-       imageurl: "/servicesImage/livestrim.jpg",
+      imageurl: "/servicesImage/livestrim.jpg",
       required: [camera, mic, streamingRig, operator],
-      fullDescription: "Our live streaming service ensures your event reaches remote audiences seamlessly. Using high-quality cameras, audio feeds, streaming rigs and skilled operators, we deliver broadcast-quality live streams to any platform — ensuring every moment is captured and shared as it happens.",
+      fullDescription:
+        "Our live streaming service ensures your event reaches remote audiences seamlessly. Using high-quality cameras, audio feeds, streaming rigs and skilled operators, we deliver broadcast-quality live streams to any platform — ensuring every moment is captured and shared as it happens.",
     },
   ],
 
@@ -1030,44 +1074,44 @@ export const preWeddingOptions = [
     id: "outdoor-90min",
     label: "Outdoor Shoot (90 Minutes)",
     desc: "1.5-hour outdoor session at one location",
-    discount: 40,
-    price:10000,
+    discount: 100,
+    price: 1000,
   },
   {
     id: "outdoor-standard",
     label: "Outdoor Shoot (Standard)",
     desc: "3-hour outdoor session with multiple locations",
     discount: 60,
-    price:15000,
+    price: 1500,
   },
   {
     id: "outdoor-extended",
     label: "Outdoor Shoot (Extended)",
     desc: "6-hour session with multiple locations and professional editing",
     discount: 60,
-   price:20000,
+    price: 2000,
   },
   {
     id: "outdoor-full-day",
     label: "Outdoor Shoot (Full Day)",
     desc: "Full-day coverage with multiple locations, assistants, and advanced edits",
     discount: 60,
-    price:25000,
-  },
-  {
-    id: "outdoor-1-5-days",
-    label: "Outdoor Shoot (1.5 Days)",
-    desc: "One and a half days of outdoor coverage across multiple locations",
-    mrp: 75000,
-    discount: 60,
-    price:30000,
+    price: 5000,
   },
   {
     id: "outdoor-2-days",
     label: "Outdoor Shoot (2 Days)",
+    desc: "One and a half days of outdoor coverage across multiple locations",
+    mrp: 9000,
+    discount: 70,
+    price: 9000,
+  },
+  {
+    id: "outdoor-4-5-days",
+    label: "Outdoor Shoot (3-5 Days)",
     desc: "Two full days of outdoor coverage with professional team support",
     discount: 60,
-    price:40000
+    price: 15000,
   },
 ];
 
@@ -1111,11 +1155,30 @@ export const getEventTypeOptions = (category) => {
 
 
 
+const today = new Date();
+const formattedToday = today.toISOString().split('T')[0];
+let eventFirstDate=formattedToday;
+export const logBookingData = (bookingData) => {
+  eventFirstDate=bookingData.details.eventTimes[0].eventDate;
+};
+
+
 export function PriceHandeler(basePrice, discount, reqPackage, areaType) {
-  let mrp =0;
-  let finalPrice =0;
-  if(discount==100){
-    mrp=basePrice;
+  // Calculate remaining days
+
+  const diffTime = new Date(eventFirstDate).getTime() - new Date(formattedToday).getTime();
+  const leftDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Add bonus discount based on days left
+  let moreDiscount=0;
+  if (leftDays > 30) moreDiscount += 3;
+  else if (leftDays > 20) moreDiscount += 2;
+  else if (leftDays > 10) moreDiscount += 1;
+
+  let mrp = 0;
+  let finalPrice = 0;
+  if (discount == 100) {
+    mrp = basePrice;
     return { mrp, discount, finalPrice };
   }
 
@@ -1129,52 +1192,52 @@ export function PriceHandeler(basePrice, discount, reqPackage, areaType) {
       packageMul = 1.6;
       break;
     case "event-basic":
+      packageMul = 1;
+      break;
     default:
       packageMul = 1;
- 
-    }
+  }
   switch (areaType) {
     case "semi-urban":
-      baseOnArea = 1.3;
+      baseOnArea = 1.2;
       break;
     case "urban":
-      baseOnArea = 1.4;
+      baseOnArea = 1.3;
       break;
     case "rural":
     default:
       baseOnArea = 1;
   }
-   finalPrice = Math.round(  basePrice * packageMul * baseOnArea);
-   mrp = Math.round((finalPrice * 100) / (100 - discount));
+  finalPrice = Math.round(basePrice * packageMul * baseOnArea);
+  finalPrice=Math.round(finalPrice*(100 - moreDiscount)/100);
+  mrp = Math.round((finalPrice * 100) / (100 - discount));
+  discount+=moreDiscount;
   return { mrp, discount, finalPrice };
 }
 
-
-
-
-  function getShortName(name) {
+function getShortName(name) {
   return name.trim().substring(0, 3).toUpperCase();
 }
 
 function getRoleShort(role) {
   const map = {
     "Production Team": "PT",
-    "Cameraman": "CM",
+    Cameraman: "CM",
     "Video Editor": "VE",
     "Equipment Partner": "EP",
     "Album Designer": "ALD",
     "Experienced Professional": "EXP",
     "Moderate Experience": "MOD",
-    "Fresher": "FRE",
+    Fresher: "FRE",
     "Photography Specialist": "PHO",
     "Videography Specialist": "VID",
     "Drone Operator": "DRO",
     "Lighting Technician": "LIG",
     "Live Stream Technician": "LSO",
-    "Client":"CLt",
-    "team":"TM",
-    "admin":"A",
-    "operator":"O",
+    Client: "CLt",
+    team: "TM",
+    admin: "A",
+    operator: "O",
   };
 
   return map[role] || role;
@@ -1192,4 +1255,3 @@ export function generateMemberClientId(name, role) {
 
   return `${nameShort}${roleShort}-${month}-${hh}${mm}`;
 }
-

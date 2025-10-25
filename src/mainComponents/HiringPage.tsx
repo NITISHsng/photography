@@ -2,14 +2,11 @@
 import toast from "react-hot-toast";
 import React, { useState, useEffect } from "react";
 import {
-  // ArrowRight,
   Check,
-  // Star,
   Calendar,
   DollarSign,
   Send,
   CheckCircle,
-  // Divide,
 } from "lucide-react";
 
 import { useAppContext } from "@/contexts/AppContext";
@@ -24,13 +21,15 @@ import BasicDetails from "@/components/fromComponents/BasicDetails";
 import Services from "@/components/fromComponents/Services";
 import PhotoVideoOptions from "@/components/fromComponents/PhotoVideoOptions";
 import Lights from "@/components/fromComponents/Lights";
+import Led from "@/components/fromComponents/Led";
+import Drone from "@/components/fromComponents/Drone";
 import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { headerType } from "@/contexts/fromType";
-
+import { logBookingData } from "@/contexts/fromData";
 const HiringPage: React.FC<headerType> = () => {
   const [bookingData, setBookingData] =
     useState<BookingData>(initialBookingData);
-
+  logBookingData(bookingData);
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
 
 //imagePopup
@@ -55,6 +54,7 @@ const [fullDescription, setfullDescription] = useState("");
   //     bookingElement.scrollIntoView({ behavior: "smooth" });
   //   }
   // };
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -465,6 +465,7 @@ const [fullDescription, setfullDescription] = useState("");
                           setBookingData={setBookingData}
                           areaDetails={areaDetails ? [areaDetails] : []}
                         />
+
                         {/* Services Selection */}
                         <Services
                           bookingData={bookingData}
@@ -495,6 +496,32 @@ const [fullDescription, setfullDescription] = useState("");
                               bookingData={bookingData}
                               setBookingData={setBookingData}
                             />
+
+{/* Drone  */}
+                 {bookingData.selectedService.some((s) =>
+                          [
+                            "drone-coverage",
+                          ].includes(s.id)
+                        ) && (
+                            <Drone
+                              bookingData={bookingData}
+                              setBookingData={setBookingData}
+                            /> 
+                        )}
+                 {/* Stage lights */}
+
+                 {bookingData.selectedService.some((s) =>
+                          [
+                            "led-screen",
+                          ].includes(s.id)
+                        ) && (
+                          
+                            <Led
+                              bookingData={bookingData}
+                              setBookingData={setBookingData}
+                            /> 
+                        )}
+           
                             {/* Stage lights */}
                             <Lights
                               bookingData={bookingData}
