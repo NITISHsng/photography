@@ -13,7 +13,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { initialBookingData, areaType } from "@/contexts/fromType";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 // import { packages } from "@/contexts/fromData";
 import { categories } from "@/contexts/fromData";
 import { generateMemberClientId } from "@/contexts/fromData";
@@ -28,7 +28,7 @@ import { headerType } from "@/contexts/fromType";
 import { logBookingData } from "@/contexts/fromData";
 const HiringPage: React.FC<headerType> = () => {
   const [bookingData, setBookingData] =
-    useState<BookingData>(initialBookingData);
+    useState<BookingWithId>(initialBookingData);
   logBookingData(bookingData);
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
 
@@ -113,11 +113,10 @@ const [fullDescription, setfullDescription] = useState("");
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     //  create a id for client and 3 is the client's 3 letter
     bookingData.createdAt = new Date().toISOString();
     bookingData.id = generateMemberClientId(bookingData.details.name, "client");
-
+    
     // validate event date at least 1 day ahead
     const firstEventDate = bookingData.details.eventTimes[0]?.eventDate;
     if (!validateDate(firstEventDate)) return;
@@ -585,8 +584,8 @@ const [fullDescription, setfullDescription] = useState("");
                         )}
 
                         {/* price Calculate */}
-                        {bookingData.selectedService.length > 0 && (
-                          <PriceCalculate localBooking={bookingData} />
+                        {bookingData?.selectedService.length > 0 && (
+                          <PriceCalculate bookingData={bookingData} setBookingData={setBookingData} />
                         )}
 
                         {isSubmitted && (
@@ -600,7 +599,7 @@ const [fullDescription, setfullDescription] = useState("");
                           </div>
                         )}
                         {/* Submit Button */}
-                        <div className="px-3">
+                        <div className="px-3 pb-5 md:pb-2">
 
                         <button
                           type="submit"

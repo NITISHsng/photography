@@ -2,19 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "@/contexts/AppContext";
-import { BookingData, TeamMember } from "@/contexts/fromType";
+import { BookingWithId, TeamMember } from "@/contexts/fromType";
 import SearchTeams from "@/components/SearchTeams";
 import OurServiceLocation from "@/components/OurServiceLocation";
 
 import { Users, BarChart3, UserCheck, TrendingUp } from "lucide-react";
 
-export type ExtendedBookingData = BookingData & {
+export type ExtendedBookingData = BookingWithId & {
   createdAt: Date | null;
 };
 
 const Dashboard = () => {
   type AppContextType = {
-    bookings: BookingData[];
+    bookings: BookingWithId[];
     teamMembers: TeamMember[];
     // Add other context properties if exist
   };
@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [timeFilter, setTimeFilter] = useState(30);
   const [completedEvent, setcompletedEvent] = useState(0);
 
-  function countCompletedBookings(bookings: BookingData[]): number {
+  function countCompletedBookings(bookings: BookingWithId[]): number {
     return bookings.filter((b) => b.details.status === "completed").length;
   }
 

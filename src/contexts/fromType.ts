@@ -102,10 +102,13 @@ export type bookAssignedTeam = {
   projects?: number;
 };
 
-export type BookingData = {
+export type BookingWithId = {
+   _id?: string
   createdAt: string;
   id: string;
   details: {
+    coponCode?:string;
+    discountPrice?:number;
     category: string;
     package: string;
     name: string;
@@ -153,7 +156,7 @@ export type BookingData = {
     droneselected: { id: string; price: number }[];
   };
 };
-export type BookingWithId = BookingData & { _id: string };
+// export type BookingWithId = BookingData & { _id: string };
 
 export type AdminUser = {
   id: string;
@@ -211,7 +214,7 @@ export type PriceInfo = {
   finalPrice: number;
 };
 
-export const initialBookingData: BookingData = {
+export const initialBookingData: BookingWithId = {
   createdAt: new Date().toISOString(),
   id: "",
   details: {
@@ -332,6 +335,7 @@ export type TeamMember = {
   password: string;
   events: AssignedEvents[];
   totalEarn: number;
+  cupan?:{code:string,discount:number}
   transactionHistory: TransactionHistory[] | null;
   createdAt: string;
 };

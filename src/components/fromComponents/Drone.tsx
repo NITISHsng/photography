@@ -1,11 +1,11 @@
 import React from "react";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import { droneOptions } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
 
 interface droneOptionProps {
-  bookingData: BookingData;
-  setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
+  bookingData: BookingWithId;
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
 }
 
 const Drone: React.FC<droneOptionProps> = ({ bookingData, setBookingData }) => {

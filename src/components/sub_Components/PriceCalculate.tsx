@@ -2,19 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { videoCategory } from "@/contexts/fromData";
 import { calculateDuration } from "@/contexts/fromType";
-import { BookingData, ExpandablePriceProps } from "@/contexts/fromType";
-
+import { BookingWithId, ExpandablePriceProps } from "@/contexts/fromType";
+import { useAppContext } from "@/contexts/AppContext";
 type Props = {
-  localBooking: BookingData;
+  bookingData: BookingWithId;
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
 };
 
-const PriceCalculate = ({ localBooking }: Props) => {
-  const [bookingData, setLocalBooking] = useState<BookingData>(localBooking);
-  useEffect(() => {
-    setLocalBooking(localBooking);
-  }, [localBooking]);
+const PriceCalculate = ({ bookingData, setBookingData }: Props) => {
+  const { teamMembers } = useAppContext();
 
-  const calculateServicePrice = (bookingData: BookingData) => {
+  const calculateServicePrice = (bookingData: BookingWithId) => {
     let baseServiceCost = 0;
     let additionalCosts = 0;
     let videoDurationAmount = 0;
@@ -25,7 +23,6 @@ const PriceCalculate = ({ localBooking }: Props) => {
       0
     );
 
-    
     // service price
     if (
       bookingData.requiredServices?.photography?.photoTypes &&
@@ -117,17 +114,13 @@ const PriceCalculate = ({ localBooking }: Props) => {
       additionalCosts += videoDurationAmount;
     }
 
-
-    if (
-      bookingData.selectedService.some((s) => s.id === "videography")
-    ) {
-
+    if (bookingData.selectedService.some((s) => s.id === "videography")) {
       // video quality price
       if (bookingData.requiredServices.videography.videoQuality) {
         additionalCosts +=
           bookingData.requiredServices.videography.videoQuality.price;
       }
-      
+
       // extra video price
       if (bookingData.requiredServices.videography.extraVideos) {
         additionalCosts +=
@@ -137,8 +130,6 @@ const PriceCalculate = ({ localBooking }: Props) => {
           );
       }
     }
-
-
 
     // Example: if you want to factor in preWedding
     if (bookingData.requiredServices.preWedding) {
@@ -170,16 +161,12 @@ const PriceCalculate = ({ localBooking }: Props) => {
       bookingData.details.eventTimes.map((slot) => slot.eventDate)
     ).size;
 
-
-
-   if (slotCount > 1) {
+    if (slotCount > 1) {
       daysAndEventDueration = (slotCount - 1) * baseServiceCost * 0.7;
     }
-    baseServiceCost=daysAndEventDueration + baseServiceCost;
-    const totalAmount = baseServiceCost + additionalCosts ;
+    baseServiceCost = daysAndEventDueration + baseServiceCost;
+    const totalAmount = baseServiceCost + additionalCosts;
     bookingData.details.totalAmount = totalAmount;
-
-    
 
     return {
       baseServiceCost,
@@ -190,6 +177,61 @@ const PriceCalculate = ({ localBooking }: Props) => {
       daysAndEventDueration,
     };
   };
+
+  const [coponCode, setCupanCode] = useState("");
+  const [estimatePrice, setEstimatePrice] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState(0);
+  
+  useEffect(() => {
+    if (!bookingData) return;
+
+    const discountFunc = () => {
+      const basePrice = calculateServicePrice(bookingData).totalAmount;
+      setEstimatePrice(basePrice);
+
+      let discountPercent = 0;
+
+      const code = coponCode.trim().toUpperCase();
+
+      if (code === "ASAN10") {
+        discountPercent = 10;
+      } else {
+        const matchedMember = teamMembers.find(
+          (member) => member?.cupan?.code?.trim().toUpperCase() === code
+        );
+        if (matchedMember) {
+          discountPercent = matchedMember.cupan?.discount || 0;
+        }
+      }
+
+      const discountValue = Math.round((basePrice * discountPercent) / 100);
+      setDiscountPrice(discountValue);
+
+      // update booking data only if values changed to avoid loops
+      setBookingData((prev) => {
+        if (!prev) return prev;
+
+        if (
+          prev.details.coponCode === coponCode &&
+          prev.details.discountPrice === discountValue
+        ) {
+          return prev; // no changes
+        }
+
+        return {
+          ...prev,
+          details: {
+            ...prev.details,
+            coponCode,
+            discountPrice: discountValue,
+          },
+        };
+      });
+    };
+
+    discountFunc();
+    console.log(bookingData.details.totalAmount);
+  }, [bookingData?.details?.totalAmount, coponCode, teamMembers]);
 
   const ExpandablePrice: React.FC<ExpandablePriceProps> = ({
     title,
@@ -319,15 +361,13 @@ const PriceCalculate = ({ localBooking }: Props) => {
                 items={bookingData.requiredServices.videography.extraVideos}
               />
             )}
-            {bookingData.requiredServices.droneselected.length >
-              0 && (
+            {bookingData.requiredServices.droneselected.length > 0 && (
               <ExpandablePrice
                 title="Drone"
                 items={bookingData.requiredServices.droneselected}
               />
             )}
-            {bookingData.requiredServices.ledscreen.length >
-              0 && (
+            {bookingData.requiredServices.ledscreen.length > 0 && (
               <ExpandablePrice
                 title="Led Screen"
                 items={bookingData.requiredServices.ledscreen}
@@ -360,7 +400,7 @@ const PriceCalculate = ({ localBooking }: Props) => {
 
             <hr />
             <div className="text-right mt-3">
-              Additional Costs={" "}
+              Additional Costs
               {calculateServicePrice(bookingData).additionalCosts}
             </div>
           </div>
@@ -369,12 +409,40 @@ const PriceCalculate = ({ localBooking }: Props) => {
       <div></div>
       <div className="mt-3">
         <div className="text-center">
-          <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-            Estimated Total Price
-          </h4>
-          <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
-            ₹{calculateServicePrice(bookingData).totalAmount}
+          <h5>Use coupon code :</h5>
+          <div className="flex flex-col-1 justify-center items-center">
+            <input
+              type="text"
+              value={coponCode}
+              onChange={(e) => setCupanCode(e.target.value)}
+              placeholder="34Asjnk"
+              className="m-2 px-3 py-2 border rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
+
+          <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+            Es timated Total Price
+          </h4>
+          {discountPrice > 0 ? (
+            <div className="flex justify-center items-baseline gap-2 mb-1">
+              <span className="text-2xl text-gray-500 line-through">
+                ₹{estimatePrice}
+              </span>
+              <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+                ₹{estimatePrice - discountPrice}
+              </span>
+            </div>
+          ) : (
+            <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+              ₹{estimatePrice}
+            </div>
+          )}
+
+          {discountPrice > 0 && (
+            <div className="text-green-600 font-semibold text-lg mb-3">
+              You save ₹{discountPrice}
+            </div>
+          )}
 
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
             *Final price may vary based on specific requirements and location

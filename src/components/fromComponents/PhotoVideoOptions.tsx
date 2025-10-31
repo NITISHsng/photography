@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
 import React from "react";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import { photoPackages } from "@/contexts/fromData";
 import { albumOptions } from "@/contexts/fromData";
 import { videoQualityOptions } from "@/contexts/fromData";
 import { extraVideos } from "@/contexts/fromData";
 import { videoCategory } from "@/contexts/fromData";
-import { Clock} from "lucide-react";
+import { Clock } from "lucide-react";
 import { PriceHandeler } from "@/contexts/fromData";
 interface PhotosVideosProps {
-  bookingData: BookingData;
-  setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
+  bookingData: BookingWithId; 
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
 }
 
 const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
@@ -197,72 +197,73 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
           </h5>
 
           {/* Type of Videography */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  {videoCategory.map((opt) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {videoCategory.map((opt) => {
+              const { mrp, discount, finalPrice } = PriceHandeler(
+                opt.price,
+                opt.discount,
+                bookingData.details.package,
+                bookingData.details.areaType
+              );
 
-    const { mrp, discount, finalPrice } = PriceHandeler(
-      opt.price,
-      opt.discount,
-      bookingData.details.package,
-      bookingData.details.areaType
-    );
+              return (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() =>
+                    setBookingData((prev) => ({
+                      ...prev,
+                      requiredServices: {
+                        ...prev.requiredServices,
+                        videography: {
+                          ...prev.requiredServices.videography,
+                          videoCategory: {
+                            id: opt.id as "classic" | "cinematic" | "standard",
+                            price: finalPrice, // ✅ store calculated price
+                          },
+                        },
+                      },
+                    }))
+                  }
+                  className={`flex-1 justify-center px-4 py-3 rounded-xl border-2 flex flex-col-2 items-center gap-3 ${
+                    bookingData.requiredServices.videography.videoCategory
+                      ?.id === opt.id
+                      ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
+                      : "border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-600"
+                  }`}
+                >
+                  <span>{opt.icon}</span>
+                  <div>
+                    <span className="font-medium">{opt.name}</span>
+                    <div>
+                      {/* ✅ use calculated MRP */}
+                      <span className="text-xs text-gray-500 line-through">
+                        ₹{mrp.toLocaleString()}
+                      </span>
 
-    return (
-      <button
-        key={opt.id}
-        type="button"
-        onClick={() =>
-          setBookingData((prev) => ({
-            ...prev,
-            requiredServices: {
-              ...prev.requiredServices,
-              videography: {
-                ...prev.requiredServices.videography,
-                videoCategory: {
-                  id: opt.id as "classic" | "cinematic" | "standard",
-                  price: finalPrice, // ✅ store calculated price
-                },
-              },
-            },
-          }))
-        }
-        className={`flex-1 justify-center px-4 py-3 rounded-xl border-2 flex flex-col-2 items-center gap-3 ${
-          bookingData.requiredServices.videography.videoCategory?.id === opt.id
-            ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
-            : "border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-600"
-        }`}
-      >
-        <span>{opt.icon}</span>
-        <div>
-          <span className="font-medium">{opt.name}</span>
-          <div>
-            {/* ✅ use calculated MRP */}
-            <span className="text-xs text-gray-500 line-through">
-              ₹{mrp.toLocaleString()}
-            </span>
+                      {/* ✅ use calculated discount */}
+                      <span className="px-2 mx-2 py-0.5 text-[12px] font-semibold bg-red-100 text-red-600 rounded-full">
+                        {discount}% OFF
+                      </span>
 
-            {/* ✅ use calculated discount */}
-            <span className="px-2 mx-2 py-0.5 text-[12px] font-semibold bg-red-100 text-red-600 rounded-full">
-              {discount}% OFF
-            </span>
-
-            {/* ✅ use calculated final price */}
-            <span className="text-sm font-bold text-orange-500">
-              {finalPrice === 0 ? "Free" : `₹${finalPrice.toLocaleString()}`}
-            </span>
+                      {/* ✅ use calculated final price */}
+                      <span className="text-sm font-bold text-orange-500">
+                        {finalPrice === 0
+                          ? "Free"
+                          : `₹${finalPrice.toLocaleString()}`}
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
-        </div>
-      </button>
-    );
-  })}
-</div>
-
 
           {/* Duration */}
           <div className="flex items-center gap-6 mt-3 mb-4">
             <div className="flex-1">
               <label className="block font-medium mb-1 ">
-                Duration (30 minutes Free) 
+                Duration (30 minutes Free)
               </label>
               <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 border-orange-400" />
@@ -309,64 +310,63 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
           <h6 className="font-medium mb-2">Video Quality</h6>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {videoQualityOptions.map((quality) => {
-        const { mrp, discount, finalPrice } = PriceHandeler(
-      quality.price,
-      quality.discount,
-      bookingData.details.package,
-      bookingData.details.areaType
-    );
-              
-              return (
+              const { mrp, discount, finalPrice } = PriceHandeler(
+                quality.price,
+                quality.discount,
+                bookingData.details.package,
+                bookingData.details.areaType
+              );
 
-              
-              <button
-                key={quality.id}
-                type="button"
-                onClick={() =>
-                  setBookingData((prev) => ({
-                    ...prev,
-                    requiredServices: {
-                      ...prev.requiredServices,
-                      videography: {
-                        ...prev.requiredServices.videography,
-                        videoQuality: {
-                          id: quality.id as "1080p" | "4k" | "8k",
-                          price: finalPrice,
+              return (
+                <button
+                  key={quality.id}
+                  type="button"
+                  onClick={() =>
+                    setBookingData((prev) => ({
+                      ...prev,
+                      requiredServices: {
+                        ...prev.requiredServices,
+                        videography: {
+                          ...prev.requiredServices.videography,
+                          videoQuality: {
+                            id: quality.id as  "720p" | "1080p" | "4k" ,
+                            price: finalPrice,
+                          },
                         },
                       },
-                    },
-                  }))
-                }
-                className={`flex-1 justify-center px-4 py-3 rounded-xl border-2 flex flex-col-2 items-center gap-3 ${
-                  bookingData.requiredServices.videography.videoQuality.id ===
-                  quality.id
-                    ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
-                    : "border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-600"
-                }`}
-              >
-                <div>{quality.icon}</div>
-                <div>
-                  <div className="font-medium">{quality.label}</div>
-
+                    }))
+                  }
+                  className={`flex-1 justify-center px-4 py-3 rounded-xl border-2 flex flex-col-2 items-center gap-3 ${
+                    bookingData.requiredServices.videography.videoQuality.id ===
+                    quality.id
+                      ? "border-orange-400 bg-orange-50 dark:bg-orange-900/10"
+                      : "border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-600"
+                  }`}
+                >
+                  <div>{quality.icon}</div>
                   <div>
-                    {/* MRP */}
-                    <span className="text-xs text-gray-500 line-through">
-                      ₹{mrp.toLocaleString()}
-                    </span>
+                    <div className="font-medium">{quality.label}</div>
 
-                    {/* Discount Badge */}
-                    <span className="px-2 mx-2 py-0.5 text-[12px] font-semibold bg-red-100 text-red-600 rounded-full">
-                      {discount}% OFF
-                    </span>
+                    <div>
+                      {/* MRP */}
+                      <span className="text-xs text-gray-500 line-through">
+                        ₹{mrp.toLocaleString()}
+                      </span>
 
-                    {/* Final Price */}
-                    <span className="text-sm font-bold text-orange-500">
-                      {finalPrice === 0 ? "Free" : `₹${finalPrice}`}
-                    </span>
+                      {/* Discount Badge */}
+                      <span className="px-2 mx-2 py-0.5 text-[12px] font-semibold bg-red-100 text-red-600 rounded-full">
+                        {discount}% OFF
+                      </span>
+
+                      {/* Final Price */}
+                      <span className="text-sm font-bold text-orange-500">
+                        {finalPrice === 0 ? "Free" : `₹${finalPrice}`}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
-)})}
+                </button>
+              );
+            })}
           </div>
 
           <h6 className="font-medium mb-2">Extra Videos</h6>
@@ -376,12 +376,12 @@ const PhotoVideoOptions: React.FC<PhotosVideosProps> = ({
                 bookingData.requiredServices.videography.extraVideos?.some(
                   (a) => a.id === opt.id
                 );
-            const { discount, finalPrice } = PriceHandeler(
-      opt.price,
-      opt.discount,
-      bookingData.details.package,
-      bookingData.details.areaType
-    );
+              const { discount, finalPrice } = PriceHandeler(
+                opt.price,
+                opt.discount,
+                bookingData.details.package,
+                bookingData.details.areaType
+              );
               return (
                 <button
                   key={opt.id}

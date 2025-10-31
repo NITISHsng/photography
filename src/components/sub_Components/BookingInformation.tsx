@@ -1,5 +1,5 @@
 import React from 'react'
-import { BookingWithId } from '@/contexts/fromType'
+import {  BookingWithId } from '@/contexts/fromType'
 import {
   Calendar,
   MapPin,
@@ -18,11 +18,13 @@ import {
 interface BookingInformationProps {
   selectedBooking: BookingWithId;
   setShowViewModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedBooking: React.Dispatch<React.SetStateAction<BookingWithId>>;
 }
+
 
 import {EventTimeSlot} from "@/contexts/fromType";
 import PriceCalculate from "../sub_Components/PriceCalculate";
-const BookingInformation: React.FC<BookingInformationProps> = ({ selectedBooking ,setShowViewModal}) => {
+const BookingInformation: React.FC<BookingInformationProps> = ({ selectedBooking ,setShowViewModal,setSelectedBooking}) => {
 
     const getServiceIcon = (service: string) => {
       switch (service) {
@@ -57,7 +59,7 @@ const BookingInformation: React.FC<BookingInformationProps> = ({ selectedBooking
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
-                Booking Details - {selectedBooking._id}
+                Booking Details - {selectedBooking.id}
               </h3>
               <button
                 onClick={()=>setShowViewModal(false)}
@@ -395,8 +397,7 @@ const BookingInformation: React.FC<BookingInformationProps> = ({ selectedBooking
 
               </div>
             </div>
-            <PriceCalculate localBooking={selectedBooking} />
-
+            <PriceCalculate bookingData={selectedBooking} setBookingData={setSelectedBooking} />
             <div className="flex space-x-4 mt-8">
               <button
                 onClick={()=>setShowViewModal(false)}
