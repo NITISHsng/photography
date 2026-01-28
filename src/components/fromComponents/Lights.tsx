@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import { lightOptions } from "@/contexts/fromData";
 import { Lightbulb } from "lucide-react";
 import { PriceHandeler } from "@/contexts/fromData";
 interface LightsProps {
-  bookingData: BookingData;
-  setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
+  bookingData: BookingWithId;
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
 }
 
 const Lights: React.FC<LightsProps> = ({ bookingData, setBookingData }) => {

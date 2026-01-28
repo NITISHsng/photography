@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import {
   serviceOptions,
   preWeddingOptions,
@@ -9,8 +9,8 @@ import {
 } from "@/contexts/fromData";
 import { PriceHandeler } from "@/contexts/fromData";
 interface ServicesProps {
-  bookingData: BookingData;
-  setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
+  bookingData: BookingWithId;
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
   setImageUrl: React.Dispatch<React.SetStateAction<string>>;
   setfullDescription: React.Dispatch<React.SetStateAction<string>>;
 }

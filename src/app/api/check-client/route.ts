@@ -2,7 +2,7 @@
 
 import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/mongodb";
-import type { BookingData } from "@/contexts/fromType";
+import type { BookingWithId } from "@/contexts/fromType";
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const hiringCollection = await getCollection<BookingData>("hiringRequests");
+    const hiringCollection = await getCollection<BookingWithId>("hiringRequests");
     const client = await hiringCollection.findOne({ id });
 
     if (!client) {

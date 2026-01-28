@@ -33,15 +33,16 @@ import PriceCalculate from "@/components/sub_Components/PriceCalculate";
 import { useParams } from "next/navigation";
 import SearchTeams from "@/components/SearchTeams";
 import { useAppContext } from "@/contexts/AppContext";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 
 export default function ClientPage() {
   const router = useRouter();
   const { mobileMenuOpen, setMobileMenuOpen, currentPage } = useAppContext();
   const params = useParams();
   const { hiringRequest, setHiringRequest, handleChange } = useAppContext();
+  
   type AppContextType = {
-    bookings: BookingData[];
+    bookings: BookingWithId[];
   };
   const [saving, setSaving] = useState(false);
   const [removeMemberId, setRemoveMemberId] = useState<string[]>([]);
@@ -52,7 +53,7 @@ export default function ClientPage() {
     if (!id || !bookings) return;
 
     const booking = bookings.find((b) => b.id === id) || null;
-    setHiringRequest(booking);
+    if(booking) setHiringRequest(booking);
 
     if (booking) {
       console.log("Found booking:", booking);
@@ -111,7 +112,7 @@ if (!hiringRequest) {
       const res = await fetch(`/api/hiring?id=${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ _id: id, removeMemberId, ...hiringRequest }), // Combine _id and data
+        body: JSON.stringify({ removeMemberId, ...hiringRequest }), // Combine _id and data
       });
 
       if (!res.ok) throw new Error("Failed to save");
@@ -1047,8 +1048,8 @@ if (!hiringRequest) {
         >
           {saving ? "Saving..." : "Save"}
         </button>
-
-        <PriceCalculate localBooking={hiringRequest} />
+       
+        <PriceCalculate bookingData={hiringRequest} setBookingData={setHiringRequest} />
       </div>
     </div>
   );

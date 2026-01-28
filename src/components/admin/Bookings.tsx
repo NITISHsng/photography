@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Calendar,
   Clock,
@@ -20,19 +20,17 @@ import {
 
 import Link from "next/link";
 import { useAppContext } from "@/contexts/AppContext";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import BookingInformation from "../sub_Components/BookingInformation";
 const Bookings: React.FC = () => {
-  type BookingWithId = BookingData & { _id: string };
   const { bookings } = useAppContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
   const [showViewModal, setShowViewModal] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState<BookingWithId | null>(
-    null
-  );
+const [selectedBooking, setSelectedBooking] = useState<BookingWithId>({} as BookingWithId);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "confirmed":
@@ -63,7 +61,7 @@ const Bookings: React.FC = () => {
     }
   };
 
-  const filteredBookings = bookings.filter((booking: BookingData) => {
+  const filteredBookings = bookings.filter((booking: BookingWithId) => {
     const name = booking.details?.name?.toLowerCase() || "";
     const pinCode = booking.details?.pinCode?.toLowerCase() || "";
     const phone = booking.details?.phone?.toLowerCase() || "";
@@ -85,16 +83,16 @@ const Bookings: React.FC = () => {
   const stats = {
     total: bookings.length,
     confirmed: bookings.filter(
-      (b: BookingData) => b.details?.status === "confirmed"
+      (b: BookingWithId) => b.details?.status === "confirmed"
     ).length,
     pending: bookings.filter(
-      (b: BookingData) => b.details?.status === "pending"
+      (b: BookingWithId) => b.details?.status === "pending"
     ).length,
     completed: bookings.filter(
-      (b: BookingData) => b.details?.status === "completed"
+      (b: BookingWithId) => b.details?.status === "completed"
     ).length,
     cancelled: bookings.filter(
-      (b: BookingData) =>
+      (b: BookingWithId) =>
         b.details?.status === "cancel" || b.details?.status === "cancelled"
     ).length,
   };
@@ -102,11 +100,12 @@ const Bookings: React.FC = () => {
   // Working action handlers
   const handleViewBooking = (booking: BookingWithId) => {
     setSelectedBooking(booking);
+    setShowViewModal(true)
   };
-  useEffect(() => {
-    setShowViewModal(true);
-    console.log(selectedBooking);
-  }, [selectedBooking]);
+  // useEffect(() => {
+  //   setShowViewModal(true);
+  //   console.log(selectedBooking);
+  // }, [selectedBooking]);
 
 
   if (!filteredBookings) {
@@ -437,6 +436,7 @@ const Bookings: React.FC = () => {
         <BookingInformation
           selectedBooking={selectedBooking}
           setShowViewModal={setShowViewModal}
+          setSelectedBooking={setSelectedBooking}
         />
       )}
     </div>

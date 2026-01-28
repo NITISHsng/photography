@@ -1,6 +1,6 @@
 "use Client";
 import React, { useEffect, useState } from "react";
-import { BookingData } from "@/contexts/fromType";
+import { BookingWithId } from "@/contexts/fromType";
 import { EventTimeSlot } from "@/contexts/fromType";
 import { PersonRole } from "@/contexts/fromType";
 import { getEventTypeOptions } from "@/contexts/fromData";
@@ -8,8 +8,8 @@ import { calculateDuration } from "@/contexts/fromType";
 import { areaType } from "@/contexts/fromType";
 
 interface BasicDetailsProps {
-  bookingData: BookingData;
-  setBookingData: React.Dispatch<React.SetStateAction<BookingData>>;
+  bookingData: BookingWithId;
+  setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
   areaDetails: areaType[] | null;
 }
 
