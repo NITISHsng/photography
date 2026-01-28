@@ -1,47 +1,41 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { videoCategory } from "@/contexts/fromData";
-import { calculateDuration } from "@/contexts/fromType";
-<<<<<<< HEAD
-import { BookingData, ExpandablePriceProps } from "@/contexts/fromType";
+import { calculateDuration, BookingWithId, ExpandablePriceProps } from "@/contexts/fromType";
 import { useAppContext } from "@/contexts/AppContext";
 
-=======
-import { BookingWithId, ExpandablePriceProps } from "@/contexts/fromType";
-import { useAppContext } from "@/contexts/AppContext";
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
 type Props = {
   bookingData: BookingWithId;
   setBookingData: React.Dispatch<React.SetStateAction<BookingWithId>>;
 };
 
-<<<<<<< HEAD
-const PriceCalculate = ({ localBooking }: Props) => {
+// Define coupons
+const COUPONS: Record<string, number> = {
+  "ASAN-10": 10,
+  "AB-50": 50,
+  "ABA-50": 20,
+};
+
+const PriceCalculate = ({ bookingData: initialBooking, setBookingData }: Props) => {
   const { teamMembers } = useAppContext();
-  const [bookingData, setLocalBooking] = useState<BookingData>(localBooking);
+  const [bookingData, setLocalBooking] = useState<BookingWithId>(initialBooking);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState<{
     id: string;
     name: string;
     price: number;
   } | null>(null);
+
   useEffect(() => {
-    setLocalBooking(localBooking);
-  }, [localBooking]);
-
-
-
-  const calculateServicePrice = (bookingData: BookingData) => {
-=======
-const PriceCalculate = ({ bookingData, setBookingData }: Props) => {
-  const { teamMembers } = useAppContext();
+    setLocalBooking(initialBooking);
+  }, [initialBooking]);
 
   const calculateServicePrice = (bookingData: BookingWithId) => {
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
     let baseServiceCost = 0;
     let additionalCosts = 0;
     let videoDurationAmount = 0;
     let daysAndEventDueration = 0;
+    
     // Sum prices of all selected services
     baseServiceCost = bookingData.selectedService.reduce(
       (sum, service) => sum + service.price,
@@ -95,7 +89,6 @@ const PriceCalculate = ({ bookingData, setBookingData }: Props) => {
     }
 
     // lights  price
-
     if (
       bookingData.requiredServices.stageLights &&
       bookingData.selectedService.some((s) => s.id === "stage-lighting")
@@ -169,90 +162,24 @@ const PriceCalculate = ({ bookingData, setBookingData }: Props) => {
       0
     );
 
-    // if (totalDuration > 5) {
-    //   const extraHours = (totalDuration - 5) * 200;
-    //   const { finalPrice } = PriceHandeler(
-    //     extraHours,
-    //     0,
-    //     bookingData.details.package,
-    //     bookingData.details.areaType
-    //   );
-    //   daysAndEventDueration += finalPrice;
-    //   baseServiceCost += finalPrice;
-    // }
-
     // count unique event dates
     const slotCount = new Set(
       bookingData.details.eventTimes.map((slot) => slot.eventDate)
     ).size;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
     if (slotCount > 1) {
       daysAndEventDueration = (slotCount - 1) * baseServiceCost * 0.7;
     }
     baseServiceCost = daysAndEventDueration + baseServiceCost;
     const totalAmount = baseServiceCost + additionalCosts;
-<<<<<<< HEAD
     let discount = 0;
 
-    
-    // Apply discount if a team is selected (This logic seems arbitrary in the original code, maybe we remove it or adjust)
-    // Original: discount = totalAmount * 0.1;
-    // New Logic: If a team is selected, we might want to just show that team's price as the "Base" instead of the generic one.
-    // However, the previous logic subtracted a discount.
-    // The user requirement says "display total price based on each production team".
-    // I will override the total Amount if a team is selected to match the team's calculated total
-    
-    // For now, let's keep the discount logic if it was intended, OR
-    // actually, let's replace the baseServiceCost with the team's price if selected?
-    // But selectedTeam is a string in the original, now it's an object.
-    
     if (selectedTeam) {
-       // If we want to strictly use the team's price as the "Base":
-       // But wait, the main calculation function is generic. 
-       // The best way is to calculate the specific team total separately or pass it in.
-       // Let's leave the 'discount' logic as is for now if it preserves original behavior, 
-       // BUT the user wants the price to be "based on each production team".
-       
-       // If I assume the user wants the Total to BE the one I calculated for the team:
-       // I should probably calculate the total based on the team's productionPrice * days.
-       
-       // Let's refine this:
-       // If selectedTeam is set, we use its price as the base.
-       // We need to know the number of days.
-       // const days = slotCount > 1 ? slotCount : 1; 
-       // If slotCount is 0 (no dates), assume 1.
-       
-       // Re-claculate base for the selected team
-       // The team's price is "per day" typically? fromType says productionPrice: number.
-       // Let's assume it is per day.
-       
-       // We need to calculate the difference to show.
-       // But the easiest way is to just let the "Team Total" be shown in the UI.
-       
-       // Let's use the 'discount' field to actually represent the "Adjustment" needed to reach the team's price?
-       // No, simpler: Just Replace totalAmount with the selected team's total if strictly needed.
-       
-       // Current approach: Just calculate a discount for display like before, or remove it? 
-       // The previous code had `discount = totalAmount * 0.1`.
-       // I will update this to actually reflect the chosen team's price advantage or difference if I can.
-       // But to keep it simple and fulfill the request "display total price best on each production team",
-       // I will rely on the list showing the correct price, and when selected, maybe update the main price?
-       
-       // Let's NOT change the main calculation logic too drastically to avoid breaking hidden dependencies.
-       // I will just keep the discount logic as 0 for now unless we want to apply a specific team discount.
-       discount = 0; 
+      discount = 0;
     }
 
     bookingData.details.totalAmount = totalAmount;
 
-=======
-    bookingData.details.totalAmount = totalAmount;
-
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
     return {
       baseServiceCost,
       additionalCosts,
@@ -264,106 +191,41 @@ const PriceCalculate = ({ bookingData, setBookingData }: Props) => {
     };
   };
 
-<<<<<<< HEAD
-// Define coupons
-const COUPONS: Record<string, number> = {
-  "ASAN-10": 10,
-  "AB-50": 50,
-  "ABA-50": 20,
-};
+  // Calculate price for a specific team
+  const calculateTeamTotal = (
+    teamPrice: number,
+    couponCode?: string
+  ) => {
 
-// Calculate price for a specific team
-const calculateTeamTotal = (
-  teamPrice: number,
-  couponCode?: string
-) => {
+    const { additionalCosts } = calculateServicePrice(bookingData);
 
-  const { additionalCosts } = calculateServicePrice(bookingData);
+    const slotCount = new Set(
+      bookingData.details.eventTimes.map(slot => slot.eventDate)
+    ).size;
+    const days = slotCount > 0 ? slotCount : 1;
 
-  const slotCount = new Set(
-    bookingData.details.eventTimes.map(slot => slot.eventDate)
-  ).size;
-  const days = slotCount > 0 ? slotCount : 1;
+    const extraDurationCost =
+      days > 1 ? (days - 1) * teamPrice * 0.7 : 0;
 
-  const extraDurationCost =
-    days > 1 ? (days - 1) * teamPrice * 0.7 : 0;
+    const baseTotal = teamPrice + extraDurationCost;
 
-  const baseTotal = teamPrice + extraDurationCost;
+    let total = baseTotal + additionalCosts;
 
-  let total = baseTotal + additionalCosts;
+    // Apply coupon discount safely
+    let discountPercent = 0;
 
-  // Apply coupon discount safely
-  let discountPercent = 0;
+    if (couponCode && couponCode in COUPONS) {
+      discountPercent = COUPONS[couponCode];
+      total *= 1 - discountPercent / 100;
+    }
 
-  if (couponCode && couponCode in COUPONS) {
-    discountPercent = COUPONS[couponCode];
-    total *= 1 - discountPercent / 100;
-  }
-
-  // Round to 2 decimal places
-  total = Number(total.toFixed(2));
-  return {
-    total,
-    discountPercent,
-  };
-};
-
-=======
-  const [coponCode, setCupanCode] = useState("");
-  const [estimatePrice, setEstimatePrice] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState(0);
-  
-  useEffect(() => {
-    if (!bookingData) return;
-
-    const discountFunc = () => {
-      const basePrice = calculateServicePrice(bookingData).totalAmount;
-      setEstimatePrice(basePrice);
-
-      let discountPercent = 0;
-
-      const code = coponCode.trim().toUpperCase();
-
-      if (code === "ASAN10") {
-        discountPercent = 10;
-      } else {
-        const matchedMember = teamMembers.find(
-          (member) => member?.cupan?.code?.trim().toUpperCase() === code
-        );
-        if (matchedMember) {
-          discountPercent = matchedMember.cupan?.discount || 0;
-        }
-      }
-
-      const discountValue = Math.round((basePrice * discountPercent) / 100);
-      setDiscountPrice(discountValue);
-
-      // update booking data only if values changed to avoid loops
-      setBookingData((prev) => {
-        if (!prev) return prev;
-
-        if (
-          prev.details.coponCode === coponCode &&
-          prev.details.discountPrice === discountValue
-        ) {
-          return prev; // no changes
-        }
-
-        return {
-          ...prev,
-          details: {
-            ...prev.details,
-            coponCode,
-            discountPrice: discountValue,
-          },
-        };
-      });
+    // Round to 2 decimal places
+    total = Number(total.toFixed(2));
+    return {
+      total,
+      discountPercent,
     };
-
-    discountFunc();
-    console.log(bookingData.details.totalAmount);
-  }, [bookingData?.details?.totalAmount, coponCode, teamMembers]);
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
+  };
 
   const ExpandablePrice: React.FC<ExpandablePriceProps> = ({
     title,
@@ -410,8 +272,6 @@ const calculateTeamTotal = (
         name: string;
         price: number;
     } | null>(selectedTeam); // Initialize with currently selected team
-
-    // Calculate price for a specific team logic removed from here as it is lifted up
 
     const handleConfirm = () => {
         if (tempSelectedTeam) {
@@ -699,7 +559,6 @@ const calculateTeamTotal = (
       <div></div>
       <div className="mt-3">
         <div className="text-center">
-<<<<<<< HEAD
           <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
             Estimated Total Price
           </h4>
@@ -707,16 +566,16 @@ const calculateTeamTotal = (
           <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
             {/* If a team is selected, show their calculated price, otherwise show standard */}
 
-  {selectedTeam ? (
-    <>
-      <span className="line-through text-gray-500 dark:text-gray-400 mr-2">
-        ₹{calculateServicePrice(bookingData).totalAmount}
-      </span>
-      <span>₹{teamTotal.toFixed(0)}</span>
-    </>
-  ) : (
-    <span>₹{calculateServicePrice(bookingData).totalAmount}</span>
-  )}
+            {selectedTeam ? (
+              <>
+                <span className="line-through text-gray-500 dark:text-gray-400 mr-2">
+                  ₹{calculateServicePrice(bookingData).totalAmount}
+                </span>
+                <span>₹{teamTotal.toFixed(0)}</span>
+              </>
+            ) : (
+              <span>₹{calculateServicePrice(bookingData).totalAmount}</span>
+            )}
 
 
           </div>
@@ -729,40 +588,6 @@ const calculateTeamTotal = (
                   {teamDiscountPercent}% Coupon Applied ({selectedTeamMember?.cuponCode})
                 </p>
               )}
-=======
-          <h5>Use coupon code :</h5>
-          <div className="flex flex-col-1 justify-center items-center">
-            <input
-              type="text"
-              value={coponCode}
-              onChange={(e) => setCupanCode(e.target.value)}
-              placeholder="34Asjnk"
-              className="m-2 px-3 py-2 border rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-            Es timated Total Price
-          </h4>
-          {discountPrice > 0 ? (
-            <div className="flex justify-center items-baseline gap-2 mb-1">
-              <span className="text-2xl text-gray-500 line-through">
-                ₹{estimatePrice}
-              </span>
-              <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">
-                ₹{estimatePrice - discountPrice}
-              </span>
-            </div>
-          ) : (
-            <div className="text-4xl font-bold text-blue-600 dark:text-blue-400">
-              ₹{estimatePrice}
-            </div>
-          )}
-
-          {discountPrice > 0 && (
-            <div className="text-green-600 font-semibold text-lg mb-3">
-              You save ₹{discountPrice}
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
             </div>
           )}
 

@@ -107,12 +107,8 @@ export type BookingWithId = {
   createdAt: string;
   id: string;
   details: {
-<<<<<<< HEAD
-    coupanCode:string;
-=======
-    coponCode?:string;
-    discountPrice?:number;
->>>>>>> a13e1ee8da725f731783e919d1f21bada87e3b09
+    coupanCode?: string;
+    discountPrice?: number;
     category: string;
     package: string;
     name: string;
