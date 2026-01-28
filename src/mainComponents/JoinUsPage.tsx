@@ -34,6 +34,21 @@ import { TeamMember } from "@/contexts/fromType";
 import { headerType } from "@/contexts/fromType";
 import { generateMemberClientId } from "@/contexts/fromData";
 
+const capabilityOptions = [
+  { id: "small", label: "Small (₹10,000 - ₹50,000)" },
+  { id: "medium", label: "Medium (₹50,000 - ₹12,00,000)" },
+  { id: "big", label: "Big Event (₹12,00,000+)" },
+];
+
+const eventTypeOptions = [
+  { id: "engagementCeremony", label: "Engagement Ceremony" },
+  { id: "preWedding", label: "Pre Wedding" },
+  { id: "wedding", label: "Wedding" },
+  { id: "riceCeremony", label: "Rice Ceremony" },
+  { id: "babyPhotography", label: "Baby Photography" },
+  { id: "corporate", label: "Corporate" },
+];
+
 const JoinUsPage: React.FC<headerType> = (props) => {
   const context = useAppContext();
 
@@ -66,10 +81,9 @@ const JoinUsPage: React.FC<headerType> = (props) => {
     skills: [],
     message: "",
     pincode: "",
-    productionPrice: 1200,
+    productionPrice: 0,
     district: "",
-    avatar:
-      "",
+    avatar:"",
     rating: 4.8,
     state: "",
     totalProjects: 0,
@@ -81,7 +95,25 @@ const JoinUsPage: React.FC<headerType> = (props) => {
     events: [],
     totalEarn: 0,
     transactionHistory: [],
+    productionCapability: "",
+    eventTypes: [],
+    cuponCode:""
   });
+
+  const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setFormData((prev) => {
+      const currentTypes = prev.eventTypes || [];
+      if (checked) {
+        return { ...prev, eventTypes: [...currentTypes, value] };
+      } else {
+        return {
+          ...prev,
+          eventTypes: currentTypes.filter((type) => type !== value),
+        };
+      }
+    });
+  };
 
   const handleRoleChange = (roleId: string) => {
     console.log(roleId);
@@ -791,7 +823,7 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                         name="resumeLink"
                         value={formData.resumeLink}
                         onChange={handleInputChange}
-                        required
+                        // required
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
                         placeholder="https://drive.google.com/..."
                       />
@@ -826,7 +858,65 @@ const JoinUsPage: React.FC<headerType> = (props) => {
                       <option value="Remote Only">Remote Only</option>
                       <option value="Hybrid">Hybrid</option>
                     </select>
+                    
                   </div>
+
+                  {/* Production Team Specific Fields */}
+                  {formData.role === "team" && (
+                    <>
+                      <div className="md:col-span-2">
+                        <label
+                          htmlFor="productionCapability"
+                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                        >
+                          Production Team Capability *
+                        </label>
+                        <select
+                          id="productionCapability"
+                          name="productionCapability"
+                          value={formData.productionCapability}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors duration-200"
+                        >
+                          <option value="">Select Capacity</option>
+                          {capabilityOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Event Types Covered *
+                        </label>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {eventTypeOptions.map((type) => (
+                            <div
+                              key={type.id}
+                              className="flex items-center space-x-2"
+                            >
+                              <input
+                                type="checkbox"
+                                id={`event-${type.id}`}
+                                value={type.id}
+                                checked={formData.eventTypes?.includes(type.id)}
+                                onChange={handleEventTypeChange}
+                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 bg-white dark:bg-gray-600 dark:border-gray-500"
+                              />
+                              <label
+                                htmlFor={`event-${type.id}`}
+                                className="text-sm text-gray-600 dark:text-gray-300 cursor-pointer select-none"
+                              >
+                                {type.label}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                   <div>
                     <label

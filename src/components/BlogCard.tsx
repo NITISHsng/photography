@@ -19,6 +19,7 @@ const BlogCard: React.FC<Props> = ({ post, className = "" }) => {
     >
       {post.coverImage && (
         <Link href={`/blog/${post.slug}`} className="block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={post.coverImage.src}
             width={post.coverImage.width ?? 1200}

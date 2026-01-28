@@ -39,6 +39,7 @@ export default function PostPage() {
 
         {post.coverImage && (
           <figure className="mt-6 rounded overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.coverImage.src}
               alt={post.coverImage.alt}

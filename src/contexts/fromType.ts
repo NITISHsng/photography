@@ -106,6 +106,7 @@ export type BookingData = {
   createdAt: string;
   id: string;
   details: {
+    coupanCode:string;
     category: string;
     package: string;
     name: string;
@@ -215,6 +216,7 @@ export const initialBookingData: BookingData = {
   createdAt: new Date().toISOString(),
   id: "",
   details: {
+    coupanCode:"ASAN-10",
     category: "event",
     package: "event-premium",
     name: "",
@@ -321,6 +323,8 @@ export type TeamMember = {
   message: string;
   pincode: string;
   district: string;
+  productionCapability?: string;
+  eventTypes?: string[];
   avatar: string;
   rating: number;
   state: string;
@@ -334,6 +338,7 @@ export type TeamMember = {
   totalEarn: number;
   transactionHistory: TransactionHistory[] | null;
   createdAt: string;
+  cuponCode:string;
 };
 
 export interface PostOffice {

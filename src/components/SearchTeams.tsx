@@ -85,7 +85,7 @@ const SearchTeams = () => {
 
       const aExact = aNumber === filterPincodeNumber ? 0 : 1;
       const bExact = bNumber === filterPincodeNumber ? 0 : 1;
-
+      
       return aExact - bExact;
     });
   }
@@ -135,6 +135,7 @@ const SearchTeams = () => {
             <div className="flex items-start justify-between mb-4">
               {/* Left: Avatar + Name + ID */}
               <div className="flex items-center space-x-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt={member.name}
                   width={48}

@@ -283,11 +283,14 @@ const BookingInformation: React.FC<BookingInformationProps> = ({ selectedBooking
         >
           <div className="flex items-center space-x-3">
             {member.avatar ? (
-              <img
-                src={member.avatar}
-                alt={member.name}
-                className="h-10 w-10 rounded-full object-cover"
-              />
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={member.avatar}
+                  alt={member.name}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              </>
             ) : (
               <User className="h-10 w-10 text-gray-400" />
             )}

@@ -33,6 +33,8 @@ const TeamManagement: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
 
   const { teamMembers } = useAppContext();
 
@@ -70,8 +72,8 @@ const TeamManagement: React.FC = () => {
   const handleEditMember = (memberId: string) => {
     const member = teamMembers.find((m) => m.memberId === memberId);
     if (member) {
-      alert(`Opening edit form for member: ${member.name} (${memberId})`);
-      console.log(`Edit member: ${memberId}`, member);
+      setEditingMember(member);
+      setShowEditModal(true);
     }
   };
 
@@ -307,6 +309,7 @@ const TeamManagement: React.FC = () => {
                   <img
                     // height={48}
                     // width={48}
+                    // eslint-disable-next-line @next/next/no-img-element
                     src={
                       member.gender === "male"
                         ? "https://avatar.iran.liara.run/public/boy"
@@ -504,6 +507,95 @@ const TeamManagement: React.FC = () => {
                 className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg transition-all duration-200"
               >
                 Add Payment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showEditModal && editingMember && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+                Edit Team Member
+              </h3>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="space-y-4 mb-6">
+              <input
+                type="text"
+                placeholder="Name"
+                value={editingMember.name}
+                onChange={(e) =>
+                  setEditingMember({ ...editingMember, name: e.target.value })
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <input
+                type="text"
+                placeholder="Role"
+                value={editingMember.role}
+                onChange={(e) =>
+                  setEditingMember({ ...editingMember, role: e.target.value })
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <input
+                type="text"
+                placeholder="Location"
+                value={editingMember.location}
+                onChange={(e) =>
+                  setEditingMember({
+                    ...editingMember,
+                    location: e.target.value,
+                  })
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <input
+                type="text"
+                placeholder="Pincode"
+                value={editingMember.pincode}
+                onChange={(e) =>
+                  setEditingMember({
+                    ...editingMember,
+                    pincode: e.target.value,
+                  })
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <input
+                type="text"
+                placeholder="Phone"
+                value={editingMember.phone}
+                onChange={(e) =>
+                  setEditingMember({ ...editingMember, phone: e.target.value })
+                }
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-all duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  // Here you would typically call a function to update the team member's data
+                  console.log("Saving changes for:", editingMember);
+                  setShowEditModal(false);
+                }}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200"
+              >
+                Save Changes
               </button>
             </div>
           </div>

@@ -321,9 +321,10 @@ const [fullDescription, setfullDescription] = useState("");
 {
   imageUrl && (
 
-        <div onClick={()=>{setImageUrl(""), setfullDescription("")}}
+        <div onClick={()=>{setImageUrl(""); setfullDescription("");}}
          className="fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm z-50">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden max-w-lg w-[90%] transform transition-all duration-300 scale-100 hover:scale-[1.02]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
           alt="Service preview"

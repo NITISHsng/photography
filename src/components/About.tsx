@@ -13,6 +13,113 @@ import {
   Zap,
 } from "lucide-react";
 import CountUp from "./sub_Components/numberAnimation";
+import { useInView } from "react-intersection-observer";
+
+// Extracted Sub-components to fix Hook Rules
+interface Stat {
+  icon: React.ElementType;
+  number: number;
+  label: string;
+  description: string;
+  color: string;
+}
+
+interface Value {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}
+
+const StatItem = ({ stat, index }: { stat: Stat; index: number }) => {
+  const IconComponent = stat.icon;
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${index * 100}ms` }}
+      className={`bg-white dark:bg-gray-800 p-4 md:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 text-center group border border-gray-200 dark:border-gray-700 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
+      <div
+        className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+      >
+        <IconComponent className="h-8 w-8 text-white" />
+      </div>
+
+      <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+        <div className="flex justify-center items-baseline">
+          <CountUp target={stat.number} duration={1500} delay={400} step={1} />
+          {stat.label === "Client Satisfaction" ? "%" : "+"}
+        </div>
+      </div>
+
+      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+        {stat.label}
+      </h3>
+
+      <p className="text-gray-600 dark:text-gray-300 text-sm">
+        {stat.description}
+      </p>
+    </div>
+  );
+};
+
+const ValueItem = ({ value, index }: { value: Value; index: number }) => {
+  const IconComponent = value.icon;
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${index * 100}ms` }}
+      className={`flex items-start space-x-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-md transform transition-all duration-500 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+    >
+      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+        <IconComponent className="h-5 w-5 text-white" />
+      </div>
+      <div>
+        <h5 className="font-bold text-gray-800 dark:text-white mb-1">
+          {value.title}
+        </h5>
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          {value.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const AchievementItem = ({ achievement, index }: { achievement: string; index: number }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${index * 100}ms` }}
+      className={`flex items-start space-x-3 p-4 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-xl transform transition-all duration-500 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+    >
+      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+      <span className="text-gray-600 dark:text-gray-300 text-sm">
+        {achievement}
+      </span>
+    </div>
+  );
+};
 
 const About: React.FC = () => {
   const stats = [
@@ -95,40 +202,9 @@ const About: React.FC = () => {
 
         {/* Stats Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-10 md:mb-20">
-          {stats.map((stat, index) => {
-            const IconComponent = stat.icon;
-            return (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 p-4 md:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 text-center group border border-gray-200 dark:border-gray-700"
-              >
-                <div
-                  className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                >
-                  <IconComponent className="h-8 w-8 text-white" />
-                </div>
-
-  <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
-    <div className="flex justify-center">
-
-  <CountUp target={stat.number} duration={1500} delay={400} step={1} />
-  {
-    stat.label=="Client Satisfaction" ? "%" : "+"
-  }
-    </div>
-</div>
-
-
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-                  {stat.label}
-                </h3>
-
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  {stat.description}
-                </p>
-              </div>
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatItem key={index} stat={stat} index={index} />
+          ))}
         </div>
 
         {/* Content Grid */}
@@ -156,27 +232,9 @@ const About: React.FC = () => {
                 Our Core Values
               </h4>
               <div className="space-y-4">
-                {values.map((value, index) => {
-                  const IconComponent = value.icon;
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-start space-x-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-md"
-                    >
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <IconComponent className="h-5 w-5 text-white" />
-                      </div>
-                      <div>
-                        <h5 className="font-bold text-gray-800 dark:text-white mb-1">
-                          {value.title}
-                        </h5>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {value.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                {values.map((value, index) => (
+                  <ValueItem key={index} value={value} index={index} />
+                ))}
               </div>
             </div>
           </div>
@@ -249,15 +307,7 @@ const About: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {achievements.map((achievement, index) => (
-              <div
-                key={index}
-                className="flex items-start space-x-3 p-4 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-xl"
-              >
-                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-600 dark:text-gray-300 text-sm">
-                  {achievement}
-                </span>
-              </div>
+              <AchievementItem key={index} achievement={achievement} index={index} />
             ))}
           </div>
         </div>

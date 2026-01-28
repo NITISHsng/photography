@@ -54,7 +54,9 @@ export async function PUT(req: Request) {
     const collection = await getCollection<StaffWithId>("staff");
 
     // ✅ Push a new payment record into paymentHistory
-const { _id, ...rest } = body;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _id, ...rest } = body;
+
 
 const result = await collection.replaceOne(
   { staffId: body.staffId }, // filter
